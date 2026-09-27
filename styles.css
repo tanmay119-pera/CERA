@@ -998,3 +998,253 @@ h1, h2, h3, h4 {
   width: 100%;
   height: clamp(340px, 50vh, 580px);
   border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.manifesto-visual__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(20px);
+}
+
+.manifesto-visual__badge {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  background: rgba(6, 20, 27, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  transform: translateZ(40px);
+  color: #CCD0CF;
+}
+
+.manifesto-visual__stat {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.manifesto-visual__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 990px) {
+  .manifesto-grid { grid-template-columns: 1fr; gap: 32px; }
+  .manifesto-body { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4. SPLIT ACCORDION ARCHITECTURE SECTION
+   ═══════════════════════════════════════════════════════════════ */
+.section-split-arch {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 32px 100px;
+}
+
+.split-arch-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.section-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  line-height: 1.65;
+  margin: 18px 0 36px;
+}
+
+/* Accordion List */
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion-item {
+  border-top: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+
+.accordion-item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.accordion-trigger {
+  width: 100%;
+  padding: 22px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+}
+
+.accordion-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.1rem;
+  color: var(--accent);
+  min-width: 28px;
+}
+
+.accordion-heading {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-main);
+  flex: 1;
+  transition: color 0.2s;
+}
+
+.accordion-trigger:hover .accordion-heading {
+  color: var(--accent);
+}
+
+.accordion-state {
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+}
+
+.accordion-item--active .accordion-content {
+  max-height: 220px;
+  padding-bottom: 22px;
+}
+
+.accordion-content p {
+  padding-left: 44px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* Split Right 3D Visual */
+.tilt-card--tall {
+  height: clamp(420px, 60vh, 640px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.arch-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(20px);
+}
+
+.arch-photo--contain {
+  object-fit: contain;
+  background: var(--bg-card);
+  padding: 32px;
+}
+
+.tilt-card__floating-chip {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  border-radius: var(--radius-sm);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-main);
+  transform: translateZ(45px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.chip-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+
+@media (max-width: 990px) {
+  .split-arch-grid { grid-template-columns: 1fr; gap: 40px; }
+  .tilt-card--tall { height: 420px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   5. TELEMETRY & COMMAND CARD (3D Depths)
+   ═══════════════════════════════════════════════════════════════ */
+.section-telemetry {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 32px 100px;
+}
+
+.section-heading-wrap {
+  margin-bottom: 48px;
+}
+
+.section-heading-wrap--split {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+/* Command Card */
+.command-card {
+  min-height: 520px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.command-card__inner {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--bg-card);
+}
+
+.command-card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.command-card__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
