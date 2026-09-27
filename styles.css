@@ -2098,3 +2098,287 @@ h1, h2, h3, h4 {
   font-size: clamp(2.8rem, 7vw, 5.8rem);
   line-height: 0.92;
   letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.momentum-sub {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.btn--momentum {
+  padding: 18px 48px;
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  font-size: 0.88rem;
+  font-weight: 800;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.btn--momentum:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   11. MINIMALIST EDITORIAL FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+.editorial-footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 32px 48px;
+}
+
+.footer-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.footer-big-brand {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  letter-spacing: 2px;
+  color: var(--text-main);
+  text-transform: uppercase;
+}
+
+.footer-big-contact {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+
+.footer-big-contact:hover {
+  opacity: 0.8;
+}
+
+.footer-divider-line {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 36px;
+}
+
+.footer-meta-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 1fr;
+  gap: 32px;
+  font-size: 0.84rem;
+}
+
+.footer-caption {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.footer-subtext {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.footer-links-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links-col a {
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.footer-links-col a:hover {
+  color: var(--text-main);
+}
+
+.footer-copy-col {
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 840px) {
+  .footer-meta-row { grid-template-columns: 1fr; gap: 24px; }
+  .footer-copy-col { text-align: left; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS & PULSES
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.4); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DRIVER AVATAR PHOTOS
+   ═══════════════════════════════════════════════════════════════ */
+.driver-avatar-photo {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INFRASTRUCTURE & MOBILITY SHOWCASE (4 CARDS)
+   ═══════════════════════════════════════════════════════════════ */
+.section-infra-showcase {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 32px 100px;
+}
+
+.infra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.infra-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--bg-card);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.4, 1), box-shadow 0.3s ease;
+}
+
+.infra-card__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-card);
+  transform: translateZ(20px);
+}
+
+.infra-card__media {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.infra-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.infra-card:hover .infra-card__img {
+  transform: scale(1.06);
+}
+
+.infra-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(6, 20, 27, 0.1) 0%, rgba(6, 20, 27, 0.65) 100%);
+}
+
+.infra-card__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(6, 20, 27, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.infra-card__badge--green {
+  color: var(--green);
+}
+
+.infra-card__badge--amber {
+  color: var(--amber);
+}
+
+.infra-card__content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+
+.infra-card__category {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.infra-card__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.infra-card__desc {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.infra-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  margin-top: 6px;
+  border-top: 1px solid var(--border);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.infra-card__foot span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.infra-stat {
+  font-weight: 700;
+  color: var(--text-main);
+  background: var(--bg-secondary);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+}
+
+@media (max-width: 640px) {
+  .infra-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
