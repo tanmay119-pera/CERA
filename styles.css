@@ -1548,3 +1548,553 @@ h1, h2, h3, h4 {
    ═══════════════════════════════════════════════════════════════ */
 .section-matcher {
   max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 32px 100px;
+}
+
+.live-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.pod-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 28px;
+}
+
+.pod-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.pod-card__inner {
+  padding: 30px;
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  transform: translateZ(20px);
+}
+
+.pod-card__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.svg-ring-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.svg-ring {
+  width: 56px;
+  height: 56px;
+  transform: rotate(-90deg);
+}
+
+.svg-ring__bg {
+  fill: none;
+  stroke: var(--bg-secondary);
+  stroke-width: 5;
+}
+
+.svg-ring__fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 213.6;
+  stroke-dashoffset: calc(213.6 * (1 - var(--pct) / 100));
+  transition: stroke-dashoffset 1s ease;
+}
+
+.svg-ring__label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: 'Anton', sans-serif;
+  font-size: 0.96rem;
+  color: var(--accent);
+}
+
+.pod-card__header-meta {
+  flex: 1;
+}
+
+.pod-card__match-type {
+  display: block;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+
+.pod-card__sub-type {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.status-chip--verified { background: var(--green-subtle); color: var(--green); }
+.status-chip--new      { background: var(--amber-subtle); color: var(--amber); }
+
+/* Route Timeline */
+.route-timeline {
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
+}
+
+.route-stop {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.stop-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.stop-dot--start { background: var(--accent); }
+.stop-dot--end   { background: var(--green); }
+
+.stop-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stop-name {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+
+.stop-time {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.route-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 5px;
+  margin: 6px 0;
+}
+
+.route-divider::before {
+  content: '';
+  width: 2px;
+  height: 24px;
+  background: var(--border);
+}
+
+.route-length {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+}
+
+.pod-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.pod-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.driver-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.driver-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.78rem;
+  display: grid;
+  place-items: center;
+}
+
+.driver-name {
+  display: block;
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: var(--text-main);
+}
+
+.driver-score {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.btn--tactile-ride {
+  padding: 10px 22px;
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  border-radius: var(--radius-full);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--tactile-ride:active {
+  transform: scale(0.94);
+}
+
+@media (max-width: 640px) {
+  .pod-container { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   8. CIVIC BENEFIT REDEMPTION (3D VOUCHERS)
+   ═══════════════════════════════════════════════════════════════ */
+.section-redemption {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 32px 100px;
+}
+
+.voucher-heading-wrap {
+  margin-bottom: 24px;
+}
+
+.balance-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.balance-card__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.balance-card__label {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.balance-card__val {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+.balance-card__val small {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+
+.sync-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.voucher-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.voucher-pass {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.voucher-pass__inner {
+  padding: 24px;
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(20px);
+}
+
+.voucher-pass__ribbon {
+  position: absolute;
+  top: 14px;
+  right: -24px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: 'Anton', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  padding: 4px 30px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.voucher-pass__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.voucher-pass__title-box {
+  flex: 1;
+}
+
+.voucher-pass__title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-main);
+  padding-right: 48px;
+}
+
+.voucher-pass__discount {
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.voucher-pass__desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.voucher-pass__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  margin-top: 4px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cost-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--amber);
+  background: var(--amber-subtle);
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+}
+
+.btn--voucher-redeem {
+  padding: 8px 22px;
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  border-radius: var(--radius-full);
+}
+
+.btn--voucher-redeem:active {
+  transform: scale(0.95);
+}
+
+.voucher-perforation {
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: repeating-linear-gradient(to right, var(--border) 0 6px, transparent 6px 12px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   9. CORRIDOR BRIEF FORM (SquareSpace Style)
+   ═══════════════════════════════════════════════════════════════ */
+.section-form-brief {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 32px 100px;
+}
+
+.form-brief-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.form-brief__sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 20px;
+  max-width: 480px;
+}
+
+.form-brief__card-inner {
+  padding: 40px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.brief-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group label small {
+  color: var(--text-muted);
+  text-transform: none;
+  font-weight: 400;
+}
+
+.input-editorial {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.input-editorial:focus {
+  border-color: var(--accent);
+  background: var(--bg-card);
+}
+
+.input-editorial::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.btn--submit-pill {
+  width: 100%;
+  padding: 16px 28px;
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  font-size: 0.86rem;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.btn--submit-pill:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  .form-brief-grid { grid-template-columns: 1fr; gap: 40px; }
+  .form-row-dual { grid-template-columns: 1fr; }
+  .form-brief__card-inner { padding: 28px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   10. MOMENTUM CTA SECTION
+   ═══════════════════════════════════════════════════════════════ */
+.section-momentum {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 120px 24px;
+  text-align: center;
+  transition: background 0.4s ease;
+}
+
+.momentum-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.momentum-title {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  line-height: 0.92;
+  letter-spacing: 2px;
