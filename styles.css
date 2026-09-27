@@ -1248,3 +1248,303 @@ h1, h2, h3, h4 {
   object-fit: cover;
 }
 
+.command-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--bg-card) 25%, rgba(6, 20, 27, 0.6) 80%, rgba(6, 20, 27, 0.3) 100%);
+}
+
+.command-card__layer--front {
+  position: relative;
+  z-index: 3;
+  padding: 36px;
+  transform: translateZ(35px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.command-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tag-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+}
+
+.tag-vehicle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--green);
+  background: var(--green-subtle);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.pulse-ring {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.pulse-ring--green {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.metric-caption {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.metric-number-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.metric-massive {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: clamp(3.6rem, 7vw, 5.2rem);
+  line-height: 0.95;
+  color: var(--text-main);
+}
+
+.metric-unit {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.metric-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+/* Tier Gauge */
+.tier-gauge {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.tier-gauge__labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.tier-gauge__highlight {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.tier-gauge__track {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--bg-secondary);
+  overflow: hidden;
+}
+
+.tier-gauge__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  width: var(--gauge-w);
+  transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tier-gauge__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.badge-tier-unlock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--amber);
+  font-weight: 700;
+}
+
+/* Trips Grid */
+.command-card__trips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.trip-cell {
+  text-align: center;
+}
+
+.trip-val {
+  display: block;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.trip-lbl {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Telemetry Stack */
+.telemetry-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.metric-box {
+  flex: 1;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.metric-box__inner {
+  padding: 32px;
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateZ(25px);
+}
+
+.metric-box__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.icon-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+}
+
+.icon-avatar--blue   { background: var(--blue-subtle); color: var(--blue); }
+.icon-avatar--amber  { background: var(--amber-subtle); color: var(--amber); }
+.icon-avatar--teal   { background: var(--teal-subtle); color: var(--teal); }
+.icon-avatar--orange { background: var(--orange-subtle); color: var(--orange); }
+.icon-avatar--purple { background: var(--purple-subtle); color: var(--purple); }
+.icon-avatar--accent { background: var(--accent-subtle); color: var(--accent); }
+
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.trend-badge--up {
+  color: var(--green);
+  background: var(--green-subtle);
+}
+
+.sync-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--green);
+  background: var(--green-subtle);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.metric-box__title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.metric-box__value {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.2rem);
+  line-height: 1;
+  color: var(--text-main);
+  margin: 6px 0;
+}
+
+.metric-box__desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.metric-box__footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.metric-box__footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 960px) {
+  .telemetry-grid { grid-template-columns: 1fr; }
+  .command-card { min-height: 480px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   7. AI COMMUTE MATCHER PODS (3D Depth)
+   ═══════════════════════════════════════════════════════════════ */
+.section-matcher {
+  max-width: 1440px;
