@@ -433,3 +433,138 @@ h1, h2, h3, h4 {
 
 .hero-clean__container {
   max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  align-items: center;
+  gap: 60px;
+}
+
+.hero-clean__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-clean__eyebrow {
+  margin-bottom: 24px;
+}
+
+.badge-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-subtle);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hero-clean__title {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-size: clamp(3.2rem, 7vw, 6.2rem);
+  line-height: 0.94;
+  letter-spacing: 2px;
+  color: var(--text-main);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.hero-clean__description {
+  font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+  color: var(--text-muted);
+  max-width: 580px;
+  line-height: 1.65;
+  margin-bottom: 36px;
+}
+
+.hero-clean__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 38px;
+}
+
+.btn--hero-solid {
+  padding: 16px 38px;
+  font-size: 0.86rem;
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.btn--hero-solid:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.btn--hero-glass {
+  padding: 16px 32px;
+  font-size: 0.86rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  backdrop-filter: blur(10px);
+}
+
+.btn--hero-glass:hover {
+  background: var(--bg-secondary);
+  transform: translateY(-3px);
+}
+
+/* Quick Impact Metrics Ribbon */
+.hero-clean__stats-ribbon {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 24px;
+  gap: 20px;
+  box-shadow: var(--shadow-flat);
+}
+
+.hero-ribbon-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-ribbon-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.5px;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.hero-ribbon-lbl {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.hero-ribbon-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+}
+
+/* ─── LIVE REAL-TIME AQI BAR & REGIONAL CORRIDOR MONITOR (FRAMELESS) ─── */
+.hero-clean__visual {
+  width: 100%;
+  max-width: 530px;
+  margin-left: auto;
+}
+
+.aqi-monitor-frameless {
+  display: flex;
+  flex-direction: column;
