@@ -31,6 +31,7 @@
 
       <div class="navbar__center">
         <a href="#manifesto" class="nav-link">Mission</a>
+        <a href="#cera-ai" class="nav-link nav-link--ai"><i data-lucide="sparkles" class="icon icon--xs"></i> CERA-AI</a>
         <a href="#services" class="nav-link">Architecture</a>
         <a href="#telemetry" class="nav-link">Air Quality</a>
         <a href="#matcher" class="nav-link">Carpool Matcher</a>
@@ -39,11 +40,37 @@
       </div>
 
       <div class="navbar__right">
-        <!-- 3D Theme Switcher Pill -->
-        <button id="theme-toggle" class="theme-switch" aria-label="Toggle theme">
-          <span class="theme-switch__icon theme-switch__moon"><i data-lucide="moon" class="icon icon--sm"></i></span>
-          <span class="theme-switch__icon theme-switch__sun"><i data-lucide="sun" class="icon icon--sm"></i></span>
-          <span class="theme-switch__knob"></span>
+        <!-- Image-Matched Neumorphic Dual-Theme Switcher -->
+        <button id="theme-toggle" class="theme-switch-pill" aria-label="Toggle dark and light theme" title="Toggle Theme">
+          <span class="theme-switch-track">
+            <!-- Left Icon: Moon (Underneath) -->
+            <span class="track-icon track-icon--moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="switch-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            </span>
+            <!-- Right Icon: Sun (Underneath) -->
+            <span class="track-icon track-icon--sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="switch-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4.2"></circle>
+                <path d="M12 2v2.5M12 19.5v2.5M2 12h2.5M19.5 12h2.5M4.93 4.93l1.8 1.8M17.27 17.27l1.8 1.8M4.93 19.07l1.8-1.8M17.27 6.73l1.8-1.8"></path>
+              </svg>
+            </span>
+            <!-- Sliding Circular Thumb with Active State Icon -->
+            <span class="theme-switch-thumb">
+              <span class="thumb-icon thumb-icon--moon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="switch-svg switch-svg--thumb" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+              </span>
+              <span class="thumb-icon thumb-icon--sun" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="switch-svg switch-svg--thumb" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4.2"></circle>
+                  <path d="M12 2v2.5M12 19.5v2.5M2 12h2.5M19.5 12h2.5M4.93 4.93l1.8 1.8M17.27 17.27l1.8 1.8M4.93 19.07l1.8-1.8M17.27 6.73l1.8-1.8"></path>
+                </svg>
+              </span>
+            </span>
+          </span>
         </button>
         <a href="#matcher" class="btn btn--pill-contrast">CONNECT &amp; RIDE</a>
         <button id="mobile-menu-btn" class="btn-icon mobile-hamburger" aria-label="Menu">
@@ -54,6 +81,7 @@
 
     <!-- Mobile Drawer -->
     <div id="mobile-menu" class="mobile-drawer">
+      <a href="#cera-ai" class="mobile-nav-item mobile-nav-item--ai"><i data-lucide="sparkles" class="icon icon--xs"></i> CERA-AI Mobility Brain</a>
       <a href="#manifesto" class="mobile-nav-item">Mission</a>
       <a href="#services" class="mobile-nav-item">Architecture</a>
       <a href="#telemetry" class="mobile-nav-item">Air Quality</a>
@@ -63,6 +91,67 @@
       <a href="#corridor-form" class="mobile-nav-item">Submit Route Brief</a>
     </div>
   </nav>
+
+  <!-- ═══════════════════════ CERA-AI FLOATING CONCIERGE DOCK ═══════════════════════ -->
+  <aside class="cera-ai-dock" id="cera-ai-dock" aria-label="CERA-AI Ride-Scribe Command Bar">
+    <div class="cera-ai-dock__bar">
+      <div class="cera-ai-dock__brand">
+        <span class="ai-spark-orb"><i data-lucide="sparkles" class="icon icon--xs"></i></span>
+        <span class="ai-dock-title">CERA-AI</span>
+        <span class="ai-dock-mode">RIDE-SCRIBE</span>
+      </div>
+
+      <div class="cera-ai-dock__field">
+        <i data-lucide="search" class="icon icon--xs ai-field-icon"></i>
+        <input
+          type="text"
+          id="dock-scribe-input"
+          class="dock-scribe-input"
+          placeholder="Speak or type: 'Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount'..."
+          aria-label="CERA-AI Natural Language Command Input"
+        />
+        <button id="dock-scribe-mic" class="dock-scribe-mic-btn" title="Simulate Voice Input" aria-label="Voice Input">
+          <i data-lucide="mic" class="icon icon--xs"></i>
+          <span class="mic-wave"></span>
+        </button>
+        <button id="dock-scribe-run" class="dock-scribe-submit-btn">
+          <span>Scribe Ride</span>
+          <i data-lucide="sparkles" class="icon icon--xs"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Suggestion Chips -->
+    <div class="cera-ai-dock__chips">
+      <span class="chips-label">AI Prompts:</span>
+      <button class="ai-quick-chip" data-prompt="Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount.">
+        <i data-lucide="building-2" class="icon icon--xs"></i> Office tomorrow 8:30 AM · UPI Split · Metro Pass
+      </button>
+      <button class="ai-quick-chip" data-prompt="Carpool from Rohini to Cyber City Gurugram around 9:00 AM in an EV with FASTag rebate.">
+        <i data-lucide="zap" class="icon icon--xs"></i> Rohini &rarr; Cyber City · EV Sedan · FASTag
+      </button>
+      <button class="ai-quick-chip" data-prompt="Evening carpool from Lajpat Nagar under ₹50 with max carbon credits.">
+        <i data-lucide="leaf" class="icon icon--xs"></i> Lajpat Nagar under ₹50 · Max Green Credits
+      </button>
+    </div>
+
+    <!-- Live Natural Language Parsing Output Drawer -->
+    <div id="dock-scribe-output" class="cera-ai-dock__output" style="display: none;">
+      <div class="output-header">
+        <div class="output-header__left">
+          <span class="pulse-ring pulse-ring--green"></span>
+          <span class="output-header__title">CERA-AI Natural Language Entity Breakdown</span>
+        </div>
+        <button id="dock-scribe-close" class="output-header__close" aria-label="Close parsed view">&times;</button>
+      </div>
+      <div class="output-entities" id="dock-scribe-entities">
+        <!-- Injected via app.js -->
+      </div>
+      <div class="output-matched-card" id="dock-scribe-match">
+        <!-- Injected matched ride preview via app.js -->
+      </div>
+    </div>
+  </aside>
 
   <main>
 
@@ -454,6 +543,502 @@
         <span class="marquee-phrase">GROW OUR MOMENTUM • CONNECT NOW • 98% ROUTE ACCURACY • CLEAN AIR CORRIDOR • ZERO CONGESTION • CIVIC ACCOUNTABILITY • VERIFIED RIDES • SHARED RESILIENCE • GROW OUR MOMENTUM • CONNECT NOW • 98% ROUTE ACCURACY • CLEAN AIR CORRIDOR • ZERO CONGESTION • CIVIC ACCOUNTABILITY • VERIFIED RIDES • SHARED RESILIENCE •</span>
       </div>
     </div>
+
+    <!-- ═══════════════════════ 6.5. CERA-AI MOBILITY BRAIN SECTION ═══════════════════════ -->
+    <section id="cera-ai" class="section-cera-ai">
+      <div class="cera-ai-container">
+
+        <!-- AI Suite Section Header -->
+        <div class="section-heading-wrap section-heading-wrap--split">
+          <div>
+            <div class="ai-header-badge">
+              <span class="ai-spark-pill"><i data-lucide="sparkles" class="icon icon--xs"></i> CERA-AI MOBILITY ENGINE</span>
+              <span class="ai-model-tag">Proactive · Conversational · Visual Data</span>
+            </div>
+            <h2 class="display-title display-title--sm">PROACTIVE INTELLIGENCE.<br/>ZERO BOOKING CHORES.</h2>
+            <p class="section-desc">
+              Experience urban commuting with proactive schedule prediction, conversational natural language booking, and live clean-corridor heatmap intelligence.
+            </p>
+          </div>
+          <div class="ai-pulse-monitor">
+            <div class="ai-pulse-status">
+              <span class="pulse-ring pulse-ring--green"></span>
+              <span>CERA-AI Active Node · 14,820 Arterial Paths Cached</span>
+            </div>
+            <span class="ai-telemetry-meta">Latency: 18ms · Zero-Knowledge Privacy Encrypted</span>
+          </div>
+        </div>
+
+        <!-- Upper Dual Grid: 1. Smart-Twin Predictor & 2. Ride-Scribe Interactive Bar -->
+        <div class="cera-ai-upper-grid">
+
+          <!-- ── FEATURE 1: The "Smart-Twin" Commute Predictor (Proactive AI) ── -->
+          <div class="tilt-card ai-feature-card ai-feature-card--twin" data-tilt-max="6">
+            <div class="tilt-card__inner ai-feature-card__inner">
+              <div class="tilt-glare"></div>
+
+              <div class="ai-feature-card__top">
+                <div class="ai-card-title-group">
+                  <span class="ai-pill-tag"><i data-lucide="brain-circuit" class="icon icon--xs"></i> 01 · PROACTIVE AI</span>
+                  <h3 class="ai-card-title">The "Smart-Twin" Commute Predictor</h3>
+                </div>
+                <div class="ai-sync-time" id="ai-clock-sync">
+                  <i data-lucide="clock" class="icon icon--xs"></i>
+                  <span>08:00 AM Routine Sync</span>
+                </div>
+              </div>
+
+              <!-- Contextual Notification Bubble (Directly from User Spec) -->
+              <div class="ai-greeting-bubble">
+                <div class="ai-greeting-avatar">
+                  <i data-lucide="sparkles" class="icon icon--sm"></i>
+                </div>
+                <div class="ai-greeting-content">
+                  <div class="ai-greeting-header">
+                    <span class="ai-greeting-name">CERA-AI Assistant</span>
+                    <span class="ai-greeting-status">Automated Routine Match</span>
+                  </div>
+                  <p class="ai-greeting-text" id="smart-twin-text">
+                    "Hey <strong>Adesh</strong>! I noticed you usually head to <strong>Connaught Place</strong> on Mondays. I’ve pre-matched you with <strong>Priya</strong> (98% route alignment, EV Sedan). Tap to lock in your ride and claim your daily <strong>50 Green Credits</strong>."
+                  </p>
+                </div>
+              </div>
+
+              <!-- Pre-Matched Ride Details Card -->
+              <div class="smart-twin-matched-pod">
+                <div class="twin-driver-row">
+                  <img src="images/driver_priya.jpg" alt="Priya M." class="twin-driver-avatar" />
+                  <div class="twin-driver-details">
+                    <div class="twin-driver-name-row">
+                      <span class="twin-driver-name">Priya M.</span>
+                      <span class="status-chip status-chip--verified"><i data-lucide="shield-check" class="icon icon--xs"></i> Verified Co-Rider</span>
+                    </div>
+                    <span class="twin-driver-meta">★ 4.9 · 87 verified trips · Tata Nexon EV (Zero Tailpipe PM2.5)</span>
+                  </div>
+                  <div class="twin-match-badge">
+                    <span class="twin-match-pct">98%</span>
+                    <span class="twin-match-lbl">Route Align</span>
+                  </div>
+                </div>
+
+                <div class="twin-route-strip">
+                  <div class="twin-route-point">
+                    <span class="twin-dot twin-dot--start"></span>
+                    <div>
+                      <span class="twin-point-name">Sector Gate 4</span>
+                      <span class="twin-point-time">08:35 AM · 300m walk</span>
+                    </div>
+                  </div>
+                  <div class="twin-route-connector">
+                    <span>14.2 km · Clean Barapullah Route</span>
+                  </div>
+                  <div class="twin-route-point">
+                    <span class="twin-dot twin-dot--end"></span>
+                    <div>
+                      <span class="twin-point-name">Connaught Place</span>
+                      <span class="twin-point-time">09:12 AM · Outer Circle</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="twin-perks-row">
+                  <div class="twin-perk">
+                    <span class="perk-label">Shared Fare</span>
+                    <span class="perk-val">₹60</span>
+                  </div>
+                  <div class="twin-perk">
+                    <span class="perk-label">Daily Green Bonus</span>
+                    <span class="perk-val text-green">+50 Credits</span>
+                  </div>
+                  <div class="twin-perk">
+                    <span class="perk-label">Carbon Avoidance</span>
+                    <span class="perk-val text-accent">-2.4 kg CO₂</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 1-Tap Booking Trigger -->
+              <div class="smart-twin-actions">
+                <button id="smart-twin-lock-btn" class="btn btn--smart-lock">
+                  <i data-lucide="zap" class="icon icon--sm"></i>
+                  <span id="smart-twin-btn-text">1-TAP LOCK IN RIDE (+50 CREDITS)</span>
+                </button>
+                <div class="smart-twin-routine-toggle">
+                  <span class="routine-toggle-lbl">Simulate Schedule:</span>
+                  <button class="routine-pill routine-pill--active" data-day="mon">Mon (CP)</button>
+                  <button class="routine-pill" data-day="wed">Wed (Cyber City)</button>
+                  <button class="routine-pill" data-day="fri">Fri (Noida 62)</button>
+                </div>
+              </div>
+
+              <!-- Lock-in Feedback Banner -->
+              <div id="smart-twin-feedback" class="twin-confirmed-banner" style="display: none;">
+                <i data-lucide="check-circle-2" class="icon icon--sm icon-green"></i>
+                <div>
+                  <strong>Ride Locked In!</strong> Match #CR-8821 confirmed with Priya M. 50 Green Credits added to your civic balance.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ── FEATURE 2: Natural Language "Ride-Scribe" Bar (Conversational UI) ── -->
+          <div class="tilt-card ai-feature-card ai-feature-card--scribe" data-tilt-max="6">
+            <div class="tilt-card__inner ai-feature-card__inner">
+              <div class="tilt-glare"></div>
+
+              <div class="ai-feature-card__top">
+                <div class="ai-card-title-group">
+                  <span class="ai-pill-tag"><i data-lucide="message-square-code" class="icon icon--xs"></i> 02 · CONVERSATIONAL UI</span>
+                  <h3 class="ai-card-title">Natural Language "Ride-Scribe" Bar</h3>
+                </div>
+                <span class="ai-status-chip"><span class="pulse-ring pulse-ring--blue"></span> Parser Online</span>
+              </div>
+
+              <p class="ai-feature-desc">
+                Talk or type naturally as if conversing with a personal transit concierge. CERA-AI extracts route coordinates, payment splits, and civic passes without forms.
+              </p>
+
+              <!-- Main Conversational Input Bar -->
+              <div class="scribe-input-box">
+                <div class="scribe-input-row">
+                  <i data-lucide="sparkles" class="icon icon--sm scribe-spark-icon"></i>
+                  <input
+                    type="text"
+                    id="section-scribe-input"
+                    class="section-scribe-input"
+                    placeholder="e.g. Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount."
+                    value="Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount."
+                  />
+                  <button id="section-scribe-mic" class="scribe-mic-btn" title="Simulate Voice Input">
+                    <i data-lucide="mic" class="icon icon--sm"></i>
+                  </button>
+                  <button id="section-scribe-btn" class="btn btn--scribe-parse">
+                    <span>Parse &amp; Match</span>
+                    <i data-lucide="arrow-right" class="icon icon--xs"></i>
+                  </button>
+                </div>
+
+                <div class="scribe-prompt-pills">
+                  <span class="pills-title">Click to test prompts:</span>
+                  <button class="scribe-sample-pill" data-query="Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount.">
+                    "Find me a ride to office tomorrow 8:30 AM, split fuel via UPI, apply metro pass discount"
+                  </button>
+                  <button class="scribe-sample-pill" data-query="Carpool from Rohini to Cyber City Gurugram around 9:00 AM in an EV with FASTag rebate.">
+                    "Carpool from Rohini to Cyber City Gurugram around 9:00 AM in an EV with FASTag rebate"
+                  </button>
+                  <button class="scribe-sample-pill" data-query="Evening carpool from Lajpat Nagar under ₹50 with max carbon credits.">
+                    "Evening carpool from Lajpat Nagar under ₹50 with max carbon credits"
+                  </button>
+                </div>
+              </div>
+
+              <!-- Real-Time AI Visual Entity Extraction breakdown -->
+              <div class="scribe-parsed-card" id="scribe-breakdown-card">
+                <div class="scribe-breakdown-head">
+                  <span class="breakdown-title"><i data-lucide="cpu" class="icon icon--xs"></i> AI Contextual Extraction:</span>
+                  <span class="breakdown-time">Latency: 12ms · High Confidence</span>
+                </div>
+                <div class="scribe-tags-grid" id="scribe-tags-grid">
+                  <div class="entity-pill">
+                    <span class="entity-k">📍 Destination</span>
+                    <span class="entity-v">Connaught Place (Office)</span>
+                  </div>
+                  <div class="entity-pill">
+                    <span class="entity-k">⏰ Time</span>
+                    <span class="entity-v">Tomorrow, 08:30 AM</span>
+                  </div>
+                  <div class="entity-pill">
+                    <span class="entity-k">💳 Payment Mode</span>
+                    <span class="entity-v">UPI Split</span>
+                  </div>
+                  <div class="entity-pill">
+                    <span class="entity-k">🎟️ Pass Discount</span>
+                    <span class="entity-v">DMRC Metro (-20%)</span>
+                  </div>
+                  <div class="entity-pill">
+                    <span class="entity-k">⚡ Vehicle Filter</span>
+                    <span class="entity-v">High-Occupancy EV</span>
+                  </div>
+                </div>
+
+                <!-- Instant Matching Pod Result from Parser -->
+                <div class="scribe-result-preview" id="scribe-result-preview">
+                  <div class="preview-header">
+                    <span class="preview-match-badge"><i data-lucide="check" class="icon icon--xs"></i> 98% Optimal Match Found</span>
+                    <span class="preview-cost">₹48 (with Metro Pass)</span>
+                  </div>
+                  <div class="preview-body">
+                    <strong>Priya M. · Tata Nexon EV</strong> (Barapullah &rarr; CP Corridor)
+                    <p class="preview-sub">Departs 08:35 AM · 2 Co-riders confirmed · 50 Green Credits</p>
+                  </div>
+                  <div class="preview-actions">
+                    <a href="#matcher" class="btn btn--preview-book" id="scribe-scroll-btn">VIEW MATCHED POD IN MATCHER &rarr;</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── FEATURE 3: Visual "Eco-Impact Heatmap" (Data Intelligence) ── -->
+        <div class="tilt-card ai-feature-card ai-feature-card--heatmap" data-tilt-max="4">
+          <div class="tilt-card__inner ai-heatmap__inner">
+            <div class="tilt-glare"></div>
+
+            <div class="ai-heatmap__header">
+              <div>
+                <span class="ai-pill-tag"><i data-lucide="map" class="icon icon--xs"></i> 03 · DATA INTELLIGENCE</span>
+                <h3 class="ai-card-title">Visual "Eco-Impact Heatmap" &amp; Clean Corridors</h3>
+                <p class="ai-feature-desc">
+                  Live spatial intelligence overlaying Delhi NCR traffic congestion with real-time PM2.5 air pollution dispersion. Drag route waypoints to reroute along glowing clean corridors.
+                </p>
+              </div>
+
+              <!-- Map Layer Filter Switches -->
+              <div class="heatmap-layer-toggles">
+                <button class="layer-toggle-btn layer-toggle-btn--active" id="layer-clean" data-layer="clean">
+                  <span class="layer-dot layer-dot--green"></span>
+                  <span>Clean Corridors</span>
+                </button>
+                <button class="layer-toggle-btn layer-toggle-btn--active" id="layer-hotspots" data-layer="hotspots">
+                  <span class="layer-dot layer-dot--red"></span>
+                  <span>Congestion Hotspots</span>
+                </button>
+                <button class="layer-toggle-btn layer-toggle-btn--active" id="layer-aqi" data-layer="aqi">
+                  <span class="layer-dot layer-dot--amber"></span>
+                  <span>PM2.5 Heatmap</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Heatmap Interactive Visual Area -->
+            <div class="ai-heatmap__body">
+
+              <!-- Interactive Dynamic Vector Map Container -->
+              <div class="heatmap-canvas-wrap">
+                <svg viewBox="0 0 900 480" class="heatmap-svg" id="heatmap-svg" aria-label="Delhi NCR Eco-Impact Map">
+                  <defs>
+                    <!-- Glowing Green Clean Corridor Filter -->
+                    <filter id="glow-clean" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="6" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    <!-- Hotspot Danger Glow Filter -->
+                    <filter id="glow-hotspot" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="8" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    <!-- Clean Path Linear Gradient -->
+                    <linearGradient id="grad-clean-corridor" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#4ADE80" stop-opacity="0.9" />
+                      <stop offset="50%" stop-color="#2DD4BF" stop-opacity="0.9" />
+                      <stop offset="100%" stop-color="#4ADE80" stop-opacity="0.9" />
+                    </linearGradient>
+                    <!-- Hotspot Radial Gradients -->
+                    <radialGradient id="heat-anand-vihar" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#EF4444" stop-opacity="0.6" />
+                      <stop offset="60%" stop-color="#F97316" stop-opacity="0.25" />
+                      <stop offset="100%" stop-color="#F97316" stop-opacity="0" />
+                    </radialGradient>
+                    <radialGradient id="heat-ashram" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#DC2626" stop-opacity="0.55" />
+                      <stop offset="70%" stop-color="#EA580C" stop-opacity="0.2" />
+                      <stop offset="100%" stop-color="#EA580C" stop-opacity="0" />
+                    </radialGradient>
+                  </defs>
+
+                  <!-- Map Grid Lines -->
+                  <g class="map-grid-layer" opacity="0.15">
+                    <line x1="0" y1="80" x2="900" y2="80" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="0" y1="160" x2="900" y2="160" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="0" y1="240" x2="900" y2="240" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="0" y1="320" x2="900" y2="320" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="0" y1="400" x2="900" y2="400" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="150" y1="0" x2="150" y2="480" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="300" y1="0" x2="300" y2="480" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="450" y1="0" x2="450" y2="480" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="600" y1="0" x2="600" y2="480" stroke="currentColor" stroke-dasharray="4 4" />
+                    <line x1="750" y1="0" x2="750" y2="480" stroke="currentColor" stroke-dasharray="4 4" />
+                  </g>
+
+                  <!-- Heatmap Pollution Aura Circles (Layer: aqi) -->
+                  <g id="layer-aqi-group" class="map-layer">
+                    <circle cx="680" cy="180" r="110" fill="url(#heat-anand-vihar)" class="hotspot-pulse" />
+                    <circle cx="520" cy="310" r="85" fill="url(#heat-ashram)" class="hotspot-pulse" />
+                    <circle cx="280" cy="120" r="70" fill="url(#heat-anand-vihar)" opacity="0.5" />
+                  </g>
+
+                  <!-- Standard Delhi Road Network Geometry -->
+                  <g class="map-base-roads" stroke="var(--border)" stroke-width="2" fill="none" opacity="0.6">
+                    <!-- Ring Road Orbit -->
+                    <ellipse cx="450" cy="240" rx="220" ry="140" stroke="var(--border)" stroke-width="2.5" />
+                    <!-- Outer Ring Road Orbit -->
+                    <ellipse cx="450" cy="240" rx="360" ry="200" stroke="var(--border)" stroke-width="1.8" stroke-dasharray="6 3" />
+                    <!-- Radial Arterials -->
+                    <line x1="450" y1="240" x2="150" y2="80" /> <!-- To Rohini / GT Karnal -->
+                    <line x1="450" y1="240" x2="780" y2="180" /> <!-- To Anand Vihar / Ghaziabad -->
+                    <line x1="450" y1="240" x2="720" y2="380" /> <!-- To Noida / Greater Noida -->
+                    <line x1="450" y1="240" x2="180" y2="410" /> <!-- To Cyber City / Gurugram NH48 -->
+                  </g>
+
+                  <!-- Congestion Hotspot Nodes (Layer: hotspots) -->
+                  <g id="layer-hotspots-group" class="map-layer">
+                    <!-- Anand Vihar Hotspot -->
+                    <g class="map-hotspot-pin" transform="translate(680, 180)">
+                      <circle cx="0" cy="0" r="18" class="pin-halo pin-halo--red" />
+                      <circle cx="0" cy="0" r="7" fill="#EF4444" />
+                      <rect x="14" y="-12" width="130" height="24" rx="4" class="pin-tag-bg" />
+                      <text x="22" y="4" class="pin-tag-text pin-tag-text--alert">Anand Vihar · 342 AQI</text>
+                    </g>
+                    <!-- Ashram Chowk Hotspot -->
+                    <g class="map-hotspot-pin" transform="translate(520, 310)">
+                      <circle cx="0" cy="0" r="15" class="pin-halo pin-halo--red" />
+                      <circle cx="0" cy="0" r="6" fill="#EF4444" />
+                      <rect x="14" y="-12" width="125" height="24" rx="4" class="pin-tag-bg" />
+                      <text x="22" y="4" class="pin-tag-text pin-tag-text--alert">Ashram Chowk · Congested</text>
+                    </g>
+                  </g>
+
+                  <!-- Dynamic Glowing Green Clean Corridor Paths (Layer: clean) -->
+                  <g id="layer-clean-group" class="map-layer">
+                    <!-- Clean Path: Barapullah & Outer Ring Road -->
+                    <path
+                      id="corridor-path-clean"
+                      d="M 180,410 C 260,370 380,280 450,240 C 510,210 590,260 720,380"
+                      class="corridor-glow-line corridor-glow-line--clean"
+                      filter="url(#glow-clean)"
+                    />
+                    <!-- Flowing Particle Stream along Clean Corridor -->
+                    <path
+                      d="M 180,410 C 260,370 380,280 450,240 C 510,210 590,260 720,380"
+                      class="corridor-particle-line"
+                    />
+
+                    <!-- Clean Corridor Badge -->
+                    <g transform="translate(370, 215)">
+                      <rect x="0" y="0" width="160" height="26" rx="13" class="clean-badge-bg" />
+                      <text x="80" y="17" text-anchor="middle" class="clean-badge-text">✦ CLEAN CORRIDOR · 128 AQI</text>
+                    </g>
+                  </g>
+
+                  <!-- Active Waypoint Markers (A -> B Route Selection) -->
+                  <g id="map-waypoints-group">
+                    <!-- Waypoint A: Origin -->
+                    <g id="marker-a" class="waypoint-marker" transform="translate(680, 180)">
+                      <circle cx="0" cy="0" r="16" class="waypoint-ring" />
+                      <circle cx="0" cy="0" r="10" fill="#22396F" stroke="#FCF1D0" stroke-width="2.5" />
+                      <text x="0" y="4" text-anchor="middle" fill="#FCF1D0" font-size="10" font-weight="bold">A</text>
+                      <rect x="-50" y="-32" width="100" height="20" rx="4" class="waypoint-label-bg" />
+                      <text x="0" y="-18" text-anchor="middle" class="waypoint-label-text" id="marker-a-text">Anand Vihar</text>
+                    </g>
+
+                    <!-- Waypoint B: Destination -->
+                    <g id="marker-b" class="waypoint-marker" transform="translate(450, 240)">
+                      <circle cx="0" cy="0" r="16" class="waypoint-ring" />
+                      <circle cx="0" cy="0" r="10" fill="#FCF1D0" stroke="#0D1C42" stroke-width="2.5" />
+                      <text x="0" y="4" text-anchor="middle" fill="#0D1C42" font-size="10" font-weight="bold">B</text>
+                      <rect x="-55" y="-32" width="110" height="20" rx="4" class="waypoint-label-bg" />
+                      <text x="0" y="-18" text-anchor="middle" class="waypoint-label-text" id="marker-b-text">Connaught Place</text>
+                    </g>
+                  </g>
+                </svg>
+
+                <!-- Floating Route Selector Toolbar -->
+                <div class="heatmap-route-selector">
+                  <span class="route-sel-title">Select Commute Route:</span>
+                  <div class="route-sel-buttons">
+                    <button class="route-sel-btn route-sel-btn--active" data-route="cp-barapullah">
+                      <span class="route-badge-num">1</span>
+                      <span>Anand Vihar &rarr; Connaught Place (Barapullah Clean Bypass)</span>
+                    </button>
+                    <button class="route-sel-btn" data-route="rohini-cybercity">
+                      <span class="route-badge-num">2</span>
+                      <span>Rohini Sec 11 &rarr; Cyber City Gurugram (EV Expressway)</span>
+                    </button>
+                    <button class="route-sel-btn" data-route="noida-southex">
+                      <span class="route-badge-num">3</span>
+                      <span>Noida Sec 62 &rarr; South Extension (DND Clean Air Flyway)</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Carbon & Clean Air Intelligence Sidebar -->
+              <div class="heatmap-telemetry-panel">
+                <div class="telemetry-panel-top">
+                  <span class="panel-eyebrow"><i data-lucide="zap" class="icon icon--xs"></i> AI ROUTE TELEMETRY</span>
+                  <h4 class="panel-title" id="heatmap-route-title">Anand Vihar &rarr; Connaught Place</h4>
+                  <span class="panel-status-chip panel-status-chip--clean" id="heatmap-corridor-status">
+                    <i data-lucide="shield-check" class="icon icon--xs"></i> Clean Air Corridor Active
+                  </span>
+                </div>
+
+                <!-- Dynamic Real-Time Calculations -->
+                <div class="telemetry-metrics-stack">
+                  <div class="heat-metric-row">
+                    <div class="heat-metric-label">
+                      <i data-lucide="leaf" class="icon icon--xs text-green"></i>
+                      <span>Real-Time Carbon Avoidance</span>
+                    </div>
+                    <span class="heat-metric-val text-green" id="heat-co2-val">4.2 kg CO₂</span>
+                  </div>
+
+                  <div class="heat-metric-row">
+                    <div class="heat-metric-label">
+                      <i data-lucide="wind" class="icon icon--xs text-accent"></i>
+                      <span>PM2.5 Exposure Reduction</span>
+                    </div>
+                    <span class="heat-metric-val text-accent" id="heat-pm25-val">-64% Inhalation</span>
+                  </div>
+
+                  <div class="heat-metric-row">
+                    <div class="heat-metric-label">
+                      <i data-lucide="clock" class="icon icon--xs"></i>
+                      <span>Congestion Idle Time Bypassed</span>
+                    </div>
+                    <span class="heat-metric-val" id="heat-time-val">34 mins saved</span>
+                  </div>
+
+                  <div class="heat-metric-row">
+                    <div class="heat-metric-label">
+                      <i data-lucide="award" class="icon icon--xs text-amber"></i>
+                      <span>Civic Green Credits Generated</span>
+                    </div>
+                    <span class="heat-metric-val text-amber" id="heat-credits-val">+50 Credits</span>
+                  </div>
+                </div>
+
+                <!-- AI Contextual Recommendation Box -->
+                <div class="heat-ai-advice">
+                  <div class="advice-head">
+                    <i data-lucide="sparkles" class="icon icon--xs text-accent"></i>
+                    <span>CERA-AI Routing Optimization</span>
+                  </div>
+                  <p class="advice-text" id="heat-advice-text">
+                    Routing co-riders through the Barapullah Elevated corridor circumvents the severe 342 AQI plume at Vikas Marg, granting co-riders 2.5× Green Credits and 100% FASTag toll reimbursement.
+                  </p>
+                </div>
+
+                <div class="heat-cta-row">
+                  <a href="#matcher" class="btn btn--heat-pool">LOCK THIS GREEN CORRIDOR RIDE &rarr;</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- ═══════════════════════ 7. COMMUTE MATCHER PODS ═══════════════════════ -->
     <section id="matcher" class="section-matcher">
