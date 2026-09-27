@@ -1,0 +1,185 @@
+/* ═══════════════════════════════════════════════════════════════
+   CERA — CleanAir & Resilience Application
+   Advanced 3D Perspective · Squarespace Editorial Architecture
+   Dual-Theme Custom Properties · Three.js WebGL Integration
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── RESET & BOX SIZING ─────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font-family: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* ─── THEME PALETTES ────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  /* Exact Dark Theme Specs */
+  --bg-primary:     #06141B;
+  --bg-card:        #11212D;
+  --bg-secondary:   #253745;
+  --border:         #4A5C6A;
+  --text-muted:     #9BA8AB;
+  --text-main:      #CCD0CF;
+
+  /* Accent & Semantics (Calibrated for the Slate/Blue-Gray Swatch) */
+  --accent:         #7EB4D1;
+  --accent-hover:   #6AA3C3;
+  --accent-subtle:  rgba(126, 180, 209, 0.12);
+  --accent-contrast:#06141B;
+
+  --btn-contrast-bg: #CCD0CF;
+  --btn-contrast-fg: #06141B;
+
+  --green:          #7BBFA5;
+  --green-subtle:   rgba(123, 191, 165, 0.12);
+  --blue:           #6FA8C7;
+  --blue-subtle:    rgba(111, 168, 199, 0.12);
+  --amber:          #C4AA72;
+  --amber-subtle:   rgba(196, 170, 114, 0.12);
+  --teal:           #6DB0A8;
+  --teal-subtle:    rgba(109, 176, 168, 0.12);
+  --orange:         #C08F7A;
+  --orange-subtle:  rgba(192, 143, 122, 0.12);
+  --purple:         #9A8EBD;
+  --purple-subtle:  rgba(154, 142, 189, 0.12);
+  --red:            #C07070;
+  --red-subtle:     rgba(192, 112, 112, 0.12);
+
+  /* Shadows & Depth */
+  --shadow-flat:    0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-3d:      0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 25px rgba(126, 180, 209, 0.08);
+  --shadow-heavy:   0 30px 60px -20px rgba(0, 0, 0, 0.8);
+  --card-glow:      rgba(126, 180, 209, 0.15);
+
+  --navbar-bg:      rgba(6, 20, 27, 0.82);
+  --marquee-bg:     #0A1C26;
+  --marquee-border: #253745;
+  --hero-vignette:  linear-gradient(90deg, #06141B 0%, #06141B 24%, rgba(6, 20, 27, 0.90) 38%, rgba(6, 20, 27, 0.3) 50%, transparent 60%);
+  --glare-gradient: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+}
+
+[data-theme="light"] {
+  /* Exact Light Theme Specs */
+  --bg-primary:     #FDFBF7;
+  --bg-card:        #F2EFE9;
+  --bg-secondary:   #E8E4DD;
+  --border:         #D3CBC0;
+  --text-muted:     #7A7267;
+  --text-main:      #2C2824;
+
+  --accent:         #B59F84;
+  --accent-hover:   #9F896F;
+  --accent-subtle:  rgba(181, 159, 132, 0.15);
+  --accent-contrast:#FFFFFF;
+
+  --btn-contrast-bg: #2C2824;
+  --btn-contrast-fg: #FDFBF7;
+
+  --green:          #5DA87C;
+  --green-subtle:   rgba(93, 168, 124, 0.12);
+  --blue:           #5B86B5;
+  --blue-subtle:    rgba(91, 134, 181, 0.12);
+  --amber:          #B89648;
+  --amber-subtle:   rgba(184, 150, 72, 0.12);
+  --teal:           #3BA49A;
+  --teal-subtle:    rgba(59, 164, 154, 0.12);
+  --orange:         #C66B52;
+  --orange-subtle:  rgba(198, 107, 82, 0.12);
+  --purple:         #8B65B8;
+  --purple-subtle:  rgba(139, 101, 184, 0.12);
+  --red:            #C05050;
+  --red-subtle:     rgba(192, 80, 80, 0.12);
+
+  --shadow-flat:    0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-3d:      0 20px 40px -15px rgba(44, 40, 36, 0.12), 0 0 20px rgba(181, 159, 132, 0.08);
+  --shadow-heavy:   0 30px 60px -20px rgba(44, 40, 36, 0.2);
+  --card-glow:      rgba(181, 159, 132, 0.15);
+
+  --navbar-bg:      rgba(253, 251, 247, 0.88);
+  --marquee-bg:     #EFECE6;
+  --marquee-border: #D3CBC0;
+  --hero-vignette:  linear-gradient(90deg, #FDFBF7 0%, #FDFBF7 24%, rgba(253, 251, 247, 0.90) 38%, rgba(253, 251, 247, 0.3) 50%, transparent 60%);
+  --glare-gradient: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+}
+
+/* ─── TYPOGRAPHY CONFIGURATION ──────────────────────────────── */
+body {
+  font-family: 'Noto Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  color: var(--text-main);
+  background-color: var(--bg-primary);
+  line-height: 1.6;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+  overflow-x: hidden;
+}
+
+/* High-impact titles inspired by the Squarespace reference */
+.display-title {
+  font-family: 'Anton', 'Playfair Display', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-main);
+}
+
+.display-title--sm {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.15;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.8;
+}
+.icon--xs { width: 14px; height: 14px; }
+.icon--sm { width: 16px; height: 16px; }
+
+/* ─── 3D PERSPECTIVE SYSTEM (OPTIMIZED HARDWARE-ACCELERATED ELEVATION) ─── */
+.tilt-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease;
+  will-change: transform;
+}
