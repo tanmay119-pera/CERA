@@ -568,3 +568,93 @@ h1, h2, h3, h4 {
 .aqi-monitor-frameless {
   display: flex;
   flex-direction: column;
+  gap: 22px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Hero Metric in Frameless Display */
+.aqi-monitor__hero-metric {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.aqi-monitor__location {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.aqi-city-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  transition: color 0.2s ease;
+}
+
+.aqi-corridor-name {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.aqi-monitor__score-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.aqi-score-cluster {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.aqi-val-massive {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  line-height: 0.95;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.aqi-unit-tag {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.aqi-severity-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-align: right;
+  transition: color 0.3s ease;
+}
+
+/* Sleek Gradient AQI Spectrum Bar */
+.aqi-spectrum-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aqi-spectrum-bar {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, 
+    #10b981 0%, 
+    #34d399 18%, 
+    #f59e0b 38%, 
