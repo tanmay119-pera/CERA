@@ -18,6 +18,7 @@
   - **Natural Language "Ride-Scribe" Bar (Conversational UI):** Omnipresent conversational command bar that extracts destination, time, UPI split, and transit pass rebates from natural spoken or typed text without tedious forms.
   - **Visual "Eco-Impact Heatmap" (Data Intelligence):** Interactive live Delhi NCR vector map visualizing PM2.5 dispersion, traffic congestion hotspots, and glowing green clean corridors with real-time carbon avoidance telemetry.
 - 💨 **Live Real-Time AQI Visualizer:** Frameless, high-contrast air quality monitor featuring a continuous spectrum gradient (Good → Moderate → Poor → Severe) and instant station inspection for Delhi NCR, Lucknow, Patna, Mumbai, and Bengaluru.
+- 📡 **Dynamic Atmospheric Telemetry Island:** Real-time IoT sensor capsule embedded in the navbar with concentric radar pulses, color-calibrated AQI status micro-tags, and an interactive glassmorphic corridor inspector popover.
 - 🚗 **High-Occupancy Commute Pods:** Verified corporate and municipal carpool routes along primary expressways (Outer Ring Road, Shaheed Path, Western Express Highway).
 - 🏷️ **Civic Vouchers & FASTag Rebates:** Automated toll discounts, metro transit top-ups, and municipal tax incentives for registered green carpools.
 - ⚡ **120 FPS Performance:** Engineered with pure CSS hardware-accelerated transforms (`will-change: transform`) and zero main-thread layout thrashing.
