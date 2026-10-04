@@ -245,42 +245,397 @@ h1, h2, h3, h4 {
   color: var(--text-main);
 }
 
-/* AQI Live Ticker Badge */
-.aqi-ticker-badge {
-  display: flex;
+/* ─── DYNAMIC ATMOSPHERIC TELEMETRY CAPSULE (NAVBAR ISLAND) ─── */
+.air-capsule-wrapper {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+}
+
+.air-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
-  padding: 5px 14px;
-  font-size: 0.74rem;
-  font-weight: 500;
+  padding: 6px 14px 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease,
+              background 0.25s ease;
+}
+
+.air-capsule:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12), 0 0 10px var(--accent-subtle);
+}
+
+.air-capsule:active {
+  transform: scale(0.98);
+}
+
+/* Radar Sensor Beacon */
+.air-capsule__radar {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.radar-core {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.radar-core--severe {
+  background: #EF4444;
+  box-shadow: 0 0 8px #EF4444;
+}
+
+.radar-core--moderate {
+  background: #F59E0B;
+  box-shadow: 0 0 8px #F59E0B;
+}
+
+.radar-core--good {
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+}
+
+.radar-ping {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0.75;
+  animation: radarSonar 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.air-capsule:has(.radar-core--severe) .radar-ping { color: #EF4444; }
+.air-capsule:has(.radar-core--moderate) .radar-ping { color: #F59E0B; }
+.air-capsule:has(.radar-core--good) .radar-ping { color: #10B981; }
+
+@keyframes radarSonar {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Capsule Typography Body */
+.air-capsule__body {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.76rem;
+  line-height: 1;
+}
+
+.capsule-city {
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--text-main);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.capsule-dot {
+  color: var(--border);
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.capsule-aqi {
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.capsule-aqi strong {
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.capsule-aqi small {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   color: var(--text-muted);
 }
 
-.aqi-pulse-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--red);
-  box-shadow: 0 0 8px var(--red);
-  animation: pulse-ring 2s infinite ease-in-out;
-}
-
-.aqi-text strong {
-  color: var(--text-main);
-  font-weight: 700;
-}
-
-.aqi-status {
-  background: var(--red-subtle);
-  color: var(--red);
-  padding: 2px 8px;
+/* Status Micro-Badge */
+.capsule-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
   border-radius: var(--radius-full);
-  font-size: 0.65rem;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.badge-mini-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.capsule-badge--severe {
+  background: rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.capsule-badge--moderate {
+  background: rgba(245, 158, 11, 0.15);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.capsule-badge--good {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+/* Rotating Micro Chevron */
+.capsule-chevron {
+  width: 13px;
+  height: 13px;
+  color: var(--text-muted);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.air-capsule-wrapper.is-open .capsule-chevron {
+  transform: rotate(180deg);
+  color: var(--text-main);
+}
+
+/* ─── INTERACTIVE TELEMETRY POPOVER ────────────────────────── */
+.air-capsule-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  width: 320px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35), 0 0 20px var(--card-glow);
+  padding: 18px;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  transform-origin: top left;
+  transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.24s;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.air-capsule-wrapper.is-open .air-capsule-popover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.popover-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.popover-head__title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.74rem;
   font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.live-signal-orb {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px #10B981;
+  animation: pulse-ring 1.8s infinite;
+}
+
+.popover-station-tag {
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.popover-hero-stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.popover-score-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.popover-aqi-val {
+  font-family: 'Anton', sans-serif;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.popover-score-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.popover-unit {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
   letter-spacing: 0.5px;
+}
+
+.popover-status {
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.popover-mini-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+  border-left: 1px solid var(--border);
+  padding-left: 12px;
+}
+
+.mini-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.mini-metric-lbl {
+  font-size: 0.64rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.mini-metric-val {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.popover-cities-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.popover-cities-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.popover-city-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.popover-city-btn:hover {
+  border-color: var(--accent);
+  color: var(--text-main);
+  background: var(--accent-subtle);
+}
+
+.popover-city-btn--active {
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  border-color: var(--btn-contrast-bg);
+  font-weight: 700;
+}
+
+.popover-perk-notice {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popover-perk-notice strong {
+  color: var(--text-main);
+}
+
+.popover-deep-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent);
+  border-top: 1px solid var(--border);
+  transition: color 0.2s ease;
+}
+
+.popover-deep-link:hover {
+  color: var(--accent-hover);
 }
 
 /* Desktop Navigation Links */
