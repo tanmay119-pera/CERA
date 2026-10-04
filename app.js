@@ -360,51 +360,151 @@ function initHeroAQICard() {
   const displayCo2 = document.getElementById('aqi-display-co2');
   const displayTip = document.getElementById('aqi-display-tip');
 
+  // Navbar Capsule Elements
+  const capsuleWrapper = document.getElementById('air-capsule-wrapper');
+  const capsuleBtn = document.getElementById('air-capsule-btn');
+  const capsuleCityName = document.getElementById('capsule-city-name');
+  const capsuleAqiVal = document.getElementById('capsule-aqi-val');
+  const capsuleBadge = document.getElementById('capsule-badge');
+  const capsuleBadgeText = document.getElementById('capsule-badge-text');
+  const capsuleRadarDot = document.getElementById('capsule-radar-dot');
+  const capsuleCorridorTag = document.getElementById('capsule-corridor-tag');
+
+  const popoverAqiVal = document.getElementById('popover-aqi-val');
+  const popoverAqiStatus = document.getElementById('popover-aqi-status');
+  const popoverPm25 = document.getElementById('popover-pm25');
+  const popoverNo2 = document.getElementById('popover-no2');
+  const popoverCityBtns = document.querySelectorAll('.popover-city-btn');
+  const popoverCloseLink = document.getElementById('popover-close-link');
+
+  function updateAirTelemetry(key) {
+    const data = CITIES_DATA[key];
+    if (!data) return;
+
+    // 1. Update Hero Visualizer
+    if (displayCity) displayCity.textContent = data.city;
+    if (displayCorridor) displayCorridor.textContent = data.corridor;
+    if (displayVal) {
+      displayVal.textContent = data.aqi;
+      displayVal.className = `aqi-val-massive ${data.colorClass}`;
+    }
+    if (displayBadge) {
+      displayBadge.className = `aqi-badge-status ${data.statusClass}`;
+    }
+    if (displayStatus) {
+      displayStatus.textContent = data.status;
+      displayStatus.className = `aqi-severity-label ${data.colorClass}`;
+    }
+    if (displayPointer) {
+      displayPointer.style.left = `${data.barPct}%`;
+      const valElem = displayPointer.querySelector('.aqi-pointer__val');
+      if (valElem) valElem.textContent = data.aqi;
+    }
+    if (displayPm25) displayPm25.textContent = data.pm25;
+    if (displayPm10) displayPm10.textContent = data.pm10;
+    if (displayNo2) displayNo2.textContent = data.no2;
+    if (displayCo2) {
+      displayCo2.textContent = data.co2;
+      displayCo2.className = `pollutant-val ${data.colorClass}`;
+    }
+    if (displayTip) {
+      displayTip.innerHTML = `<i data-lucide="info" class="icon icon--xs"></i> ${data.tip}`;
+    }
+
+    // 2. Update Navbar Telemetry Capsule
+    if (capsuleCityName) capsuleCityName.textContent = data.city;
+    if (capsuleAqiVal) capsuleAqiVal.textContent = data.aqi;
+
+    let badgeCategory = 'severe';
+    let badgeLabel = 'ALERT';
+    if (data.aqi < 100) {
+      badgeCategory = 'good';
+      badgeLabel = 'GOOD';
+    } else if (data.aqi < 200) {
+      badgeCategory = 'moderate';
+      badgeLabel = 'MODERATE';
+    }
+
+    if (capsuleBadge) {
+      capsuleBadge.className = `capsule-badge capsule-badge--${badgeCategory}`;
+    }
+    if (capsuleBadgeText) {
+      capsuleBadgeText.textContent = badgeLabel;
+    }
+    if (capsuleRadarDot) {
+      capsuleRadarDot.className = `radar-core radar-core--${badgeCategory}`;
+    }
+
+    // 3. Update Popover
+    if (popoverAqiVal) {
+      popoverAqiVal.textContent = data.aqi;
+      popoverAqiVal.className = `popover-aqi-val ${data.colorClass}`;
+    }
+    if (popoverAqiStatus) {
+      popoverAqiStatus.textContent = data.status;
+      popoverAqiStatus.className = `popover-status ${data.colorClass}`;
+    }
+    if (popoverPm25) popoverPm25.textContent = data.pm25;
+    if (popoverNo2) popoverNo2.textContent = data.no2;
+    if (capsuleCorridorTag) capsuleCorridorTag.textContent = data.corridor;
+
+    // 4. Synchronize Active Buttons
+    cityRows.forEach(r => {
+      r.classList.toggle('active', r.getAttribute('data-city-key') === key);
+    });
+    popoverCityBtns.forEach(b => {
+      b.classList.toggle('popover-city-btn--active', b.getAttribute('data-city') === key);
+    });
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // Hero city bar clicks
   cityRows.forEach(row => {
     row.addEventListener('click', () => {
-      cityRows.forEach(r => r.classList.remove('active'));
-      row.classList.add('active');
-
       const key = row.getAttribute('data-city-key');
-      const data = CITIES_DATA[key];
-      if (!data) return;
-
-      if (displayCity) displayCity.textContent = data.city;
-      if (displayCorridor) displayCorridor.textContent = data.corridor;
-      if (displayVal) {
-        displayVal.textContent = data.aqi;
-        displayVal.className = `aqi-val-massive ${data.colorClass}`;
-      }
-
-      if (displayBadge) {
-        displayBadge.className = `aqi-badge-status ${data.statusClass}`;
-      }
-
-      if (displayStatus) {
-        displayStatus.textContent = data.status;
-        displayStatus.className = `aqi-severity-label ${data.colorClass}`;
-      }
-
-      if (displayPointer) {
-        displayPointer.style.left = `${data.barPct}%`;
-        const valElem = displayPointer.querySelector('.aqi-pointer__val');
-        if (valElem) valElem.textContent = data.aqi;
-      }
-
-      if (displayPm25) displayPm25.textContent = data.pm25;
-      if (displayPm10) displayPm10.textContent = data.pm10;
-      if (displayNo2) displayNo2.textContent = data.no2;
-      if (displayCo2) {
-        displayCo2.textContent = data.co2;
-        displayCo2.className = `pollutant-val ${data.colorClass}`;
-      }
-
-      if (displayTip) {
-        displayTip.innerHTML = `<i data-lucide="info" class="icon icon--xs"></i> ${data.tip}`;
-        if (window.lucide) lucide.createIcons();
-      }
+      updateAirTelemetry(key);
     });
   });
+
+  // Popover city button clicks
+  popoverCityBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const key = btn.getAttribute('data-city');
+      updateAirTelemetry(key);
+    });
+  });
+
+  // Toggle Capsule Popover
+  if (capsuleBtn && capsuleWrapper) {
+    capsuleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = capsuleWrapper.classList.toggle('is-open');
+      capsuleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!capsuleWrapper.contains(e.target)) {
+        capsuleWrapper.classList.remove('is-open');
+        capsuleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        capsuleWrapper.classList.remove('is-open');
+        capsuleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  if (popoverCloseLink && capsuleWrapper) {
+    popoverCloseLink.addEventListener('click', () => {
+      capsuleWrapper.classList.remove('is-open');
+      if (capsuleBtn) capsuleBtn.setAttribute('aria-expanded', 'false');
+    });
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
