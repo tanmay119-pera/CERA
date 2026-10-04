@@ -22,10 +22,74 @@
     <div class="navbar__inner">
       <div class="navbar__left">
         <a href="#" class="navbar__brand">CERA</a>
-        <div class="aqi-ticker-badge">
-          <span class="aqi-pulse-dot"></span>
-          <span class="aqi-text">📍 Delhi NCR · AQI <strong>284</strong></span>
-          <span class="aqi-status">HIGH ALERT</span>
+        <!-- Dynamic Atmospheric Telemetry Capsule (Navbar Island) -->
+        <div class="air-capsule-wrapper" id="air-capsule-wrapper">
+          <button class="air-capsule" id="air-capsule-btn" aria-label="Toggle Live Air Quality Telemetry Inspector" aria-expanded="false" title="Click to inspect regional air quality">
+            <span class="air-capsule__radar">
+              <span class="radar-ping"></span>
+              <span class="radar-core radar-core--severe" id="capsule-radar-dot"></span>
+            </span>
+            <span class="air-capsule__body">
+              <span class="capsule-city" id="capsule-city-name">Delhi NCR</span>
+              <span class="capsule-dot">•</span>
+              <span class="capsule-aqi"><strong id="capsule-aqi-val">284</strong> <small>AQI</small></span>
+            </span>
+            <span class="capsule-badge capsule-badge--severe" id="capsule-badge">
+              <span class="badge-mini-dot"></span>
+              <span id="capsule-badge-text">ALERT</span>
+            </span>
+            <i data-lucide="chevron-down" class="capsule-chevron"></i>
+          </button>
+
+          <!-- Interactive Glassmorphic Telemetry Dropdown Popover -->
+          <div class="air-capsule-popover" id="air-capsule-popover" role="dialog" aria-label="Air Quality Inspector">
+            <div class="popover-head">
+              <div class="popover-head__title">
+                <span class="live-signal-orb"></span>
+                <span>Live Municipal Telemetry</span>
+              </div>
+              <span class="popover-station-tag" id="capsule-corridor-tag">Anand Vihar Corridor</span>
+            </div>
+
+            <div class="popover-hero-stat">
+              <div class="popover-score-wrap">
+                <span class="popover-aqi-val text-red" id="popover-aqi-val">284</span>
+                <div class="popover-score-meta">
+                  <span class="popover-unit">AQI Index</span>
+                  <span class="popover-status text-red" id="popover-aqi-status">Severe Air Quality</span>
+                </div>
+              </div>
+              <div class="popover-mini-metrics">
+                <div class="mini-metric">
+                  <span class="mini-metric-lbl">PM2.5</span>
+                  <span class="mini-metric-val" id="popover-pm25">218 µg/m³</span>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-metric-lbl">NO₂</span>
+                  <span class="mini-metric-val" id="popover-no2">68 ppb</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="popover-cities-title">Quick City Corridor Select:</div>
+            <div class="popover-cities-pills">
+              <button class="popover-city-btn popover-city-btn--active" data-city="delhi">Delhi NCR</button>
+              <button class="popover-city-btn" data-city="lucknow">Lucknow</button>
+              <button class="popover-city-btn" data-city="patna">Patna</button>
+              <button class="popover-city-btn" data-city="mumbai">Mumbai</button>
+              <button class="popover-city-btn" data-city="bengaluru">Bengaluru</button>
+            </div>
+
+            <div class="popover-perk-notice" id="popover-perk-notice">
+              <i data-lucide="zap" class="icon icon--xs"></i>
+              <span>High-occupancy carpools: <strong>2.5× Green Credits active</strong>.</span>
+            </div>
+
+            <a href="#telemetry" class="popover-deep-link" id="popover-close-link">
+              <span>View Full Carbon &amp; Air Telemetry</span>
+              <i data-lucide="arrow-right" class="icon icon--xs"></i>
+            </a>
+          </div>
         </div>
       </div>
 
