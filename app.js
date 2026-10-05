@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroAQICard();
   initCeraAI();
   initCeraAIShortcuts();
+  initCeraOmnibar();
 });
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1303,3 +1304,285 @@ function initCeraAIShortcuts() {
     }
   });
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   CERA-AI GLOBAL COMMAND PALETTE OMNIBAR CONTROLLER
+   ═══════════════════════════════════════════════════════════════ */
+function initCeraOmnibar() {
+  const modal = document.getElementById('cera-omnibar-modal');
+  const backdrop = document.getElementById('omnibar-backdrop');
+  const closeBtn = document.getElementById('omnibar-close-btn');
+  const input = document.getElementById('omnibar-input');
+  const body = document.getElementById('omnibar-body');
+  const kbdBadge = document.getElementById('omnibar-modal-kbd');
+  const sysEnvText = document.getElementById('omnibar-sys-env-text');
+  const timeCtxText = document.getElementById('omnibar-time-ctx-text');
+
+  if (!modal || !input || !body) return;
+
+  const actions = [
+    {
+      id: 'twin-lock',
+      category: 'Proactive Commute',
+      icon: 'sparkles',
+      title: 'Lock In Smart-Twin Commute Ride',
+      desc: 'Confirm pre-matched routine ride & credit +50 Green Points',
+      badge: '+50 Credits',
+      handler: () => {
+        const btn = document.getElementById('smart-twin-lock-btn');
+        if (btn) btn.click();
+        const section = document.getElementById('cera-ai');
+        if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
+    {
+      id: 'scribe-focus',
+      category: 'Conversational Concierge',
+      icon: 'message-square',
+      title: 'Natural Language Ride-Scribe',
+      desc: 'Type natural commute details (e.g. office tomorrow 8:30 AM)',
+      badge: 'Natural NLP',
+      handler: () => {
+        const dock = document.getElementById('cera-ai-dock');
+        const inp = document.getElementById('dock-scribe-input');
+        if (dock) dock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (inp) { inp.focus(); inp.select(); }
+      }
+    },
+    {
+      id: 'voice-mic',
+      category: 'Conversational Concierge',
+      icon: 'mic',
+      title: 'Dictate Route via Voice Input',
+      desc: 'Simulate speech-to-text commute prompt with audio wave',
+      badge: 'Voice AI',
+      handler: () => {
+        const mic = document.getElementById('dock-scribe-mic');
+        if (mic) mic.click();
+      }
+    },
+    {
+      id: 'heatmap-view',
+      category: 'Eco Intelligence',
+      icon: 'map-pin',
+      title: 'Inspect Eco-Impact Clean Corridors',
+      desc: 'View Barapullah, NH-48 & DND low-pollution arterial corridors',
+      badge: 'AQI Map',
+      handler: () => {
+        const hm = document.getElementById('heatmap-widget');
+        if (hm) hm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    },
+    {
+      id: 'air-telemetry',
+      category: 'Eco Intelligence',
+      icon: 'wind',
+      title: 'Live Air Quality & PM2.5 Telemetry',
+      desc: 'Real-time Delhi NCR monitoring stations & particulate exposure',
+      badge: 'Live Data',
+      handler: () => {
+        const telem = document.getElementById('telemetry');
+        if (telem) telem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
+    {
+      id: 'matcher-view',
+      category: 'Civic Carpool',
+      icon: 'users',
+      title: 'Open Verified Carpool Matcher',
+      desc: 'Explore high-occupancy verified rides, EV cars & co-riders',
+      badge: 'Verified',
+      handler: () => {
+        const m = document.getElementById('matcher');
+        if (m) m.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
+    {
+      id: 'vouchers-view',
+      category: 'Civic Rewards',
+      icon: 'ticket',
+      title: 'Redeem Civic & FASTag Vouchers',
+      desc: 'Apply your accumulated green credits to metro & toll rebates',
+      badge: 'Rebates',
+      handler: () => {
+        const red = document.getElementById('redemption');
+        if (red) red.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
+    {
+      id: 'theme-toggle-action',
+      category: 'System Environment',
+      icon: 'sun-moon',
+      title: 'Toggle Dark / Light Visual Theme',
+      desc: 'Switch between High-Contrast Dark (#0D1C42) and Editorial Light',
+      badge: 'Theme',
+      handler: () => {
+        const toggle = document.getElementById('theme-toggle');
+        if (toggle) toggle.click();
+      }
+    },
+    {
+      id: 'sys-info-alert',
+      category: 'System Environment',
+      icon: 'cpu',
+      title: 'System Environment & Telemetry Diagnostics',
+      desc: 'Review detected OS, browser engine, display DPR, and CPU cores',
+      badge: 'Diagnostic',
+      handler: () => {
+        const sys = CeraAISystem.getSystemInfo();
+        const hw = CeraAISystem.getHardwareTelemetry();
+        alert(`CERA-AI System Telemetry Diagnostic:\n\n• OS: ${sys.os}\n• Browser: ${sys.browser}\n• Display: ${sys.displayInfo}\n• CPU Hardware: ${hw.cores}\n• Memory: ${hw.ram}\n• Network: ${hw.netType}`);
+      }
+    }
+  ];
+
+  let selectedIndex = 0;
+  let filteredActions = [...actions];
+
+  function openOmnibar() {
+    modal.classList.add('is-active');
+    modal.setAttribute('aria-hidden', 'false');
+
+    const sys = CeraAISystem.getSystemInfo();
+    const hw = CeraAISystem.getHardwareTelemetry();
+    const ctx = CeraAISystem.getCommuteContext();
+
+    if (kbdBadge) kbdBadge.textContent = sys.shortcutKey;
+    if (sysEnvText) sysEnvText.textContent = `${sys.os} · ${sys.browser} · ${hw.cores}`;
+    if (timeCtxText) timeCtxText.textContent = `${ctx.timeFormatted} · ${ctx.commuteContext}`;
+
+    input.value = '';
+    renderItems(actions);
+    setTimeout(() => input.focus(), 60);
+  }
+
+  function closeOmnibar() {
+    modal.classList.remove('is-active');
+    modal.setAttribute('aria-hidden', 'true');
+    input.blur();
+  }
+
+  function toggleOmnibar() {
+    if (modal.classList.contains('is-active')) {
+      closeOmnibar();
+    } else {
+      openOmnibar();
+    }
+  }
+
+  window.toggleCeraOmnibar = toggleOmnibar;
+  window.closeCeraOmnibar = closeOmnibar;
+
+  if (backdrop) backdrop.addEventListener('click', closeOmnibar);
+  if (closeBtn) closeBtn.addEventListener('click', closeOmnibar);
+
+  function renderItems(items) {
+    filteredActions = items;
+    selectedIndex = 0;
+    body.innerHTML = '';
+
+    if (items.length === 0) {
+      body.innerHTML = `
+        <div class="omnibar-empty-state">
+          <p>No matching commands or corridors found.</p>
+          <span style="font-size: 0.78rem; opacity: 0.75;">Try typing "EV", "metro", "theme", "AQI", or "commute"</span>
+        </div>
+      `;
+      return;
+    }
+
+    let currentCat = '';
+    items.forEach((item, idx) => {
+      if (item.category !== currentCat) {
+        currentCat = item.category;
+        const groupEl = document.createElement('div');
+        groupEl.className = 'omnibar-group-title';
+        groupEl.textContent = currentCat;
+        body.appendChild(groupEl);
+      }
+
+      const itemEl = document.createElement('div');
+      itemEl.className = `omnibar-item ${idx === selectedIndex ? 'is-selected' : ''}`;
+      itemEl.dataset.index = idx;
+      itemEl.innerHTML = `
+        <div class="omnibar-item-left">
+          <i data-lucide="${item.icon}" class="icon omnibar-item-icon"></i>
+          <div class="omnibar-item-info">
+            <span class="omnibar-item-title">${item.title}</span>
+            <span class="omnibar-item-desc">${item.desc}</span>
+          </div>
+        </div>
+        <span class="omnibar-item-badge">${item.badge}</span>
+      `;
+
+      itemEl.addEventListener('click', () => {
+        executeItem(item);
+      });
+
+      itemEl.addEventListener('mouseenter', () => {
+        selectedIndex = idx;
+        updateSelection();
+      });
+
+      body.appendChild(itemEl);
+    });
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function updateSelection() {
+    const itemEls = body.querySelectorAll('.omnibar-item');
+    itemEls.forEach((el, idx) => {
+      el.classList.toggle('is-selected', idx === selectedIndex);
+      if (idx === selectedIndex) {
+        el.scrollIntoView({ block: 'nearest' });
+      }
+    });
+  }
+
+  function executeItem(item) {
+    closeOmnibar();
+    if (item && typeof item.handler === 'function') {
+      setTimeout(() => item.handler(), 120);
+    }
+  }
+
+  input.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    if (!q) {
+      renderItems(actions);
+      return;
+    }
+
+    const matches = actions.filter(act => {
+      return act.title.toLowerCase().includes(q) ||
+             act.desc.toLowerCase().includes(q) ||
+             act.category.toLowerCase().includes(q) ||
+             act.badge.toLowerCase().includes(q);
+    });
+
+    renderItems(matches);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (filteredActions.length > 0) {
+        selectedIndex = (selectedIndex + 1) % filteredActions.length;
+        updateSelection();
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (filteredActions.length > 0) {
+        selectedIndex = (selectedIndex - 1 + filteredActions.length) % filteredActions.length;
+        updateSelection();
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (filteredActions[selectedIndex]) {
+        executeItem(filteredActions[selectedIndex]);
+      }
+    }
+  });
+}
+
