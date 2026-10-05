@@ -510,6 +510,76 @@ function initHeroAQICard() {
 /* ═══════════════════════════════════════════════════════════════
    11. CERA-AI SUITE (SMART-TWIN, RIDE-SCRIBE, ECO-IMPACT HEATMAP)
    ═══════════════════════════════════════════════════════════════ */
+
+// System & Contextual Intelligence Engine
+const CeraAISystem = {
+  detectUserSystem() {
+    const ua = navigator.userAgent || '';
+    const platform = navigator.userAgentData?.platform || navigator.platform || '';
+
+    // OS Detection
+    let os = 'Unknown OS';
+    let osShort = 'OS';
+    let osIcon = 'cpu';
+    let shortcutKey = 'Ctrl';
+    let shortcutSymbol = 'Ctrl+K';
+
+    if (/Mac|iPhone|iPad|iPod/i.test(platform) || /Macintosh|Mac OS X/i.test(ua)) {
+      os = 'macOS';
+      osShort = 'Mac';
+      osIcon = 'laptop';
+      shortcutKey = 'Cmd';
+      shortcutSymbol = '⌘K';
+    } else if (/Win/i.test(platform) || /Windows/i.test(ua)) {
+      os = 'Windows';
+      osShort = 'Windows';
+      osIcon = 'monitor';
+      shortcutKey = 'Ctrl';
+      shortcutSymbol = 'Ctrl+K';
+    } else if (/Android/i.test(ua)) {
+      os = 'Android';
+      osShort = 'Android';
+      osIcon = 'smartphone';
+      shortcutKey = 'Tap';
+      shortcutSymbol = 'Tap AI';
+    } else if (/Linux/i.test(platform) || /Linux/i.test(ua)) {
+      os = 'Linux';
+      osShort = 'Linux';
+      osIcon = 'terminal';
+      shortcutKey = 'Ctrl';
+      shortcutSymbol = 'Ctrl+K';
+    }
+
+    // Browser Detection
+    let browser = 'Modern Browser';
+    if (/Edg\//i.test(ua)) browser = 'Microsoft Edge';
+    else if (/Chrome\//i.test(ua)) browser = 'Google Chrome';
+    else if (/Safari\//i.test(ua) && !/Chrome\//i.test(ua)) browser = 'Apple Safari';
+    else if (/Firefox\//i.test(ua)) browser = 'Mozilla Firefox';
+    else if (/Arc\//i.test(ua)) browser = 'Arc Browser';
+
+    // Display & Rendering Specs
+    const dpr = window.devicePixelRatio || 1;
+    const isRetina = dpr >= 2;
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
+    const displayInfo = isRetina ? `Retina @ ${dpr}x` : `${screenWidth}×${screenHeight}`;
+
+    return {
+      os,
+      osShort,
+      osIcon,
+      shortcutKey,
+      shortcutSymbol,
+      browser,
+      displayInfo,
+      dpr,
+      isRetina,
+      isMobile: /Mobi|Android|iPhone/i.test(ua)
+    };
+  }
+};
+
 function initCeraAI() {
   // ─── A. THE "SMART-TWIN" COMMUTE PREDICTOR (PROACTIVE AI) ───
   const lockBtn = document.getElementById('smart-twin-lock-btn');
