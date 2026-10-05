@@ -577,6 +577,61 @@ const CeraAISystem = {
       isRetina,
       isMobile: /Mobi|Android|iPhone/i.test(ua)
     };
+  },
+
+  getCommuteContext() {
+    const now = new Date();
+    const hours = now.getHours();
+    const mins = now.getMinutes();
+    const day = now.getDay(); // 0 is Sunday, 1 is Monday...
+
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayName = days[day];
+
+    let timePeriod = 'Morning';
+    let greetingPrefix = 'Good morning';
+    let isRushHour = false;
+    let commuteContext = 'Morning Workstation Transit';
+
+    if (hours >= 5 && hours < 12) {
+      timePeriod = 'Morning';
+      greetingPrefix = 'Good morning';
+      isRushHour = hours >= 8 && (hours < 10 || (hours === 10 && mins <= 30));
+      commuteContext = isRushHour ? 'Peak Morning Rush Hour (Arterial Inflow)' : 'Morning Corridor Transit';
+    } else if (hours >= 12 && hours < 17) {
+      timePeriod = 'Afternoon';
+      greetingPrefix = 'Good afternoon';
+      isRushHour = false;
+      commuteContext = 'Midday Solar EV Charging & Express Interchange';
+    } else if (hours >= 17 && hours < 22) {
+      timePeriod = 'Evening';
+      greetingPrefix = 'Good evening';
+      isRushHour = hours >= 17 && hours <= 20;
+      commuteContext = isRushHour ? 'Evening Return Rush (Barapullah & Ring Road Congestion)' : 'Evening Civic Transit';
+    } else {
+      timePeriod = 'Night';
+      greetingPrefix = 'Good night';
+      isRushHour = false;
+      commuteContext = 'Off-Peak Low-Emission Night Corridors';
+    }
+
+    const timeFormatted = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    let routineDayKey = 'mon';
+    if (day === 3 || day === 4) routineDayKey = 'wed';
+    else if (day === 5 || day === 6 || day === 0) routineDayKey = 'fri';
+
+    return {
+      dayName,
+      timePeriod,
+      greetingPrefix,
+      isRushHour,
+      commuteContext,
+      timeFormatted,
+      routineDayKey,
+      hours,
+      mins
+    };
   }
 };
 
