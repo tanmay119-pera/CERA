@@ -3640,6 +3640,27 @@ h1, h2, h3, h4 {
   font-weight: 600;
 }
 
+.routine-reset-btn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.routine-reset-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--bg-surface);
+}
+
 .twin-confirmed-banner {
   background: rgba(74, 222, 128, 0.15);
   border: 1px solid #4ADE80;

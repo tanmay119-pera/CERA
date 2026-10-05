@@ -812,8 +812,30 @@ function initCeraAI() {
     clockSync.innerHTML = `<i data-lucide="clock" class="icon icon--xs"></i> <span>${commuteContext.timeFormatted} · ${commuteContext.dayName} Routine Sync</span>`;
   }
 
-  // Initial routine display
+  // Initial routine display from localStorage or current diurnal day
+  const savedRoutine = localStorage.getItem('cera-commute-routine');
+  if (savedRoutine) {
+    try {
+      const parsed = JSON.parse(savedRoutine);
+      if (parsed && parsed.day && routines[parsed.day]) {
+        currentDay = parsed.day;
+      }
+    } catch (e) {}
+  }
+
   applyRoutine(currentDay);
+
+  if (savedRoutine) {
+    try {
+      const parsed = JSON.parse(savedRoutine);
+      if (parsed && parsed.locked) {
+        isLocked = true;
+        if (lockBtn) lockBtn.classList.add('is-locked');
+        if (lockBtnText) lockBtnText.innerHTML = `✓ LOCKED IN · CONFIRMED WITH ${routines[currentDay].driver.toUpperCase()}`;
+        if (feedbackBanner) feedbackBanner.style.display = 'flex';
+      }
+    } catch (e) {}
+  }
 
   if (lockBtn) {
     lockBtn.addEventListener('click', () => {
@@ -826,6 +848,14 @@ function initCeraAI() {
         if (feedbackBanner) {
           feedbackBanner.style.display = 'flex';
         }
+
+        try {
+          localStorage.setItem('cera-commute-routine', JSON.stringify({
+            day: currentDay,
+            locked: true,
+            timestamp: Date.now()
+          }));
+        } catch (e) {}
 
         // Dynamically increment citizen's civic credit balance
         if (creditsCounter) {
@@ -843,12 +873,28 @@ function initCeraAI() {
         isLocked = false;
         lockBtn.classList.remove('is-locked');
         if (lockBtnText) {
-          lockBtnText.textContent = '1-TAP LOCK IN RIDE (+50 CREDITS)';
+          lockBtnText.textContent = `1-TAP LOCK IN RIDE (${routines[currentDay].credits})`;
         }
         if (feedbackBanner) {
           feedbackBanner.style.display = 'none';
         }
+        try {
+          localStorage.removeItem('cera-commute-routine');
+        } catch (e) {}
       }
+    });
+  }
+
+  // Reset Routine Button
+  const resetRoutineBtn = document.getElementById('smart-twin-reset-btn');
+  if (resetRoutineBtn) {
+    resetRoutineBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      try {
+        localStorage.removeItem('cera-commute-routine');
+      } catch (err) {}
+      isLocked = false;
+      applyRoutine(commuteContext.routineDayKey || 'mon');
     });
   }
 
