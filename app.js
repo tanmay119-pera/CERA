@@ -1107,30 +1107,88 @@ function initCeraAI() {
     });
   });
 
-  // Mic dictation simulation
-  function simulateVoice(inputElem, micElem, callback) {
+  // Web Speech Recognition & Continuous Dictation Engine
+  function activateVoiceDictation(inputElem, micElem, callback) {
     if (!micElem) return;
+
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRec) {
+      try {
+        const recognition = new SpeechRec();
+        recognition.lang = 'en-IN';
+        recognition.interimResults = true;
+        recognition.continuous = false;
+
+        micElem.classList.add('is-listening');
+        if (inputElem) {
+          inputElem.value = '';
+          inputElem.placeholder = '🎙️ Listening... Speak your commute destination now';
+        }
+
+        recognition.onresult = (event) => {
+          let transcript = '';
+          for (let i = 0; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+          }
+          if (inputElem) inputElem.value = transcript;
+        };
+
+        recognition.onend = () => {
+          micElem.classList.remove('is-listening');
+          if (inputElem && !inputElem.value) {
+            inputElem.value = 'Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount.';
+          }
+          if (inputElem && inputElem.value) {
+            const parsed = parseNaturalLanguage(inputElem.value);
+            renderDockOutput(parsed);
+            renderSectionOutput(parsed);
+            handleUserChatPrompt(inputElem.value);
+          }
+          if (callback) callback();
+        };
+
+        recognition.onerror = () => {
+          micElem.classList.remove('is-listening');
+          const sample = "Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount.";
+          if (inputElem) inputElem.value = sample;
+          const parsed = parseNaturalLanguage(sample);
+          renderDockOutput(parsed);
+          renderSectionOutput(parsed);
+          handleUserChatPrompt(sample);
+          if (callback) callback();
+        };
+
+        recognition.start();
+        return;
+      } catch (err) {
+        // Fallback to simulation if speech recognition blocked
+      }
+    }
+
+    // High-Fidelity Simulation Fallback
     micElem.classList.add('is-listening');
     if (inputElem) {
-      inputElem.value = 'Listening... (Speak your commute destination)';
+      inputElem.value = '🎙️ Listening... (Voice Transit Dictation Stream)';
     }
 
     setTimeout(() => {
-      const sample = "Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount.";
+      const sample = "Carpool from Rohini to Cyber City Gurugram around 9:00 AM in an EV with FASTag rebate.";
       if (inputElem) inputElem.value = sample;
       micElem.classList.remove('is-listening');
       const parsed = parseNaturalLanguage(sample);
       renderDockOutput(parsed);
       renderSectionOutput(parsed);
+      handleUserChatPrompt(sample);
       if (callback) callback();
     }, 1200);
   }
 
   if (dockMicBtn) {
-    dockMicBtn.addEventListener('click', () => simulateVoice(dockInput, dockMicBtn));
+    dockMicBtn.addEventListener('click', () => activateVoiceDictation(dockInput, dockMicBtn));
   }
   if (secMicBtn) {
-    secMicBtn.addEventListener('click', () => simulateVoice(secInput, secMicBtn));
+    secMicBtn.addEventListener('click', () => activateVoiceDictation(secInput, secMicBtn));
   }
 
   // ─── B.2 CONVERSATIONAL CONCIERGE CHAT ENGINE ───

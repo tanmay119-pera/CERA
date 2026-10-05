@@ -3033,6 +3033,27 @@ h1, h2, h3, h4 {
   100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
+.mic-wave {
+  display: none;
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid #EF4444;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dock-scribe-mic-btn.is-listening .mic-wave,
+.scribe-mic-btn.is-listening .mic-wave {
+  display: block;
+  animation: micWaveRing 1.4s infinite cubic-bezier(0.2, 0.8, 0.4, 1);
+}
+
+@keyframes micWaveRing {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
 .dock-scribe-submit-btn {
   background: var(--btn-contrast-bg);
   color: var(--btn-contrast-fg);
