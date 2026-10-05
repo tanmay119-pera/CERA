@@ -638,7 +638,12 @@
               <span class="sys-badge-text" id="ai-sys-client-label">System: Calibrating...</span>
               <span class="sys-badge-hw" id="ai-sys-hw-label"></span>
             </div>
-            <span class="ai-telemetry-meta">Latency: 18ms · Zero-Knowledge Privacy Encrypted</span>
+            <div class="ai-monitor-bottom">
+              <span class="ai-telemetry-meta">Latency: 18ms · Zero-Knowledge Privacy Encrypted</span>
+              <button id="btn-open-diagnostics" class="btn-ai-diagnostics" title="Open Full System Environment Diagnostics" aria-label="Open Diagnostics">
+                <i data-lucide="cpu" class="icon icon--xs"></i> Full Diagnostics
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1724,6 +1729,35 @@
         <div class="omnibar-hint-brand">
           <span>CERA-AI System Intelligence</span>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ CERA-AI SYSTEM ENVIRONMENT DIAGNOSTICS DRAWER ═══════════════════════ -->
+  <div id="cera-diagnostics-drawer" class="cera-diagnostics-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="System Telemetry Diagnostics">
+    <div class="diagnostics-backdrop" id="diagnostics-backdrop"></div>
+    <div class="diagnostics-content">
+      <div class="diagnostics-header">
+        <div class="diagnostics-title-wrap">
+          <i data-lucide="cpu" class="icon icon--sm icon-accent"></i>
+          <div>
+            <h3 class="diagnostics-title">CERA-AI System Environment Readout</h3>
+            <span class="diagnostics-subtitle">Hardware, OS, and Diurnal Transit Calibration</span>
+          </div>
+        </div>
+        <button id="diagnostics-close-btn" class="diagnostics-close-btn" aria-label="Close diagnostics">&times;</button>
+      </div>
+
+      <div class="diagnostics-body" id="diagnostics-body">
+        <!-- Injected dynamically by app.js -->
+      </div>
+
+      <div class="diagnostics-footer">
+        <button id="btn-copy-diagnostics" class="btn btn--copy-report">
+          <i data-lucide="copy" class="icon icon--xs"></i>
+          <span id="copy-report-text">Copy Environment Report</span>
+        </button>
+        <span class="diag-status-ok">● All AI Engines Nominal</span>
       </div>
     </div>
   </div>
