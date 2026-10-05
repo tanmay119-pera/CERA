@@ -1213,6 +1213,74 @@ function initCeraAI() {
     };
   }
 
+  function appendUserMessage(text) {
+    if (!chatThread) return;
+    const msgEl = document.createElement('div');
+    msgEl.className = 'chat-msg chat-msg--user';
+    msgEl.innerHTML = `
+      <div class="chat-msg__bubble"><p>${text}</p></div>
+      <div class="chat-msg__avatar">You</div>
+    `;
+    chatThread.appendChild(msgEl);
+    chatThread.scrollTop = chatThread.scrollHeight;
+  }
+
+  function appendAssistantResponse(replyObj) {
+    if (!chatThread) return;
+    const msgEl = document.createElement('div');
+    msgEl.className = 'chat-msg chat-msg--assistant';
+    let cardHTML = '';
+    if (replyObj.actionCard) {
+      cardHTML = `
+        <div class="chat-action-card">
+          <div class="chat-card-row">
+            <span class="chat-card-title">${replyObj.actionCard.title}</span>
+            <span class="chat-card-meta">${replyObj.actionCard.meta}</span>
+          </div>
+          <a href="${replyObj.actionCard.linkHref}" class="chat-card-btn">${replyObj.actionCard.linkText}</a>
+        </div>
+      `;
+    }
+    msgEl.innerHTML = `
+      <div class="chat-msg__avatar"><i data-lucide="sparkles" class="icon icon--xs"></i></div>
+      <div class="chat-msg__bubble">
+        <p>${replyObj.text}</p>
+        ${cardHTML}
+      </div>
+    `;
+    chatThread.appendChild(msgEl);
+    chatThread.scrollTop = chatThread.scrollHeight;
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function handleUserChatPrompt(prompt) {
+    if (!prompt || !prompt.trim()) return;
+    appendUserMessage(prompt);
+    setTimeout(() => {
+      const response = generateCivicAIResponse(prompt);
+      appendAssistantResponse(response);
+    }, 240);
+  }
+
+  // Personalize greeting intro
+  const greetingIntro = document.getElementById('chat-greeting-intro');
+  if (greetingIntro) {
+    const sys = CeraAISystem.getSystemInfo();
+    const ctx = CeraAISystem.getCommuteContext();
+    greetingIntro.innerHTML = `Namaste! I'm CERA-AI calibrated for your <strong>${sys.os}</strong> system at ${ctx.timeFormatted} (<em>${ctx.commuteContext}</em>). Tell me where you need to commute, ask about clean air corridors, or tap any quick prompt below.`;
+  }
+
+  // Wire initial chat chips
+  if (chatThread) {
+    chatThread.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chat-chip');
+      if (chip) {
+        const ask = chip.dataset.chatAsk || chip.textContent.trim();
+        handleUserChatPrompt(ask);
+      }
+    });
+  }
+
   // ─── C. VISUAL "ECO-IMPACT HEATMAP" (DATA INTELLIGENCE) ───
   const layerCleanBtn = document.getElementById('layer-clean');
   const layerHotspotsBtn = document.getElementById('layer-hotspots');
