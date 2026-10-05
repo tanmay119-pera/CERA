@@ -661,6 +661,28 @@ const CeraAISystem = {
 };
 
 function initCeraAI() {
+  // ─── SYSTEM ENVIRONMENT TELEMETRY POPULATION ───
+  try {
+    const sysInfo = CeraAISystem.getSystemInfo();
+    const hwInfo = CeraAISystem.getHardwareTelemetry();
+    const sysClientLabel = document.getElementById('ai-sys-client-label');
+    const sysHwLabel = document.getElementById('ai-sys-hw-label');
+    const dockKbdHint = document.getElementById('ai-dock-kbd-hint');
+
+    if (sysClientLabel) {
+      sysClientLabel.textContent = `Client: ${sysInfo.os} · ${sysInfo.browser}`;
+    }
+    if (sysHwLabel) {
+      sysHwLabel.textContent = `(${sysInfo.displayInfo} • ${hwInfo.telemetrySummary})`;
+    }
+    if (dockKbdHint) {
+      dockKbdHint.textContent = sysInfo.shortcutKey;
+      dockKbdHint.title = `Global Omnibar (${sysInfo.shortcutKey})`;
+    }
+  } catch (err) {
+    console.warn('CERA-AI System Telemetry initialization warning:', err);
+  }
+
   // ─── A. THE "SMART-TWIN" COMMUTE PREDICTOR (PROACTIVE AI) ───
   const lockBtn = document.getElementById('smart-twin-lock-btn');
   const lockBtnText = document.getElementById('smart-twin-btn-text');
