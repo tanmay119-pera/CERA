@@ -3403,6 +3403,19 @@ h1, h2, h3, h4 {
   font-style: normal;
 }
 
+.ai-greeting-alert {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-style: normal;
+  color: var(--accent);
+  background: var(--bg-surface);
+  padding: 1px 7px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  margin-left: 4px;
+}
+
 .smart-twin-matched-pod {
   background: var(--bg-secondary);
   border: 1px solid var(--border);

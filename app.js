@@ -747,7 +747,71 @@ function initCeraAI() {
   };
 
   let isLocked = false;
-  let currentDay = 'mon';
+  const commuteContext = CeraAISystem.getCommuteContext();
+  let currentDay = commuteContext.routineDayKey || 'mon';
+
+  function buildSystemGreeting(routine, sys, ctx) {
+    const greeting = ctx.greetingPrefix;
+    const timeStr = ctx.timeFormatted;
+    const osName = sys.os;
+    const rush = ctx.isRushHour ? ` <span class="ai-greeting-alert">⚡ ${ctx.commuteContext}</span>` : '';
+    return `"${greeting}, <strong>${routine.user}</strong>! Connected from your <strong>${osName}</strong> system at ${timeStr}.${rush} For your <strong>${ctx.dayName}</strong> commute to <strong>${routine.dest}</strong>, I’ve pre-matched you with <strong>${routine.driver}</strong> (${routine.matchPct} route alignment, EV Sedan). Tap to lock in your ride and claim your daily <strong>50 Green Credits</strong>."`;
+  }
+
+  function applyRoutine(day) {
+    currentDay = day;
+    const data = routines[day];
+    if (!data) return;
+
+    routinePills.forEach(p => p.classList.toggle('routine-pill--active', p.dataset.day === day));
+
+    if (twinText) twinText.innerHTML = buildSystemGreeting(data, sysInfo, commuteContext);
+
+    const driverAvatar = document.querySelector('.twin-driver-avatar');
+    if (driverAvatar) driverAvatar.src = data.driverImg;
+
+    const driverName = document.querySelector('.twin-driver-name');
+    if (driverName) driverName.textContent = data.driver;
+
+    const driverMeta = document.querySelector('.twin-driver-meta');
+    if (driverMeta) driverMeta.textContent = data.driverMeta;
+
+    const matchPct = document.querySelector('.twin-match-pct');
+    if (matchPct) matchPct.textContent = data.matchPct;
+
+    const ptNames = document.querySelectorAll('.twin-point-name');
+    if (ptNames[0]) ptNames[0].textContent = data.startPoint;
+    if (ptNames[1]) ptNames[1].textContent = data.endPoint;
+
+    const ptTimes = document.querySelectorAll('.twin-point-time');
+    if (ptTimes[0]) ptTimes[0].textContent = data.startTime;
+    if (ptTimes[1]) ptTimes[1].textContent = data.endTime;
+
+    const corridorElem = document.querySelector('.twin-route-connector span');
+    if (corridorElem) corridorElem.textContent = data.corridor;
+
+    const perks = document.querySelectorAll('.twin-perk .perk-val');
+    if (perks[0]) perks[0].textContent = data.fare;
+    if (perks[1]) perks[1].textContent = data.credits;
+    if (perks[2]) perks[2].textContent = data.co2;
+
+    // Reset lock state on routine change
+    isLocked = false;
+    if (lockBtn) lockBtn.classList.remove('is-locked');
+    if (lockBtnText) lockBtnText.textContent = `1-TAP LOCK IN RIDE (${data.credits})`;
+    if (feedbackBanner) feedbackBanner.style.display = 'none';
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // Update routine clock sync indicator
+  const clockSync = document.getElementById('ai-clock-sync');
+  if (clockSync) {
+    clockSync.innerHTML = `<i data-lucide="clock" class="icon icon--xs"></i> <span>${commuteContext.timeFormatted} · ${commuteContext.dayName} Routine Sync</span>`;
+  }
+
+  // Initial routine display
+  applyRoutine(currentDay);
 
   if (lockBtn) {
     lockBtn.addEventListener('click', () => {
@@ -789,50 +853,8 @@ function initCeraAI() {
   // Routine Switcher
   routinePills.forEach(pill => {
     pill.addEventListener('click', () => {
-      routinePills.forEach(p => p.classList.remove('routine-pill--active'));
-      pill.classList.add('routine-pill--active');
       const day = pill.dataset.day || 'mon';
-      currentDay = day;
-      const data = routines[day];
-      if (!data) return;
-
-      if (twinText) twinText.innerHTML = `"${data.quote}"`;
-
-      const driverAvatar = document.querySelector('.twin-driver-avatar');
-      if (driverAvatar) driverAvatar.src = data.driverImg;
-
-      const driverName = document.querySelector('.twin-driver-name');
-      if (driverName) driverName.textContent = data.driver;
-
-      const driverMeta = document.querySelector('.twin-driver-meta');
-      if (driverMeta) driverMeta.textContent = data.driverMeta;
-
-      const matchPct = document.querySelector('.twin-match-pct');
-      if (matchPct) matchPct.textContent = data.matchPct;
-
-      const ptNames = document.querySelectorAll('.twin-point-name');
-      if (ptNames[0]) ptNames[0].textContent = data.startPoint;
-      if (ptNames[1]) ptNames[1].textContent = data.endPoint;
-
-      const ptTimes = document.querySelectorAll('.twin-point-time');
-      if (ptTimes[0]) ptTimes[0].textContent = data.startTime;
-      if (ptTimes[1]) ptTimes[1].textContent = data.endTime;
-
-      const corridorElem = document.querySelector('.twin-route-connector span');
-      if (corridorElem) corridorElem.textContent = data.corridor;
-
-      const perks = document.querySelectorAll('.twin-perk .perk-val');
-      if (perks[0]) perks[0].textContent = data.fare;
-      if (perks[1]) perks[1].textContent = data.credits;
-      if (perks[2]) perks[2].textContent = data.co2;
-
-      // Reset lock state on routine change
-      isLocked = false;
-      if (lockBtn) lockBtn.classList.remove('is-locked');
-      if (lockBtnText) lockBtnText.textContent = `1-TAP LOCK IN RIDE (${data.credits})`;
-      if (feedbackBanner) feedbackBanner.style.display = 'none';
-
-      if (window.lucide) lucide.createIcons();
+      applyRoutine(day);
     });
   });
 
