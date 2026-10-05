@@ -848,6 +848,40 @@
                 </div>
               </div>
 
+              <!-- Conversational Assistant Dialogue Stream -->
+              <div class="cera-chat-container" id="cera-chat-container">
+                <div class="chat-header">
+                  <div class="chat-header__title">
+                    <span class="chat-pulse-dot"></span>
+                    <span>CERA-AI Conversational Concierge</span>
+                  </div>
+                  <span class="chat-header__sys" id="chat-sys-env-tag">macOS Station · 18ms Latency</span>
+                </div>
+
+                <div class="chat-messages-thread" id="chat-messages-thread" role="log" aria-live="polite">
+                  <!-- Initial assistant greeting message -->
+                  <div class="chat-msg chat-msg--assistant">
+                    <div class="chat-msg__avatar"><i data-lucide="sparkles" class="icon icon--xs"></i></div>
+                    <div class="chat-msg__bubble">
+                      <p id="chat-greeting-intro">
+                        Namaste! I'm your CERA-AI personal transit concierge. Tell me where you need to commute, ask about clean air corridors, or tap any quick prompt below.
+                      </p>
+                      <div class="chat-chips-row">
+                        <button class="chat-chip" data-chat-ask="Find me an EV ride leaving in 15 mins to Connaught Place">
+                          🚗 EV to Connaught Place
+                        </button>
+                        <button class="chat-chip" data-chat-ask="What is the cleanest air corridor right now?">
+                          🌿 Clean Air Corridors
+                        </button>
+                        <button class="chat-chip" data-chat-ask="How do I claim my 100% FASTag toll rebate?">
+                          🎫 Claim FASTag Rebate
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
