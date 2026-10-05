@@ -4026,6 +4026,29 @@ h1, h2, h3, h4 {
 .layer-dot--red { background: #EF4444; box-shadow: 0 0 8px #EF4444; }
 .layer-dot--amber { background: #F59E0B; box-shadow: 0 0 8px #F59E0B; }
 
+.heatmap-gps-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  margin: 12px 0 20px 0;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.gps-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3B82F6;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.7);
+  animation: pulseSysDot 1.8s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
 .ai-heatmap__body {
   display: grid;
   grid-template-columns: 1.8fr 1fr;
