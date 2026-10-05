@@ -102,6 +102,38 @@ All asset references use forward-slash relative paths (`images/...`), ensuring c
 
 ---
 
+## 🧠 CERA-AI System Intelligence & Omnibar Architecture
+
+CERA-AI v2.4 brings system-level environmental awareness directly into the civic transit experience:
+
+### 1. Client Environment & Hardware Telemetry Engine
+- **OS & Platform Mapping:** Automatically differentiates between macOS (`⌘K`), Windows/Linux (`Ctrl+K`), and mobile devices.
+- **Display & Pixel Density:** Recognizes Retina / HiDPI scalings and adapts micro-badges dynamically.
+- **Hardware Concurrency & Downlink:** Reads available CPU cores, allocated device memory (RAM), and network connection speeds to calibrate UI animations and dispatch latency (18ms).
+
+### 2. Diurnal Temporal Transit Engine
+- **Diurnal Awareness:** Calculates time of day and categorizes traffic into Peak Morning Rush Hour (Arterial Inflow), Midday Solar EV Charging, Evening Return Congestion (Barapullah & Ring Road), and Off-Peak Low-Emission Night Corridors.
+- **Contextual Greetings:** Injects customized greetings addressing the commuter by name, system workstation, current hour, and arterial pollution advisory.
+
+### 3. Global Command Omnibar (`⌘K` / `Ctrl+K`)
+- **Instant Keyboard Dispatch:** Hit `Cmd+K` (macOS) or `Ctrl+K` (Windows/Linux) anywhere to open the glassmorphic Command Palette.
+- **Action Categories:** Fuzzy searches Smart-Twin ride confirmations, Ride-Scribe prompts, live air quality telemetry, FASTag municipal voucher redemption, and theme toggling.
+- **Full Keyboard Navigation:** Supports `↑` and `↓` arrow keys, `Enter` to execute, and `ESC` to dismiss.
+
+### 4. Conversational Concierge & Civic Knowledge Engine
+- **Rich Interactive Dialogue:** Live message thread answering commuter queries regarding FASTag 100% toll waivers, DMRC metro discounts, EV carpools, and clean corridor routes.
+- **Embedded Action Cards:** Responses automatically generate direct transit action cards linking to verified carpool pods and vouchers.
+- **Web Speech API Audio Synthesis:** Click the listen button to hear CERA-AI speak its recommendations aloud with synthesized voice and harmonic audio chime cues.
+- **Continuous Voice Dictation:** Speak transit queries naturally with an animated microphone pulse ring.
+
+### 5. Smart-Twin Routine Memory & GPS Heatmap Sync
+- **Calendar Routine Memory:** Persists confirmed commute bookings across browser reloads using local storage, with an instant schedule reset option.
+- **Location Sensor Integration:** Queries device geolocation coordinates to pinpoint the commuter's exact distance from the nearest clean inflow corridor.
+- **System Diagnostics Drawer:** View a complete hardware, network, and transit environment readout, with one-click report copying.
+
+---
+
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE) — free for academic, personal, and commercial open-source usage.
+
