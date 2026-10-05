@@ -1615,6 +1615,64 @@
 
   </main>
 
+  <!-- ═══════════════════════ CERA-AI COMMAND PALETTE OMNIBAR ═══════════════════════ -->
+  <div id="cera-omnibar-modal" class="cera-omnibar-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="CERA-AI Global Command Palette">
+    <div class="omnibar-backdrop" id="omnibar-backdrop"></div>
+    <div class="omnibar-dialog">
+      <!-- Search Input Header -->
+      <div class="omnibar-header">
+        <div class="omnibar-input-wrap">
+          <i data-lucide="sparkles" class="icon icon--sm omnibar-spark-icon"></i>
+          <input
+            type="text"
+            id="omnibar-input"
+            class="omnibar-input"
+            placeholder="Type a command, ride, corridor, or query CERA-AI..."
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Command search input"
+          />
+        </div>
+        <div class="omnibar-header-actions">
+          <span class="omnibar-kbd-badge" id="omnibar-modal-kbd">⌘K</span>
+          <button id="omnibar-close-btn" class="omnibar-close-btn" aria-label="Close Command Palette">&times;</button>
+        </div>
+      </div>
+
+      <!-- System Environment Banner inside Palette -->
+      <div class="omnibar-sys-banner">
+        <div class="sys-banner-left">
+          <span class="sys-banner-pulse"></span>
+          <span id="omnibar-sys-env-text">macOS · Calibrating System Environment...</span>
+        </div>
+        <div class="sys-banner-right" id="omnibar-time-ctx-text">
+          Diurnal Temporal Transit
+        </div>
+      </div>
+
+      <!-- Action Results List -->
+      <div class="omnibar-body" id="omnibar-body" role="listbox">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Footer Navigation Hints -->
+      <div class="omnibar-footer">
+        <div class="omnibar-hint">
+          <kbd class="omnibar-key">↑</kbd><kbd class="omnibar-key">↓</kbd> <span>Navigate</span>
+        </div>
+        <div class="omnibar-hint">
+          <kbd class="omnibar-key">↵</kbd> <span>Execute</span>
+        </div>
+        <div class="omnibar-hint">
+          <kbd class="omnibar-key">ESC</kbd> <span>Dismiss</span>
+        </div>
+        <div class="omnibar-hint-brand">
+          <span>CERA-AI System Intelligence</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
