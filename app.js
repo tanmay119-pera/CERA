@@ -632,6 +632,31 @@ const CeraAISystem = {
       hours,
       mins
     };
+  },
+
+  getHardwareTelemetry() {
+    const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} Cores` : 'Multi-Core CPU';
+    const ram = navigator.deviceMemory ? `${navigator.deviceMemory}GB RAM` : 'Optimized RAM';
+    
+    let netType = 'High-Speed';
+    if (navigator.connection) {
+      const conn = navigator.connection;
+      if (conn.effectiveType) {
+        netType = conn.effectiveType.toUpperCase();
+      } else if (conn.type) {
+        netType = conn.type;
+      }
+    } else if (!navigator.onLine) {
+      netType = 'Offline Sync';
+    }
+
+    return {
+      cores,
+      ram,
+      netType,
+      isOnline: navigator.onLine,
+      telemetrySummary: `${cores} • ${ram} • ${netType}`
+    };
   }
 };
 
