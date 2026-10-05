@@ -1225,6 +1225,57 @@ function initCeraAI() {
     chatThread.scrollTop = chatThread.scrollHeight;
   }
 
+  // ─── AUDIO SYNTHESIS & CUE ENGINE ───
+  function playCeraAudioCue(type = 'success') {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      if (type === 'lock') {
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+      } else {
+        osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.12);
+      }
+
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.25);
+    } catch (e) {
+      // AudioContext policy fallback gracefully
+    }
+  }
+
+  function speakCeraMessage(htmlText, btn) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+
+    const clean = htmlText.replace(/<[^>]*>?/gm, '');
+    const utter = new SpeechSynthesisUtterance(clean);
+    utter.rate = 1.0;
+    utter.pitch = 1.05;
+
+    if (btn) btn.classList.add('is-speaking');
+
+    utter.onend = () => {
+      if (btn) btn.classList.remove('is-speaking');
+    };
+    utter.onerror = () => {
+      if (btn) btn.classList.remove('is-speaking');
+    };
+
+    window.speechSynthesis.speak(utter);
+  }
+
   function appendAssistantResponse(replyObj) {
     if (!chatThread) return;
     const msgEl = document.createElement('div');
@@ -1244,12 +1295,26 @@ function initCeraAI() {
     msgEl.innerHTML = `
       <div class="chat-msg__avatar"><i data-lucide="sparkles" class="icon icon--xs"></i></div>
       <div class="chat-msg__bubble">
-        <p>${replyObj.text}</p>
+        <p>
+          ${replyObj.text}
+          <button class="chat-audio-btn" title="Listen to CERA-AI Response" aria-label="Audio readout">
+            <i data-lucide="volume-2" class="icon icon--xs"></i>
+          </button>
+        </p>
         ${cardHTML}
       </div>
     `;
+
+    const audioBtn = msgEl.querySelector('.chat-audio-btn');
+    if (audioBtn) {
+      audioBtn.addEventListener('click', () => {
+        speakCeraMessage(replyObj.text, audioBtn);
+      });
+    }
+
     chatThread.appendChild(msgEl);
     chatThread.scrollTop = chatThread.scrollHeight;
+    playCeraAudioCue('success');
     if (window.lucide) lucide.createIcons();
   }
 
