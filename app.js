@@ -1237,6 +1237,61 @@ function initCeraAI() {
     secMicBtn.addEventListener('click', () => activateVoiceDictation(secInput, secMicBtn));
   }
 
+  // ─── CLIPBOARD QUICK-PASTE & SCENARIO CYCLING ───
+  const dockPasteBtn = document.getElementById('dock-scribe-paste');
+  const secPasteBtn = document.getElementById('section-scribe-paste');
+  const cycleBtn = document.getElementById('scribe-cycle-btn');
+
+  async function pasteClipboardToScribe(inputElem) {
+    if (!navigator.clipboard || !navigator.clipboard.readText) {
+      alert('Clipboard API access requires browser permission or HTTPS context.');
+      return;
+    }
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && text.trim()) {
+        if (inputElem) inputElem.value = text.trim();
+        if (dockInput) dockInput.value = text.trim();
+        if (secInput) secInput.value = text.trim();
+        const parsed = parseNaturalLanguage(text.trim());
+        renderDockOutput(parsed);
+        renderSectionOutput(parsed);
+        handleUserChatPrompt(text.trim());
+      }
+    } catch (err) {
+      console.warn('Clipboard read warning:', err);
+    }
+  }
+
+  if (dockPasteBtn) {
+    dockPasteBtn.addEventListener('click', () => pasteClipboardToScribe(dockInput));
+  }
+  if (secPasteBtn) {
+    secPasteBtn.addEventListener('click', () => pasteClipboardToScribe(secInput));
+  }
+
+  const cycleScenarios = [
+    "Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount.",
+    "Carpool from Rohini to Cyber City Gurugram around 9:00 AM in an EV with FASTag rebate.",
+    "Evening carpool from Lajpat Nagar under ₹50 with max carbon credits.",
+    "Express EV carpool from Noida Sec 62 to AIIMS via DND Flyway around 08:45 AM.",
+    "Morning zero-emission ride from Dwarka Sector 10 to Connaught Place via Airport Express bypass."
+  ];
+  let cycleIdx = 0;
+
+  if (cycleBtn) {
+    cycleBtn.addEventListener('click', () => {
+      cycleIdx = (cycleIdx + 1) % cycleScenarios.length;
+      const prompt = cycleScenarios[cycleIdx];
+      if (secInput) secInput.value = prompt;
+      if (dockInput) dockInput.value = prompt;
+      const parsed = parseNaturalLanguage(prompt);
+      renderSectionOutput(parsed);
+      renderDockOutput(parsed);
+      handleUserChatPrompt(prompt);
+    });
+  }
+
   // ─── B.2 CONVERSATIONAL CONCIERGE CHAT ENGINE ───
   const chatThread = document.getElementById('chat-messages-thread');
   const chatSysTag = document.getElementById('chat-sys-env-tag');
