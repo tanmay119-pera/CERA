@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBriefForm();
   initHeroAQICard();
   initCeraAI();
+  initCeraAIShortcuts();
 });
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1248,3 +1249,57 @@ function initCeraAI() {
   });
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   CERA-AI GLOBAL KEYBOARD SHORTCUT DISPATCHER (Cmd+K / Ctrl+K)
+   ═══════════════════════════════════════════════════════════════ */
+function initCeraAIShortcuts() {
+  const sysInfo = CeraAISystem.getSystemInfo();
+  const isMac = sysInfo.os.includes('macOS') || sysInfo.os.includes('iOS');
+
+  window.addEventListener('keydown', (e) => {
+    // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
+    const modifierActive = isMac ? e.metaKey : (e.ctrlKey || e.metaKey);
+    if (modifierActive && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      
+      const omnibarModal = document.getElementById('cera-omnibar-modal');
+      if (omnibarModal) {
+        if (typeof window.toggleCeraOmnibar === 'function') {
+          window.toggleCeraOmnibar();
+        } else {
+          const isOpen = omnibarModal.classList.contains('is-active');
+          if (isOpen) {
+            omnibarModal.classList.remove('is-active');
+          } else {
+            omnibarModal.classList.add('is-active');
+            const searchInp = document.getElementById('omnibar-input');
+            if (searchInp) {
+              searchInp.focus();
+              searchInp.select();
+            }
+          }
+        }
+      } else {
+        // Smooth scroll fallback to Ride-Scribe and focus input
+        const scribeInput = document.getElementById('dock-scribe-input');
+        const dock = document.getElementById('cera-ai-dock');
+        if (dock) {
+          dock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (scribeInput) {
+          scribeInput.focus();
+          scribeInput.select();
+        }
+      }
+    } else if (e.key === 'Escape') {
+      const omnibarModal = document.getElementById('cera-omnibar-modal');
+      if (omnibarModal && omnibarModal.classList.contains('is-active')) {
+        omnibarModal.classList.remove('is-active');
+      }
+      const dockOutput = document.getElementById('dock-scribe-output');
+      if (dockOutput && dockOutput.style.display !== 'none') {
+        dockOutput.style.display = 'none';
+      }
+    }
+  });
+}
