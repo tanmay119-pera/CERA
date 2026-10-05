@@ -1133,6 +1133,86 @@ function initCeraAI() {
     secMicBtn.addEventListener('click', () => simulateVoice(secInput, secMicBtn));
   }
 
+  // ─── B.2 CONVERSATIONAL CONCIERGE CHAT ENGINE ───
+  const chatThread = document.getElementById('chat-messages-thread');
+  const chatSysTag = document.getElementById('chat-sys-env-tag');
+
+  if (chatSysTag) {
+    const sys = CeraAISystem.getSystemInfo();
+    chatSysTag.textContent = `${sys.os} Station · 18ms Latency`;
+  }
+
+  function generateCivicAIResponse(query) {
+    const q = (query || '').toLowerCase();
+    const sys = CeraAISystem.getSystemInfo();
+    const ctx = CeraAISystem.getCommuteContext();
+
+    if (/hello|hi|hey|namaste|morning|evening|greetings/i.test(q)) {
+      return {
+        text: `${ctx.greetingPrefix}! I'm CERA-AI calibrated for your <strong>${sys.os}</strong> workstation at ${ctx.timeFormatted}. During this ${ctx.commuteContext}, I can pre-match your seat, bypass severe PM2.5 corridors, or unlock municipal FASTag rebates. Where are you heading today?`,
+        actionCard: null
+      };
+    }
+
+    if (/fastag|toll|rebate|waiver|dnd|rfid/i.test(q)) {
+      return {
+        text: `Carpooling with 3+ passengers qualifies your vehicle for <strong>100% municipal FASTag toll waiver</strong> across DND Flyway and Barapullah corridors. RFID gates automatically confirm cabin occupancy and log +50 Green Credits directly into your municipal citizen wallet.`,
+        actionCard: {
+          title: 'Civic FASTag Rebate Active',
+          meta: '100% Toll Reimbursement · +50 Green Credits',
+          linkText: 'Redeem Municipal Vouchers →',
+          linkHref: '#redemption'
+        }
+      };
+    }
+
+    if (/corridor|clean|air|aqi|pm2\.5|pollution|hotspot/i.test(q)) {
+      return {
+        text: `Live particulate telemetry flags elevated PM2.5 (342 AQI) near Vikas Marg. CERA-AI recommends routing co-riders through the <strong>Barapullah Clean Corridor</strong>, reducing inhalation exposure by 64% and granting 2.5× Green Credits.`,
+        actionCard: {
+          title: 'Barapullah Clean Corridor',
+          meta: '64% Inhalation Reduction · 34 mins saved',
+          linkText: 'Inspect Live Heatmap →',
+          linkHref: '#heatmap-widget'
+        }
+      };
+    }
+
+    if (/ev|electric|carpool|ride|office|connaught|priya|nexon|book|match/i.test(q)) {
+      return {
+        text: `I’ve located a high-affinity EV carpool! <strong>Priya M.</strong> is departing Sector Gate 4 in a Tata Nexon EV with 98% route alignment to Connaught Place. Fare is ₹48 (with Metro Pass) and includes 50 Green Credits.`,
+        actionCard: {
+          title: 'Priya M. · Tata Nexon EV',
+          meta: 'Departs 08:35 AM · 98% Match · ₹48 Fare',
+          linkText: 'Lock In Ride Now →',
+          linkHref: '#matcher'
+        }
+      };
+    }
+
+    if (/metro|dmrc|card|pass|discount|upi/i.test(q)) {
+      return {
+        text: `Linking your <strong>Delhi Metro (DMRC) Smart Card</strong> gives you an automatic 20% discount on all EV feeder carpools connecting to metro transit stations. Shared fares can be settled instantly via UPI split.`,
+        actionCard: {
+          title: 'DMRC Transit Integration',
+          meta: '20% Feeder Discount · UPI Instant Split',
+          linkText: 'View Transit Architecture →',
+          linkHref: '#services'
+        }
+      };
+    }
+
+    return {
+      text: `Understood! I've analyzed your transit brief for "${query}". CERA's civic dispatch algorithm has prioritized zero-emission EV corridors and high-occupancy vehicles along your travel corridor.`,
+      actionCard: {
+        title: 'Optimized Transit Match',
+        meta: 'High-Occupancy Clean Corridor · 50 Credits',
+        linkText: 'View in Carpool Matcher →',
+        linkHref: '#matcher'
+      }
+    };
+  }
+
   // ─── C. VISUAL "ECO-IMPACT HEATMAP" (DATA INTELLIGENCE) ───
   const layerCleanBtn = document.getElementById('layer-clean');
   const layerHotspotsBtn = document.getElementById('layer-hotspots');
