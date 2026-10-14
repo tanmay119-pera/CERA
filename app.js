@@ -113,41 +113,59 @@ function initAccordion() {
    6. INTERSECTION-OBSERVER ANIMATED STAT COUNTERS
    ═══════════════════════════════════════════════════════════════ */
 function initCounterAnimations() {
-  const counters = [
-    { el: document.getElementById('co2-counter'), target: 42.5, prefix: '', decimals: 1 },
-    { el: document.getElementById('cost-counter'), target: 1450, prefix: '₹', decimals: 0 },
-    { el: document.getElementById('credits-counter'), target: 340, prefix: '', decimals: 0 },
-  ];
+  function rollUserStats(user) {
+    if (!user) return;
+    const co2Val = user.co2SavedKg || 48.6;
+    const estSavings = Math.round((user.tripsCompleted || 34) * 142);
 
+    const heroCo2 = document.getElementById('hero-stat-co2');
+    const heroSavings = document.getElementById('hero-stat-savings');
+    const ceraAiCo2 = document.getElementById('co2-counter');
+    const ceraAiCredits = document.getElementById('credits-counter');
+
+    if (heroCo2) animateNumber({ el: heroCo2, target: co2Val, suffix: ' kg', decimals: 1 });
+    if (heroSavings) animateNumber({ el: heroSavings, target: estSavings, prefix: '₹', decimals: 0 });
+    if (ceraAiCo2) animateNumber({ el: ceraAiCo2, target: co2Val, suffix: '', decimals: 1 });
+    if (ceraAiCredits) animateNumber({ el: ceraAiCredits, target: user.credits || 420, suffix: '', decimals: 0 });
+  }
+
+  let animatedOnce = false;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const cfg = counters.find(c => c.el === entry.target);
-      if (cfg && !cfg.done) {
-        cfg.done = true;
-        animateNumber(cfg);
+      if (entry.isIntersecting && !animatedOnce) {
+        animatedOnce = true;
+        const u = typeof CeraUserManager !== 'undefined' ? CeraUserManager.getCurrentUser() : null;
+        if (u) rollUserStats(u);
       }
     });
-  }, { threshold: 0.35 });
+  }, { threshold: 0.2 });
 
-  counters.forEach(c => {
-    if (c.el) observer.observe(c.el);
-  });
+  const ribbon = document.querySelector('.hero-clean__stats-ribbon');
+  if (ribbon) observer.observe(ribbon);
+
+  // Subscribe to persona switches
+  if (typeof CeraUserManager !== 'undefined') {
+    CeraUserManager.onUserChange(user => {
+      rollUserStats(user);
+    });
+  }
 }
 
-function animateNumber({ el, target, prefix, decimals }) {
-  const duration = 1400;
+function animateNumber({ el, target, prefix = '', suffix = '', decimals = 0 }) {
+  if (!el) return;
+  const duration = 1200;
   const startTime = performance.now();
 
   function step(now) {
     const progress = Math.min((now - startTime) / duration, 1);
-    // Cubic ease out
     const ease = 1 - Math.pow(1 - progress, 3);
     const current = ease * target;
 
-    el.textContent = prefix + (decimals > 0
+    const formatted = decimals > 0
       ? current.toFixed(decimals)
-      : Math.round(current).toLocaleString('en-IN'));
+      : Math.round(current).toLocaleString('en-IN');
+
+    el.textContent = `${prefix}${formatted}${suffix}`;
 
     if (progress < 1) {
       requestAnimationFrame(step);
