@@ -885,6 +885,11 @@ const CeraUserManager = {
       vehiclePref: 'Tata Nexon EV / Electric Sedan',
       habitualDays: 'Mondays & Thursdays (08:30 AM)',
       streak: 12,
+      prompts: [
+        { icon: 'building-2', label: 'Office tomorrow 8:30 AM · UPI Split · Metro Pass', prompt: 'Find me a ride to office tomorrow around 8:30 AM, split the fuel via UPI, and apply my metro pass discount.' },
+        { icon: 'zap', label: 'Rohini → Cyber City · EV Sedan · FASTag', prompt: 'Carpool from Rohini to Cyber City Gurugram around 9:00 AM in an EV with FASTag rebate.' },
+        { icon: 'leaf', label: 'Lajpat Nagar under ₹50 · Max Green Credits', prompt: 'Evening carpool from Lajpat Nagar under ₹50 with max carbon credits.' }
+      ],
       routines: {
         mon: {
           dest: 'Connaught Place',
@@ -954,6 +959,11 @@ const CeraUserManager = {
       vehiclePref: 'Tata Nexon EV / MG ZS EV',
       habitualDays: 'Tuesdays, Wednesdays & Fridays (08:15 AM)',
       streak: 24,
+      prompts: [
+        { icon: 'zap', label: 'Vasant Kunj → Cyber City · 08:15 AM · EV', prompt: 'Carpool from Vasant Kunj to Cyber City Gurugram around 8:15 AM in an EV with FASTag rebate.' },
+        { icon: 'building-2', label: 'Saket to Aerocity Worldmark · EV Front Seat', prompt: 'Morning ride from Saket District Centre to Aerocity Worldmark 2 around 8:40 AM with Priya.' },
+        { icon: 'leaf', label: 'Cyber City to South Delhi · Zero Tailpipe', prompt: 'Evening carpool from Cyber City to South Delhi under ₹70 with max Green Credits.' }
+      ],
       routines: {
         mon: {
           dest: 'Cyber City DLF',
@@ -1023,6 +1033,11 @@ const CeraUserManager = {
       vehiclePref: 'Hyundai Ioniq 5 EV',
       habitualDays: 'Daily Weekdays (07:45 AM)',
       streak: 42,
+      prompts: [
+        { icon: 'activity', label: 'Hauz Khas → AIIMS · 07:45 AM · Clean Link', prompt: 'Morning clinical commute from Hauz Khas to AIIMS Emergency Corridor at 07:45 AM in an EV.' },
+        { icon: 'building-2', label: 'Panchsheel → Safdarjung Labs · 07:50 AM', prompt: 'Carpool to Safdarjung Research Labs around 7:50 AM with Rajesh, hospital lane pass.' },
+        { icon: 'leaf', label: 'South Ex to DU North Campus · Friday 08:00', prompt: 'Friday carpool to Vallabhbhai Patel Chest Institute DU North Campus at 08:00 AM with Vikram.' }
+      ],
       routines: {
         mon: {
           dest: 'AIIMS New Delhi',
@@ -1092,6 +1107,11 @@ const CeraUserManager = {
       vehiclePref: 'MG ZS EV / Verified Shared Pod',
       habitualDays: 'Mondays, Wednesdays & Thursdays (08:30 AM)',
       streak: 15,
+      prompts: [
+        { icon: 'map-pin', label: 'Lajpat Nagar → Noida Sec 125 · 08:25 AM', prompt: 'Find a ride from Lajpat Nagar to Noida Sector 125 at 8:25 AM via DND Clean Flyway, cashless.' },
+        { icon: 'zap', label: 'Jangpura → Mayur Vihar · Barapullah HOV', prompt: 'Carpool to Mayur Vihar Phase 1 Metro via Barapullah Elevated Transit around 8:40 AM.' },
+        { icon: 'leaf', label: 'Ashram → Greater Noida Knowledge Park · EV', prompt: 'Long-distance zero-emission pod to Greater Noida Knowledge Park on Friday at 8:10 AM.' }
+      ],
       routines: {
         mon: {
           dest: 'Noida Sector 125 Hub',
@@ -1161,6 +1181,11 @@ const CeraUserManager = {
       vehiclePref: 'Shared Compact EV',
       habitualDays: 'Tuesdays & Thursdays (09:00 AM)',
       streak: 9,
+      prompts: [
+        { icon: 'compass', label: 'Hauz Khas → Lodhi Art District · 08:50 AM', prompt: 'Creative session commute from Hauz Khas to Lodhi Art District Block 12 around 08:50 AM in an EV.' },
+        { icon: 'building-2', label: 'Green Park → Khan Market · 09:00 AM', prompt: 'Shared EV ride from Green Park to Khan Market Metro Gate 4 at 09:00 AM with Rajesh.' },
+        { icon: 'leaf', label: 'AIIMS → CP British Council · 09:10 AM', prompt: 'Friday commute to Connaught Place British Council at 09:10 AM with Priya for 50 Green Credits.' }
+      ],
       routines: {
         mon: {
           dest: 'Lodhi Art District',
@@ -1702,7 +1727,7 @@ function initCeraAI() {
     });
   }
 
-  // Listen for user persona switches to update Smart-Twin routines
+  // Listen for user persona switches to update Smart-Twin routines & Ride-Scribe prompt chips
   CeraUserManager.onUserChange(user => {
     activeUser = user;
     routines = user.routines || CeraUserManager.PERSONAS.adesh.routines;
@@ -1710,6 +1735,7 @@ function initCeraAI() {
     if (creditsCounter) creditsCounter.textContent = user.credits;
     if (co2Counter) co2Counter.textContent = user.co2SavedKg;
     applyRoutine(currentDay);
+    renderUserPromptChips(user);
   });
 
   // Reset Routine Button
@@ -1758,16 +1784,28 @@ function initCeraAI() {
 
     // 1. Destination
     let destination = "Connaught Place (Office Hub)";
-    if (lower.includes('cyber city') || lower.includes('gurugram')) destination = "Cyber City, Gurugram";
-    else if (lower.includes('lajpat') || lower.includes('south')) destination = "Lajpat Nagar / South Ex";
-    else if (lower.includes('noida')) destination = "Noida Sector 62";
+    if (lower.includes('cyber city') || lower.includes('gurugram') || lower.includes('horizon')) destination = "Cyber City, Gurugram";
+    else if (lower.includes('safdarjung') || lower.includes('aiims') || lower.includes('medical') || lower.includes('pulmonary')) destination = "AIIMS & Safdarjung Medical Hub";
+    else if (lower.includes('noida') || lower.includes('knowledge park') || lower.includes('sector 125') || lower.includes('sector 62')) destination = "Noida Sector 125 & IT Hub";
+    else if (lower.includes('lodhi') || lower.includes('khan market') || lower.includes('art district')) destination = "Lodhi Art District & Cultural Hub";
+    else if (lower.includes('lajpat') || lower.includes('south ex')) destination = "Lajpat Nagar / South Ex";
+    else if (lower.includes('aerocity') || lower.includes('worldmark')) destination = "Aerocity Worldmark District";
     else if (lower.includes('rohini')) destination = "Rohini Sector 11";
+    else if (lower.includes('dwarka')) destination = "Dwarka Sector 10 Hub";
 
     // 2. Time
     let time = "Tomorrow, 08:30 AM";
-    if (lower.includes('9:00') || lower.includes('9 am')) time = "Tomorrow, 09:00 AM";
+    if (lower.includes('7:45') || lower.includes('07:45')) time = "Tomorrow, 07:45 AM";
+    else if (lower.includes('7:50') || lower.includes('07:50')) time = "Tomorrow, 07:50 AM";
+    else if (lower.includes('8:10') || lower.includes('08:10')) time = "Tomorrow, 08:10 AM";
+    else if (lower.includes('8:15') || lower.includes('08:15')) time = "Tomorrow, 08:15 AM";
+    else if (lower.includes('8:25') || lower.includes('08:25')) time = "Tomorrow, 08:25 AM";
+    else if (lower.includes('8:40') || lower.includes('08:40')) time = "Tomorrow, 08:40 AM";
+    else if (lower.includes('8:50') || lower.includes('08:50')) time = "Tomorrow, 08:50 AM";
+    else if (lower.includes('9:00') || lower.includes('9 am') || lower.includes('09:00')) time = "Tomorrow, 09:00 AM";
+    else if (lower.includes('9:10') || lower.includes('09:10')) time = "Tomorrow, 09:10 AM";
     else if (lower.includes('evening') || lower.includes('6:45') || lower.includes('night')) time = "Today, 06:45 PM";
-    else if (lower.includes('8:00') || lower.includes('8 am')) time = "Tomorrow, 08:00 AM";
+    else if (lower.includes('8:00') || lower.includes('8 am') || lower.includes('08:00')) time = "Tomorrow, 08:00 AM";
 
     // 3. Payment
     let payment = "UPI Dynamic Split";
@@ -1776,27 +1814,46 @@ function initCeraAI() {
     else if (lower.includes('upi')) payment = "UPI Split (Instant)";
 
     // 4. Discounts & Rebates
-    let discount = "None specified";
+    let discount = "Civic Green Credits Applied";
     if (lower.includes('metro pass') || lower.includes('dmrc')) discount = "DMRC Metro Pass (-20% / ₹12 off)";
     else if (lower.includes('fastag rebate') || lower.includes('toll')) discount = "NHAI Toll Rebate (15% off)";
+    else if (lower.includes('hospital') || lower.includes('lane pass')) discount = "Emergency / Hospital Priority Pass";
+    else if (lower.includes('student') || lower.includes('cultural')) discount = "Student & Cultural Pass (-25%)";
     else if (lower.includes('carbon') || lower.includes('green credits')) discount = "Civic Green Credits 2.5× Boost";
 
     // 5. Vehicle Preference
-    let vehicle = "Verified EV Preferred";
-    if (lower.includes('ev') || lower.includes('electric')) vehicle = "Zero-Emission EV Sedan";
+    let vehicle = "Zero-Emission EV Sedan";
+    if (lower.includes('ioniq') || lower.includes('hepa') || lower.includes('filter')) vehicle = "Hyundai Ioniq 5 EV (HEPA Clean Air)";
+    else if (lower.includes('nexon') || lower.includes('ev sedan')) vehicle = "Tata Nexon EV (Zero Tailpipe)";
+    else if (lower.includes('mg zs') || lower.includes('clean ev')) vehicle = "MG ZS EV (Zero Emission)";
     else if (lower.includes('hybrid')) vehicle = "Hybrid Clean Pod";
-    else vehicle = "High-Occupancy Commuter Pod";
+    else vehicle = "Verified High-Occupancy Pod";
 
     // 6. Matched Pod Details
     let driver = "Priya M.";
     let driverCar = "Tata Nexon EV";
     let matchScore = "98%";
     let fare = "₹48";
-    if (destination.includes('Cyber City')) {
+    if (destination.includes('Cyber City') || destination.includes('Gurugram')) {
       driver = "Rajesh K.";
       driverCar = "Tata Nexon EV";
-      matchScore = "94%";
+      matchScore = "99%";
+      fare = "₹70";
+    } else if (destination.includes('AIIMS') || destination.includes('Safdarjung')) {
+      driver = "Priya M.";
+      driverCar = "Tata Nexon EV";
+      matchScore = "97%";
+      fare = "₹40";
+    } else if (destination.includes('Noida') || destination.includes('Knowledge Park')) {
+      driver = "Vikram S.";
+      driverCar = "MG ZS EV";
+      matchScore = "96%";
       fare = "₹60";
+    } else if (destination.includes('Lodhi') || destination.includes('Khan Market')) {
+      driver = "Priya M.";
+      driverCar = "Tata Nexon EV";
+      matchScore = "98%";
+      fare = "₹45";
     } else if (destination.includes('Lajpat') || time.includes('06:45')) {
       driver = "Vikram S.";
       driverCar = "MG ZS EV";
@@ -1933,18 +1990,6 @@ function initCeraAI() {
     });
   }
 
-  // Dock prompt chips
-  dockChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const prompt = chip.dataset.prompt || '';
-      if (dockInput) dockInput.value = prompt;
-      if (secInput) secInput.value = prompt;
-      const parsed = parseNaturalLanguage(prompt);
-      renderDockOutput(parsed);
-      renderSectionOutput(parsed);
-    });
-  });
-
   // Section NLP events
   if (secRunBtn) {
     secRunBtn.addEventListener('click', () => {
@@ -1968,17 +2013,80 @@ function initCeraAI() {
     });
   }
 
-  // Section prompt sample pills
-  secPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      const query = pill.dataset.query || '';
-      if (secInput) secInput.value = query;
-      if (dockInput) dockInput.value = query;
-      const parsed = parseNaturalLanguage(query);
-      renderSectionOutput(parsed);
-      renderDockOutput(parsed);
-    });
-  });
+  // Dynamic User Prompt Chips Synchronization
+  function renderUserPromptChips(user) {
+    const dockWrap = document.getElementById('dock-ai-chips-wrap');
+    const scribeWrap = document.getElementById('scribe-sample-pills-wrap');
+    const prompts = (user && user.prompts) || (CeraUserManager.PERSONAS.adesh && CeraUserManager.PERSONAS.adesh.prompts) || [];
+    const displayName = (user && (user.shortName || user.name)) || 'Commuter';
+
+    if (dockWrap) {
+      dockWrap.innerHTML = `
+        <span class="chips-label">AI Prompts (${displayName}):</span>
+        ${prompts.map(p => `
+          <button type="button" class="ai-quick-chip" data-prompt="${p.prompt.replace(/"/g, '&quot;')}">
+            <i data-lucide="${p.icon || 'zap'}" class="icon icon--xs"></i> ${p.label}
+          </button>
+        `).join('')}
+      `;
+
+      dockWrap.querySelectorAll('.ai-quick-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const prompt = chip.dataset.prompt || '';
+          if (dockInput) dockInput.value = prompt;
+          if (secInput) secInput.value = prompt;
+          const parsed = parseNaturalLanguage(prompt);
+          renderDockOutput(parsed);
+          renderSectionOutput(parsed);
+        });
+      });
+    }
+
+    if (scribeWrap) {
+      scribeWrap.innerHTML = `
+        <span class="pills-title">Click to test prompts (${displayName}):</span>
+        ${prompts.map(p => `
+          <button type="button" class="scribe-sample-pill" data-query="${p.prompt.replace(/"/g, '&quot;')}">
+            "${p.prompt}"
+          </button>
+        `).join('')}
+        <button type="button" id="scribe-cycle-btn" class="scribe-cycle-btn" title="Cycle Next Scenario" aria-label="Cycle next scenario">
+          <i data-lucide="refresh-cw" class="icon icon--xs"></i> Cycle Scenarios
+        </button>
+      `;
+
+      scribeWrap.querySelectorAll('.scribe-sample-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          const query = pill.dataset.query || '';
+          if (secInput) secInput.value = query;
+          if (dockInput) dockInput.value = query;
+          const parsed = parseNaturalLanguage(query);
+          renderSectionOutput(parsed);
+          renderDockOutput(parsed);
+        });
+      });
+
+      const cycleBtn = document.getElementById('scribe-cycle-btn');
+      if (cycleBtn) {
+        let currentPromptIdx = 0;
+        cycleBtn.addEventListener('click', () => {
+          if (!prompts.length) return;
+          currentPromptIdx = (currentPromptIdx + 1) % prompts.length;
+          const p = prompts[currentPromptIdx];
+          if (secInput) secInput.value = p.prompt;
+          if (dockInput) dockInput.value = p.prompt;
+          const parsed = parseNaturalLanguage(p.prompt);
+          renderSectionOutput(parsed);
+          renderDockOutput(parsed);
+        });
+      }
+    }
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // Initial population of prompt chips for active user
+  renderUserPromptChips(activeUser);
 
   // Web Speech Recognition & Continuous Dictation Engine
   function activateVoiceDictation(inputElem, micElem, callback) {
