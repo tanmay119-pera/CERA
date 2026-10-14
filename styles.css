@@ -2726,6 +2726,62 @@ h1, h2, h3, h4 {
   color: var(--text-main);
 }
 
+.driver-trust-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+/* Seat availability visual indicator */
+.seat-indicator-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.seat-dots-cluster {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.seat-mini-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.seat-mini-dot--open {
+  background: #22C55E;
+  box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+}
+
+.seat-mini-dot--taken {
+  background: var(--text-muted);
+  opacity: 0.45;
+}
+
+.seat-indicator-text {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pill-chip--ev-clean {
+  color: var(--accent);
+  border-color: rgba(252, 241, 208, 0.35);
+  background: var(--accent-subtle);
+}
+
 .driver-score {
   display: block;
   font-size: 0.72rem;
