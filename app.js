@@ -1162,6 +1162,19 @@ function initUserProfileNav() {
     if (mobileName) mobileName.textContent = user.name;
     if (mobileRole) mobileRole.textContent = `${user.badge} · ${user.credits} GC`;
 
+    const heroAvatar = document.getElementById('hero-user-avatar');
+    const heroName = document.getElementById('hero-user-name');
+    const heroTier = document.getElementById('hero-user-tier');
+    const heroCredits = document.getElementById('hero-user-credits');
+
+    if (heroAvatar) {
+      heroAvatar.src = user.avatar;
+      heroAvatar.alt = user.name;
+    }
+    if (heroName) heroName.textContent = user.name;
+    if (heroTier) heroTier.innerHTML = `<i data-lucide="shield-check" class="icon icon--xxs"></i> ${user.badge} · ${user.corridor}`;
+    if (heroCredits) heroCredits.textContent = user.credits;
+
     renderDropdownPersonas(user);
     if (window.lucide) lucide.createIcons();
   }

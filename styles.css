@@ -1238,6 +1238,90 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
 }
 
+/* Personalized Active Commuter Banner in Hero */
+.hero-user-banner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 16px 6px 8px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  margin-bottom: 22px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-user-banner:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.hero-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--accent);
+  flex-shrink: 0;
+}
+
+.hero-user-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.15;
+}
+
+.hero-user-greeting {
+  font-size: 0.78rem;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.hero-user-greeting strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.hero-user-tier {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-user-credits-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-secondary);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+}
+
+.hero-user-credits-pill .credits-amount {
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.hero-user-credits-pill .credits-tag {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
 .hero-clean__title {
   font-family: 'Anton', 'Playfair Display', sans-serif;
   font-size: clamp(3.2rem, 7vw, 6.2rem);
