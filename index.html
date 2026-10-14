@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Accessible Skip Link for Screen Readers and Keyboard Navigators -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
   <!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
   <nav class="navbar">
@@ -263,7 +265,7 @@
     </div>
   </aside>
 
-  <main>
+  <main id="main-content">
 
     <!-- ═══════════════════════ 1. HERO SECTION ═══════════════════════ -->
     <section class="hero-clean">
@@ -728,7 +730,20 @@
                   <label for="calc-distance-slider" class="calc-label">One-Way Daily Commute Distance</label>
                   <span class="calc-slider-val" id="calc-distance-val">18 km</span>
                 </div>
-                <input type="range" id="calc-distance-slider" class="calc-slider" min="5" max="60" value="18" step="1" />
+                <input
+                  type="range"
+                  id="calc-distance-slider"
+                  class="calc-slider"
+                  min="5"
+                  max="60"
+                  value="18"
+                  step="1"
+                  aria-valuemin="5"
+                  aria-valuemax="60"
+                  aria-valuenow="18"
+                  aria-label="One-Way Daily Commute Distance in kilometers"
+                  aria-describedby="calc-distance-val"
+                />
                 <div class="calc-slider-ticks">
                   <span>5 km (Local)</span>
                   <span>25 km (Ring Road)</span>
@@ -738,22 +753,22 @@
 
               <!-- Vehicle Fuel Type -->
               <div class="calc-control-group">
-                <label class="calc-label">Vehicle Fuel / Powertrain Type</label>
-                <div class="calc-btn-group" id="calc-fuel-group">
-                  <button type="button" class="calc-btn is-active" data-fuel="petrol">Petrol (14 km/L)</button>
-                  <button type="button" class="calc-btn" data-fuel="diesel">Diesel (18 km/L)</button>
-                  <button type="button" class="calc-btn" data-fuel="cng">CNG (22 km/kg)</button>
-                  <button type="button" class="calc-btn" data-fuel="ev">Electric EV (Zero)</button>
+                <label class="calc-label" id="calc-fuel-label">Vehicle Fuel / Powertrain Type</label>
+                <div class="calc-btn-group" id="calc-fuel-group" role="radiogroup" aria-labelledby="calc-fuel-label">
+                  <button type="button" class="calc-btn is-active" data-fuel="petrol" role="radio" aria-checked="true">Petrol (14 km/L)</button>
+                  <button type="button" class="calc-btn" data-fuel="diesel" role="radio" aria-checked="false">Diesel (18 km/L)</button>
+                  <button type="button" class="calc-btn" data-fuel="cng" role="radio" aria-checked="false">CNG (22 km/kg)</button>
+                  <button type="button" class="calc-btn" data-fuel="ev" role="radio" aria-checked="false">Electric EV (Zero)</button>
                 </div>
               </div>
 
               <!-- Pool Occupancy -->
               <div class="calc-control-group">
-                <label class="calc-label">Target Pod Occupancy (Co-Riders)</label>
-                <div class="calc-btn-group" id="calc-seats-group">
-                  <button type="button" class="calc-btn" data-seats="2">2 People (Split 50%)</button>
-                  <button type="button" class="calc-btn is-active" data-seats="3">3 People (Split 66%)</button>
-                  <button type="button" class="calc-btn" data-seats="4">4 People (Split 75%)</button>
+                <label class="calc-label" id="calc-seats-label">Target Pod Occupancy (Co-Riders)</label>
+                <div class="calc-btn-group" id="calc-seats-group" role="radiogroup" aria-labelledby="calc-seats-label">
+                  <button type="button" class="calc-btn" data-seats="2" role="radio" aria-checked="false">2 People (Split 50%)</button>
+                  <button type="button" class="calc-btn is-active" data-seats="3" role="radio" aria-checked="true">3 People (Split 66%)</button>
+                  <button type="button" class="calc-btn" data-seats="4" role="radio" aria-checked="false">4 People (Split 75%)</button>
                 </div>
               </div>
             </div>
@@ -2259,12 +2274,12 @@
   </div>
 
   <!-- ═══════════════════════ COMMUTER PERSONA DIRECTORY MODAL ═══════════════════════ -->
-  <div id="cera-persona-modal" class="cera-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Commuter Persona Directory">
+  <div id="cera-persona-modal" class="cera-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="persona-modal-title">
     <div class="cera-modal-panel persona-modal-panel">
       <div class="cera-modal-header">
         <div class="cera-modal-title-group">
           <span class="cera-modal-badge"><i data-lucide="users" class="icon icon--xs"></i> CIVIC PROFILES</span>
-          <h3 class="cera-modal-title">Commuter Persona Directory</h3>
+          <h3 class="cera-modal-title" id="persona-modal-title">Commuter Persona Directory</h3>
           <p class="cera-modal-sub">Switch active profile to simulate personalized commute routing, habitual corridors, and Green Credit ledgers.</p>
         </div>
         <button id="persona-modal-close-btn" class="cera-modal-close" aria-label="Close modal">&times;</button>
@@ -2285,12 +2300,12 @@
   </div>
 
   <!-- ═══════════════════════ CARPOOL POD SEAT BOOKING MODAL ═══════════════════════ -->
-  <div id="cera-booking-modal" class="cera-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Carpool Pod Reservation">
+  <div id="cera-booking-modal" class="cera-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
     <div class="cera-modal-panel booking-modal-panel">
       <div class="cera-modal-header">
         <div class="cera-modal-title-group">
           <span class="cera-modal-badge"><i data-lucide="shield-check" class="icon icon--xs"></i> HIGH-OCCUPANCY POD DISPATCH</span>
-          <h3 class="cera-modal-title">Confirm Seat Reservation</h3>
+          <h3 class="cera-modal-title" id="booking-modal-title">Confirm Seat Reservation</h3>
           <p class="cera-modal-sub" id="booking-modal-subtitle">Direct peer carpool match with municipal clean air compliance.</p>
         </div>
         <button id="booking-modal-close-btn" class="cera-modal-close" aria-label="Close modal">&times;</button>

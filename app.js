@@ -3484,6 +3484,7 @@ function initCarbonCalculator() {
   // Slider events
   slider.addEventListener('input', () => {
     currentDistance = Number(slider.value);
+    slider.setAttribute('aria-valuenow', currentDistance);
     if (distanceVal) distanceVal.textContent = `${currentDistance} km`;
     calculate();
   });
@@ -3491,8 +3492,12 @@ function initCarbonCalculator() {
   // Fuel button events
   fuelButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      fuelButtons.forEach(b => b.classList.remove('is-active'));
+      fuelButtons.forEach(b => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-checked', 'false');
+      });
       btn.classList.add('is-active');
+      btn.setAttribute('aria-checked', 'true');
       currentFuel = btn.dataset.fuel || 'petrol';
       calculate();
     });
@@ -3501,8 +3506,12 @@ function initCarbonCalculator() {
   // Seat occupancy events
   seatsButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      seatsButtons.forEach(b => b.classList.remove('is-active'));
+      seatsButtons.forEach(b => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-checked', 'false');
+      });
       btn.classList.add('is-active');
+      btn.setAttribute('aria-checked', 'true');
       currentSeats = Number(btn.dataset.seats) || 3;
       calculate();
     });

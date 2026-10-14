@@ -6756,6 +6756,59 @@ h1, h2, h3, h4 {
   background: var(--bg-secondary);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ACCESSIBILITY: SKIP-LINK, FOCUS RINGS & KEYBOARD NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
+.skip-to-content {
+  position: fixed;
+  top: -120px;
+  left: 20px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  z-index: 99999;
+  text-decoration: none;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+  transition: top 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skip-to-content:focus {
+  top: 20px;
+  outline: 3px solid var(--text-main);
+  outline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
 
 
 
