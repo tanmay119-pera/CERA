@@ -445,26 +445,117 @@ function initVoucherButtons() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   9. CORRIDOR BRIEF INQUIRY FORM
+   9. CORRIDOR BRIEF INQUIRY FORM WITH PROFILE AUTOFILL
    ═══════════════════════════════════════════════════════════════ */
 function initBriefForm() {
   const form = document.getElementById('commute-brief-form');
   if (!form) return;
 
+  const firstNameInput = document.getElementById('first-name');
+  const lastNameInput = document.getElementById('last-name');
+  const originInput = document.getElementById('commute-origin');
+  const timeInput = document.getElementById('commute-time');
+  const phoneInput = document.getElementById('phone-num');
+  const emailInput = document.getElementById('email-addr');
+
+  const briefAvatar = document.getElementById('brief-user-avatar');
+  const briefUserName = document.getElementById('brief-user-name');
+  const autofillBtn = document.getElementById('brief-autofill-btn');
+
+  function autofillWithUser(user) {
+    if (!user) return;
+
+    if (briefAvatar && user.avatar) {
+      briefAvatar.src = user.avatar;
+      briefAvatar.alt = user.name;
+    }
+    if (briefUserName) {
+      briefUserName.textContent = `${user.name} (${user.role})`;
+    }
+
+    const parts = user.name.split(' ');
+    let first = parts[0];
+    let last = parts.slice(1).join(' ');
+    if (first.startsWith('Dr.')) {
+      first = parts[1] || 'Rohan';
+      last = parts.slice(2).join(' ') || 'Sen';
+    }
+
+    if (firstNameInput) firstNameInput.value = first;
+    if (lastNameInput) lastNameInput.value = last;
+    if (originInput) originInput.value = `${user.primaryHub} → ${user.destination}`;
+
+    let timeStr = '08:30 AM';
+    if (user.habitualDays && user.habitualDays.includes('(')) {
+      const match = user.habitualDays.match(/\(([^)]+)\)/);
+      if (match) timeStr = match[1];
+    }
+    if (timeInput) timeInput.value = timeStr;
+
+    const phoneSuffix = Math.abs(user.id.charCodeAt(0) * 137) % 90000 + 10000;
+    if (phoneInput) phoneInput.value = `+91 9810${phoneSuffix} (Verified)`;
+    if (emailInput) emailInput.value = `${user.id}.commute@cera.gov.in`;
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // Initial autofill
+  if (typeof CeraUserManager !== 'undefined') {
+    autofillWithUser(CeraUserManager.getCurrentUser());
+    CeraUserManager.onUserChange(user => {
+      autofillWithUser(user);
+    });
+  }
+
+  if (autofillBtn) {
+    autofillBtn.addEventListener('click', () => {
+      const user = typeof CeraUserManager !== 'undefined' ? CeraUserManager.getCurrentUser() : null;
+      if (user) {
+        autofillWithUser(user);
+        if (typeof CeraToast !== 'undefined') {
+          CeraToast.show(`Corridor brief auto-filled with ${user.name}'s verified commuter profile.`, {
+            title: 'Profile Autofill Synced',
+            type: 'info'
+          });
+        }
+      }
+    });
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
-    const origin = document.getElementById('commute-origin').value;
+    const origin = originInput ? originInput.value : 'Corridor Route';
+    const user = typeof CeraUserManager !== 'undefined' ? CeraUserManager.getCurrentUser() : null;
 
     btn.textContent = 'TRANSMITTING BRIEF TO SPATIAL ENGINE...';
     btn.disabled = true;
 
     setTimeout(() => {
-      btn.textContent = '✓ BRIEF ACCEPTED — CLUSTERING IN PROGRESS';
-      btn.style.background = 'var(--green)';
-      btn.style.color = '#FFFFFF';
-      displayToast(`Corridor brief for "${origin}" logged! We will notify you with 3 verified ride matches within 24h.`);
-    }, 900);
+      btn.textContent = '✓ BRIEF ACCEPTED — +25 GC CREDITED';
+      btn.style.background = 'var(--accent)';
+      btn.style.color = 'var(--bg-primary)';
+
+      if (typeof CeraUserManager !== 'undefined') {
+        CeraUserManager.addCredits(25);
+      }
+
+      if (typeof CeraToast !== 'undefined') {
+        CeraToast.show(`Corridor brief for "${origin}" registered under ${user ? user.name : 'your account'}. Spatial engine is clustering 3 co-riders within 500m. +25 Green Credits rewarded!`, {
+          title: 'Corridor Brief Accepted',
+          type: 'success'
+        });
+      } else if (typeof displayToast === 'function') {
+        displayToast(`Corridor brief for "${origin}" logged! We will notify you with 3 verified ride matches within 24h.`);
+      }
+
+      setTimeout(() => {
+        btn.textContent = 'SUBMIT ANOTHER CORRIDOR BRIEF';
+        btn.disabled = false;
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 3500);
+    }, 850);
   });
 }
 
