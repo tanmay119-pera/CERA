@@ -6922,6 +6922,117 @@ textarea:focus-visible {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE UX & TOUCH TARGET OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .carbon-calc-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .hero-user-strip {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .hero-user-stats {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .corridor-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .carbon-calc-inner {
+    padding: 20px 16px;
+    gap: 18px;
+  }
+
+  .carbon-calc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .carbon-calc-title {
+    font-size: 1.2rem;
+  }
+
+  .calc-btn {
+    min-height: 42px;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+  }
+
+  .calc-result-val {
+    font-size: 1.8rem;
+  }
+
+  .calc-result-mini-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .aqi-health-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .aqi-health-guidance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .corridor-flow-strip {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .cera-modal-panel {
+    width: 95vw !important;
+    max-height: 90vh !important;
+    padding: 18px 14px !important;
+  }
+
+  .booking-modal-summary {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .persona-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .corridor-filter-pills {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .corridor-filter-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cera-toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 80px;
+    max-width: 100%;
+  }
+
+  .cera-toast {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
 
 
 
