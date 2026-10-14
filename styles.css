@@ -5354,5 +5354,289 @@ h1, h2, h3, h4 {
   font-weight: 600;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   CERA MODAL & PERSONA DIRECTORY DIALOG
+   Strict 3-shade theme architecture: #0D1C42, #22396F, #FCF1D0
+   ═══════════════════════════════════════════════════════════════ */
+.cera-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 28, 66, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease;
+}
+
+.cera-modal-backdrop.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cera-modal-panel {
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cera-modal-backdrop.is-active .cera-modal-panel {
+  transform: scale(1) translateY(0);
+}
+
+.cera-modal-header {
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--bg-card);
+}
+
+.cera-modal-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cera-modal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.cera-modal-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.cera-modal-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 580px;
+  line-height: 1.4;
+}
+
+.cera-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.cera-modal-close:hover {
+  color: var(--accent);
+  background: var(--bg-secondary);
+}
+
+.persona-modal-grid {
+  padding: 22px 28px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+  max-height: calc(90vh - 160px);
+}
+
+.persona-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.persona-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.persona-card.is-active {
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+  box-shadow: 0 0 0 1.5px var(--accent), 0 8px 24px rgba(0, 0, 0, 0.32);
+}
+
+.persona-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.persona-card-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  flex-shrink: 0;
+}
+
+.persona-card-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.persona-card-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.persona-card-role {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.persona-card-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  margin-top: 4px;
+  width: fit-content;
+}
+
+.persona-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 10px;
+  background: var(--bg-primary);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.persona-stat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.persona-stat-num {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.persona-stat-lbl {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.persona-info-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+}
+
+.persona-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.persona-info-row strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.persona-btn-select {
+  width: 100%;
+  padding: 9px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-main);
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.persona-card.is-active .persona-btn-select {
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  border-color: var(--btn-contrast-bg);
+  cursor: default;
+}
+
+.persona-btn-select:not([disabled]):hover {
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  border-color: var(--btn-contrast-bg);
+}
+
+.cera-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+}
+
+.cera-modal-footer-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+}
+
+
 
 

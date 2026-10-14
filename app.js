@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBriefForm();
   initHeroAQICard();
   initUserProfileNav();
+  initPersonaModal();
   initCeraAI();
   initCeraAIShortcuts();
   initCeraOmnibar();
@@ -1205,6 +1206,112 @@ function initUserProfileNav() {
       CeraUserManager.setCurrentUser(personas[nextIdx].id);
     });
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   5.7. COMMUTER PERSONA DIRECTORY MODAL
+   ═══════════════════════════════════════════════════════════════ */
+function initPersonaModal() {
+  const modal = document.getElementById('cera-persona-modal');
+  const openBtn = document.getElementById('btn-open-persona-modal');
+  const closeBtn = document.getElementById('persona-modal-close-btn');
+  const doneBtn = document.getElementById('persona-modal-done-btn');
+  const grid = document.getElementById('persona-modal-grid');
+
+  if (!modal || !grid) return;
+
+  function renderCards(activeUser) {
+    const personas = CeraUserManager.getAllPersonas();
+    grid.innerHTML = personas.map(p => {
+      const isActive = p.id === activeUser.id;
+      return `
+        <div class="persona-card ${isActive ? 'is-active' : ''}">
+          <div class="persona-card-header">
+            <img src="${p.avatar}" alt="${p.name}" class="persona-card-avatar" />
+            <div class="persona-card-meta">
+              <span class="persona-card-name">${p.name}</span>
+              <span class="persona-card-role">${p.role}</span>
+              <span class="persona-card-badge">${p.badge}</span>
+            </div>
+          </div>
+
+          <div class="persona-stats-grid">
+            <div class="persona-stat-cell">
+              <span class="persona-stat-num">${p.credits}</span>
+              <span class="persona-stat-lbl">Credits</span>
+            </div>
+            <div class="persona-stat-cell">
+              <span class="persona-stat-num">${p.co2SavedKg} kg</span>
+              <span class="persona-stat-lbl">CO₂ Offset</span>
+            </div>
+            <div class="persona-stat-cell">
+              <span class="persona-stat-num">${p.streak}d</span>
+              <span class="persona-stat-lbl">Streak</span>
+            </div>
+          </div>
+
+          <div class="persona-info-rows">
+            <div class="persona-info-row">
+              <i data-lucide="map-pin" class="icon icon--xxs"></i>
+              <span>Hub: <strong>${p.primaryHub}</strong> → <strong>${p.destination}</strong></span>
+            </div>
+            <div class="persona-info-row">
+              <i data-lucide="calendar" class="icon icon--xxs"></i>
+              <span>Routine: <strong>${p.habitualDays}</strong></span>
+            </div>
+            <div class="persona-info-row">
+              <i data-lucide="car" class="icon icon--xxs"></i>
+              <span>Preferred: <strong>${p.vehiclePref}</strong></span>
+            </div>
+          </div>
+
+          <button type="button" class="persona-btn-select" data-persona-id="${p.id}" ${isActive ? 'disabled' : ''}>
+            ${isActive ? '✓ Active Commuter Persona' : 'Switch to this Persona'}
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    grid.querySelectorAll('.persona-btn-select:not([disabled])').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.personaId;
+        CeraUserManager.setCurrentUser(id);
+      });
+    });
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function openModal() {
+    renderCards(CeraUserManager.getCurrentUser());
+    modal.classList.add('is-active');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-active');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  if (openBtn) openBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (doneBtn) doneBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+      closeModal();
+    }
+  });
+
+  CeraUserManager.onUserChange(user => {
+    if (modal.classList.contains('is-active')) {
+      renderCards(user);
+    }
+  });
 }
 
 function initCeraAI() {
