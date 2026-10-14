@@ -390,57 +390,79 @@ function initBriefForm() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   10. FLOATING TOAST NOTIFICATION
+   10. ACCESSIBLE FLOATING TOAST NOTIFICATION ENGINE
    ═══════════════════════════════════════════════════════════════ */
-function displayToast(msg) {
-  let box = document.getElementById('cera-toast-wrap');
-  if (!box) {
-    box = document.createElement('div');
-    box.id = 'cera-toast-wrap';
-    Object.assign(box.style, {
-      position: 'fixed',
-      bottom: '32px',
-      right: '32px',
-      zIndex: '99999',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '10px',
-      pointerEvents: 'none'
+const CeraToast = {
+  getContainer() {
+    let box = document.getElementById('cera-toast-wrap');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'cera-toast-wrap';
+      box.className = 'cera-toast-wrap';
+      box.setAttribute('role', 'status');
+      box.setAttribute('aria-live', 'polite');
+      document.body.appendChild(box);
+    }
+    return box;
+  },
+
+  show(msg, options = {}) {
+    const box = this.getContainer();
+    const duration = options.duration || 4500;
+    const title = options.title || 'CERA Notification';
+    const type = options.type || 'success';
+
+    let iconName = 'check-circle-2';
+    if (type === 'credit') iconName = 'leaf';
+    else if (type === 'info') iconName = 'sparkles';
+    else if (type === 'warning') iconName = 'alert-triangle';
+
+    const toast = document.createElement('div');
+    toast.className = `cera-toast cera-toast--${type}`;
+    toast.innerHTML = `
+      <div class="cera-toast__icon">
+        <i data-lucide="${iconName}" class="icon icon--xs"></i>
+      </div>
+      <div class="cera-toast__body">
+        <span class="cera-toast__title">${title}</span>
+        <span class="cera-toast__msg">${msg}</span>
+      </div>
+      <button type="button" class="cera-toast__close" aria-label="Dismiss notification">&times;</button>
+      <div class="cera-toast__bar" style="animation-duration: ${duration}ms;"></div>
+    `;
+
+    box.appendChild(toast);
+    if (window.lucide) lucide.createIcons();
+
+    requestAnimationFrame(() => {
+      toast.classList.add('is-visible');
     });
-    document.body.appendChild(box);
+
+    let dismissTimer = setTimeout(() => dismiss(), duration);
+
+    function dismiss() {
+      clearTimeout(dismissTimer);
+      toast.classList.remove('is-visible');
+      toast.classList.add('is-leaving');
+      setTimeout(() => {
+        if (toast.parentNode) toast.remove();
+      }, 300);
+    }
+
+    const closeBtn = toast.querySelector('.cera-toast__close');
+    if (closeBtn) closeBtn.addEventListener('click', dismiss);
+
+    return toast;
   }
+};
 
-  const toast = document.createElement('div');
-  Object.assign(toast.style, {
-    background: 'var(--bg-secondary)',
-    color: 'var(--text-main)',
-    border: '1px solid var(--border)',
-    borderRadius: '12px',
-    padding: '16px 24px',
-    fontSize: '0.86rem',
-    fontWeight: '600',
-    fontFamily: "'Noto Sans', sans-serif",
-    boxShadow: 'var(--shadow-heavy)',
-    maxWidth: '420px',
-    pointerEvents: 'auto',
-    opacity: '0',
-    transform: 'translateY(20px)',
-    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+function displayToast(msg) {
+  const isCredit = msg.includes('Credit') || msg.includes('GC') || msg.includes('earned');
+  const isAlert = msg.includes('caution') || msg.includes('severe') || msg.includes('Warning');
+  CeraToast.show(msg, {
+    title: isCredit ? 'Green Credits Earned' : (isAlert ? 'Corridor Advisory' : 'Civic Update'),
+    type: isCredit ? 'credit' : (isAlert ? 'warning' : 'success')
   });
-
-  toast.textContent = msg;
-  box.appendChild(toast);
-
-  requestAnimationFrame(() => {
-    toast.style.opacity = '1';
-    toast.style.transform = 'translateY(0)';
-  });
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(16px)';
-    setTimeout(() => toast.remove(), 350);
-  }, 4200);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1225,6 +1247,12 @@ const CeraUserManager = {
 
     const updatedUser = this.getCurrentUser();
     this.notify(updatedUser);
+    if (typeof CeraToast !== 'undefined') {
+      CeraToast.show(`Switched to ${updatedUser.name} (${updatedUser.role}). Corridors, routines, and Green Credits synchronized.`, {
+        title: 'Commuter Persona Active',
+        type: 'info'
+      });
+    }
     return true;
   },
 
