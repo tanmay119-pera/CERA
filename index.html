@@ -662,6 +662,116 @@
           </div>
         </div>
       </div>
+
+      <!-- Interactive Personal Carbon & Fuel Savings Calculator -->
+      <div class="carbon-calc-card tilt-card" data-tilt-max="5">
+        <div class="carbon-calc-inner">
+          <div class="carbon-calc-header">
+            <div class="carbon-calc-title-wrap">
+              <span class="carbon-calc-badge"><i data-lucide="calculator" class="icon icon--xs"></i> CIVIC ROI CALCULATOR</span>
+              <h3 class="carbon-calc-title">Personal Emissions &amp; Fuel Savings Simulator</h3>
+              <p class="carbon-calc-sub">Calculate your household cash savings and tailpipe PM2.5 mitigation when carpooling across Delhi NCR arterial routes.</p>
+            </div>
+            <div class="carbon-calc-user-sync" id="calc-persona-sync">
+              <img id="calc-user-avatar" src="images/driver_rajesh.jpg" alt="Adesh" class="calc-user-avatar" />
+              <div class="calc-user-text">
+                <span class="calc-user-label">Calculated for</span>
+                <span class="calc-user-name" id="calc-user-name">Adesh Sharma</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="carbon-calc-grid">
+            <!-- Left Controls -->
+            <div class="calc-controls-col">
+              <!-- Distance Slider -->
+              <div class="calc-control-group">
+                <div class="calc-slider-header">
+                  <label for="calc-distance-slider" class="calc-label">One-Way Daily Commute Distance</label>
+                  <span class="calc-slider-val" id="calc-distance-val">18 km</span>
+                </div>
+                <input type="range" id="calc-distance-slider" class="calc-slider" min="5" max="60" value="18" step="1" />
+                <div class="calc-slider-ticks">
+                  <span>5 km (Local)</span>
+                  <span>25 km (Ring Road)</span>
+                  <span>60 km (Inter-city)</span>
+                </div>
+              </div>
+
+              <!-- Vehicle Fuel Type -->
+              <div class="calc-control-group">
+                <label class="calc-label">Vehicle Fuel / Powertrain Type</label>
+                <div class="calc-btn-group" id="calc-fuel-group">
+                  <button type="button" class="calc-btn is-active" data-fuel="petrol">Petrol (14 km/L)</button>
+                  <button type="button" class="calc-btn" data-fuel="diesel">Diesel (18 km/L)</button>
+                  <button type="button" class="calc-btn" data-fuel="cng">CNG (22 km/kg)</button>
+                  <button type="button" class="calc-btn" data-fuel="ev">Electric EV (Zero)</button>
+                </div>
+              </div>
+
+              <!-- Pool Occupancy -->
+              <div class="calc-control-group">
+                <label class="calc-label">Target Pod Occupancy (Co-Riders)</label>
+                <div class="calc-btn-group" id="calc-seats-group">
+                  <button type="button" class="calc-btn" data-seats="2">2 People (Split 50%)</button>
+                  <button type="button" class="calc-btn is-active" data-seats="3">3 People (Split 66%)</button>
+                  <button type="button" class="calc-btn" data-seats="4">4 People (Split 75%)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Results Display -->
+            <div class="calc-results-col">
+              <div class="calc-result-box calc-result-box--hero">
+                <span class="calc-result-lbl">ESTIMATED MONTHLY SAVINGS</span>
+                <div class="calc-result-val-wrap">
+                  <span class="calc-result-val" id="calc-res-savings">₹4,620</span>
+                  <span class="calc-result-badge">₹55,440 / Year</span>
+                </div>
+                <p class="calc-result-desc">Direct cash retained through shared fuel, toll concessions, and odd-even exemptions.</p>
+              </div>
+
+              <div class="calc-result-mini-grid">
+                <div class="calc-result-mini">
+                  <div class="calc-mini-icon text-accent"><i data-lucide="leaf" class="icon icon--sm"></i></div>
+                  <div class="calc-mini-data">
+                    <span class="calc-mini-val" id="calc-res-co2">54.2 kg</span>
+                    <span class="calc-mini-lbl">CO₂ Mitigated / Mo</span>
+                  </div>
+                </div>
+
+                <div class="calc-result-mini">
+                  <div class="calc-mini-icon text-green"><i data-lucide="wind" class="icon icon--sm"></i></div>
+                  <div class="calc-mini-data">
+                    <span class="calc-mini-val" id="calc-res-pm25">128 g</span>
+                    <span class="calc-mini-lbl">PM2.5 Lungs Protected</span>
+                  </div>
+                </div>
+
+                <div class="calc-result-mini">
+                  <div class="calc-mini-icon text-amber"><i data-lucide="award" class="icon icon--sm"></i></div>
+                  <div class="calc-mini-data">
+                    <span class="calc-mini-val" id="calc-res-credits">+480 GC</span>
+                    <span class="calc-mini-lbl">Govt Green Credits</span>
+                  </div>
+                </div>
+
+                <div class="calc-result-mini">
+                  <div class="calc-mini-icon"><i data-lucide="shield-check" class="icon icon--sm"></i></div>
+                  <div class="calc-mini-data">
+                    <span class="calc-mini-val" id="calc-res-tier">Tier 2</span>
+                    <span class="calc-mini-lbl">Unlocked Civic Tier</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="calc-cta-row">
+                <a href="#matcher" class="btn btn--pill-contrast">FIND MATCHING CORRIDOR PODS &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ═══════════════════════ 6. MARQUEE BANNER B ═══════════════════════ -->

@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroAQICard();
   initUserProfileNav();
   initPersonaModal();
+  initCarbonCalculator();
   initCeraAI();
   initCeraAIShortcuts();
   initCeraOmnibar();
@@ -2978,4 +2979,132 @@ function initCeraDiagnostics() {
     });
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   5.8. INTERACTIVE PERSONAL CARBON & FUEL SAVINGS CALCULATOR
+   ═══════════════════════════════════════════════════════════════ */
+function initCarbonCalculator() {
+  const slider = document.getElementById('calc-distance-slider');
+  const distanceVal = document.getElementById('calc-distance-val');
+  const fuelButtons = document.querySelectorAll('#calc-fuel-group .calc-btn');
+  const seatsButtons = document.querySelectorAll('#calc-seats-group .calc-btn');
+
+  const resSavings = document.getElementById('calc-res-savings');
+  const resSavingsYear = document.querySelector('.calc-result-badge');
+  const resCo2 = document.getElementById('calc-res-co2');
+  const resPm25 = document.getElementById('calc-res-pm25');
+  const resCredits = document.getElementById('calc-res-credits');
+  const resTier = document.getElementById('calc-res-tier');
+
+  const calcAvatar = document.getElementById('calc-user-avatar');
+  const calcName = document.getElementById('calc-user-name');
+
+  if (!slider || !resSavings) return;
+
+  let currentDistance = Number(slider.value) || 18;
+  let currentFuel = 'petrol';
+  let currentSeats = 3;
+
+  const FUEL_FACTORS = {
+    petrol: { costPerKm: 6.91, co2PerKm: 0.165, pm25PerKm: 0.42 },
+    diesel: { costPerKm: 4.98, co2PerKm: 0.185, pm25PerKm: 0.85 },
+    cng:    { costPerKm: 3.41, co2PerKm: 0.115, pm25PerKm: 0.12 },
+    ev:     { costPerKm: 1.05, co2PerKm: 0.035, pm25PerKm: 0.02 }
+  };
+
+  function updateSyncUser(user) {
+    if (calcAvatar && user && user.avatar) {
+      calcAvatar.src = user.avatar;
+      calcAvatar.alt = user.name;
+    }
+    if (calcName && user && user.name) {
+      calcName.textContent = user.name;
+    }
+  }
+
+  function calculate() {
+    const monthlyKm = currentDistance * 2 * 22; // 22 working days round-trip
+    const factor = FUEL_FACTORS[currentFuel] || FUEL_FACTORS.petrol;
+    const tollPerMonth = 2200; // Average monthly DND / Barapullah / expressway toll
+
+    const soloFuelCost = monthlyKm * factor.costPerKm;
+    const soloTotalCost = soloFuelCost + tollPerMonth;
+
+    // In a carpool of currentSeats, costs are split and toll has green FASTag rebate (15% off)
+    const carpoolToll = (tollPerMonth * 0.85) / currentSeats;
+    const carpoolFuel = soloFuelCost / currentSeats;
+    const carpoolTotalCost = carpoolFuel + carpoolToll;
+
+    const monthlySavings = Math.round(soloTotalCost - carpoolTotalCost);
+    const yearlySavings = monthlySavings * 12;
+
+    // Environmental savings
+    const soloCo2 = monthlyKm * factor.co2PerKm;
+    const savedCo2 = soloCo2 * (1 - 1 / currentSeats);
+
+    const soloPm25 = monthlyKm * factor.pm25PerKm;
+    const savedPm25 = soloPm25 * (1 - 1 / currentSeats);
+
+    // Green credits calculation
+    const earnedCredits = Math.round(savedCo2 * 9) + (currentSeats >= 4 ? 60 : 35);
+
+    // Tier calculation
+    let tierText = 'Tier 1';
+    if (earnedCredits >= 500) {
+      tierText = 'Tier 3 (Gold)';
+    } else if (earnedCredits >= 250) {
+      tierText = 'Tier 2 (Silver)';
+    } else {
+      tierText = 'Tier 1 (Bronze)';
+    }
+
+    // Render results
+    resSavings.textContent = `₹${monthlySavings.toLocaleString('en-IN')}`;
+    if (resSavingsYear) {
+      resSavingsYear.textContent = `₹${yearlySavings.toLocaleString('en-IN')} / Year`;
+    }
+    if (resCo2) resCo2.textContent = `${savedCo2.toFixed(1)} kg`;
+    if (resPm25) resPm25.textContent = `${Math.round(savedPm25)} g`;
+    if (resCredits) resCredits.textContent = `+${earnedCredits} GC`;
+    if (resTier) resTier.textContent = tierText;
+  }
+
+  // Slider events
+  slider.addEventListener('input', () => {
+    currentDistance = Number(slider.value);
+    if (distanceVal) distanceVal.textContent = `${currentDistance} km`;
+    calculate();
+  });
+
+  // Fuel button events
+  fuelButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      fuelButtons.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      currentFuel = btn.dataset.fuel || 'petrol';
+      calculate();
+    });
+  });
+
+  // Seat occupancy events
+  seatsButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      seatsButtons.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      currentSeats = Number(btn.dataset.seats) || 3;
+      calculate();
+    });
+  });
+
+  // User synchronization
+  if (typeof CeraUserManager !== 'undefined') {
+    updateSyncUser(CeraUserManager.getCurrentUser());
+    CeraUserManager.onUserChange(user => {
+      updateSyncUser(user);
+    });
+  }
+
+  calculate();
+}
+
 
