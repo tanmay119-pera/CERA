@@ -2422,6 +2422,97 @@ h1, h2, h3, h4 {
   color: var(--green);
 }
 
+/* Corridor Filter Tabs & Search Bar */
+.matcher-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.matcher-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.matcher-tab {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  color: var(--text-main);
+  padding: 7px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.matcher-tab:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.matcher-tab.is-active {
+  background: var(--btn-contrast-bg);
+  color: var(--btn-contrast-fg);
+  border-color: var(--btn-contrast-bg);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.matcher-tab-count {
+  font-size: 0.64rem;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent-subtle);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.matcher-tab.is-active .matcher-tab-count {
+  background: rgba(13, 28, 66, 0.25);
+  color: #0D1C42;
+}
+
+.matcher-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 280px;
+}
+
+.matcher-search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.matcher-search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  color: var(--text-main);
+  padding: 8px 16px 8px 36px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.matcher-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
 .pod-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));

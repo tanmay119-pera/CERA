@@ -1242,10 +1242,36 @@
         </div>
       </div>
 
+      <!-- Corridor Filter Tabs & Real-Time Search Bar -->
+      <div class="matcher-filter-bar">
+        <div class="matcher-filter-tabs" role="tablist" aria-label="Corridor Filter Tabs">
+          <button type="button" class="matcher-tab is-active" data-corridor="all" role="tab" aria-selected="true">
+            <span>All Corridors</span>
+            <span class="matcher-tab-count">5</span>
+          </button>
+          <button type="button" class="matcher-tab" data-corridor="barapullah" role="tab" aria-selected="false">
+            <span>Barapullah Elevated</span>
+            <span class="matcher-tab-count">2</span>
+          </button>
+          <button type="button" class="matcher-tab" data-corridor="cybercity" role="tab" aria-selected="false">
+            <span>NH-48 Cyber City</span>
+            <span class="matcher-tab-count">2</span>
+          </button>
+          <button type="button" class="matcher-tab" data-corridor="dnd" role="tab" aria-selected="false">
+            <span>DND Noida Flyway</span>
+            <span class="matcher-tab-count">1</span>
+          </button>
+        </div>
+        <div class="matcher-search-wrap">
+          <i data-lucide="search" class="icon icon--xs matcher-search-icon"></i>
+          <input type="text" id="matcher-search-input" class="matcher-search-input" placeholder="Search by driver, hub, or destination..." aria-label="Search carpool pods" />
+        </div>
+      </div>
+
       <!-- Corridor Pod Grid with 3D Tilt -->
-      <div class="pod-container">
+      <div class="pod-container" id="pod-cards-container">
         <!-- Pod 1 -->
-        <div class="tilt-card pod-card" data-tilt-max="10">
+        <div class="tilt-card pod-card" data-tilt-max="10" data-corridor="barapullah" data-driver="Rajesh K." data-dest="Connaught Place" data-hub="Navin Shahdara">
           <div class="tilt-card__inner pod-card__inner">
             <div class="tilt-glare"></div>
             <div class="pod-card__header">
@@ -1298,7 +1324,7 @@
                   <span class="driver-score">★ 4.8 · 112 verified trips · ₹45/seat</span>
                 </div>
               </div>
-              <button class="btn btn--tactile-ride">
+              <button class="btn btn--tactile-ride" data-driver="Rajesh K." data-corridor="Barapullah / Ring Road" data-fare="₹45" data-co2="-1.8 kg" data-dest="Connaught Place">
                 <span class="btn-text">CONNECT &amp; RIDE</span>
               </button>
             </div>
@@ -1306,7 +1332,7 @@
         </div>
 
         <!-- Pod 2 -->
-        <div class="tilt-card pod-card" data-tilt-max="10">
+        <div class="tilt-card pod-card" data-tilt-max="10" data-corridor="cybercity" data-driver="Priya M." data-dest="Nehru Place" data-hub="Dwarka Sector 21">
           <div class="tilt-card__inner pod-card__inner">
             <div class="tilt-glare"></div>
             <div class="pod-card__header">
@@ -1319,7 +1345,7 @@
               </div>
               <div class="pod-card__header-meta">
                 <span class="pod-card__match-type">AI Route Match</span>
-                <span class="pod-card__sub-type">Corridor: Mehrauli-Badarpur</span>
+                <span class="pod-card__sub-type">Corridor: Mehrauli-Badarpur / NH-48</span>
               </div>
               <span class="status-chip status-chip--verified"><i data-lucide="shield-check" class="icon icon--xs"></i> Verified</span>
             </div>
@@ -1358,7 +1384,7 @@
                   <span class="driver-score">★ 4.9 · 87 verified trips · ₹60/seat</span>
                 </div>
               </div>
-              <button class="btn btn--tactile-ride">
+              <button class="btn btn--tactile-ride" data-driver="Priya M." data-corridor="Mehrauli-Badarpur / NH-48" data-fare="₹60" data-co2="-2.4 kg" data-dest="Nehru Place">
                 <span class="btn-text">CONNECT &amp; RIDE</span>
               </button>
             </div>
@@ -1366,22 +1392,22 @@
         </div>
 
         <!-- Pod 3 -->
-        <div class="tilt-card pod-card" data-tilt-max="10">
+        <div class="tilt-card pod-card" data-tilt-max="10" data-corridor="dnd" data-driver="Vikram S." data-dest="Rohini Sector 3" data-hub="Lajpat Nagar">
           <div class="tilt-card__inner pod-card__inner">
             <div class="tilt-glare"></div>
             <div class="pod-card__header">
-              <div class="svg-ring-wrap" data-score="84">
+              <div class="svg-ring-wrap" data-score="88">
                 <svg viewBox="0 0 80 80" class="svg-ring">
                   <circle cx="40" cy="40" r="34" class="svg-ring__bg" />
-                  <circle cx="40" cy="40" r="34" class="svg-ring__fill" style="--pct: 84;" />
+                  <circle cx="40" cy="40" r="34" class="svg-ring__fill" style="--pct: 88;" />
                 </svg>
-                <span class="svg-ring__label">84%</span>
+                <span class="svg-ring__label">88%</span>
               </div>
               <div class="pod-card__header-meta">
                 <span class="pod-card__match-type">AI Route Match</span>
-                <span class="pod-card__sub-type">Corridor: Inner Ring / Ashram</span>
+                <span class="pod-card__sub-type">Corridor: DND Noida Flyway / Ring</span>
               </div>
-              <span class="status-chip status-chip--new"><i data-lucide="sparkles" class="icon icon--xs"></i> New Corridor</span>
+              <span class="status-chip status-chip--verified"><i data-lucide="shield-check" class="icon icon--xs"></i> Verified</span>
             </div>
 
             <div class="route-timeline">
@@ -1418,12 +1444,133 @@
                   <span class="driver-score">★ 4.6 · 34 verified trips · ₹55/seat</span>
                 </div>
               </div>
-              <button class="btn btn--tactile-ride">
+              <button class="btn btn--tactile-ride" data-driver="Vikram S." data-corridor="DND Noida Flyway / Ring" data-fare="₹55" data-co2="-2.1 kg" data-dest="Rohini Sector 3">
                 <span class="btn-text">CONNECT &amp; RIDE</span>
               </button>
             </div>
           </div>
         </div>
+
+        <!-- Pod 4 -->
+        <div class="tilt-card pod-card" data-tilt-max="10" data-corridor="barapullah" data-driver="Dr. Rohan Sen" data-dest="AIIMS New Delhi" data-hub="Hauz Khas">
+          <div class="tilt-card__inner pod-card__inner">
+            <div class="tilt-glare"></div>
+            <div class="pod-card__header">
+              <div class="svg-ring-wrap" data-score="97">
+                <svg viewBox="0 0 80 80" class="svg-ring">
+                  <circle cx="40" cy="40" r="34" class="svg-ring__bg" />
+                  <circle cx="40" cy="40" r="34" class="svg-ring__fill" style="--pct: 97;" />
+                </svg>
+                <span class="svg-ring__label">97%</span>
+              </div>
+              <div class="pod-card__header-meta">
+                <span class="pod-card__match-type">AI Route Match</span>
+                <span class="pod-card__sub-type">Corridor: Barapullah / Aurobindo Link</span>
+              </div>
+              <span class="status-chip status-chip--verified"><i data-lucide="shield-check" class="icon icon--xs"></i> Verified</span>
+            </div>
+
+            <div class="route-timeline">
+              <div class="route-stop">
+                <span class="stop-dot stop-dot--start"></span>
+                <div class="stop-info">
+                  <span class="stop-name">Hauz Khas Enclave</span>
+                  <span class="stop-time">07:50 AM · Gate 1</span>
+                </div>
+              </div>
+              <div class="route-divider">
+                <span class="route-length">8.4 km · ~22 min</span>
+              </div>
+              <div class="route-stop">
+                <span class="stop-dot stop-dot--end"></span>
+                <div class="stop-info">
+                  <span class="stop-name">AIIMS / Safdarjung</span>
+                  <span class="stop-time">08:12 AM · Medical Complex</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pod-meta-row">
+              <span class="pill-chip"><i data-lucide="car" class="icon icon--xs"></i> Hyundai Ioniq 5</span>
+              <span class="pill-chip"><i data-lucide="users" class="icon icon--xs"></i> 1 Seat Open</span>
+              <span class="pill-chip"><i data-lucide="leaf" class="icon icon--xs"></i> -2.2 kg CO₂</span>
+            </div>
+
+            <div class="pod-footer">
+              <div class="driver-profile">
+                <img src="images/driver_rajesh.jpg" alt="Dr. Rohan Sen" class="driver-avatar-photo" />
+                <div class="driver-info">
+                  <span class="driver-name">Dr. Rohan Sen</span>
+                  <span class="driver-score">★ 4.95 · 140 verified trips · ₹40/seat</span>
+                </div>
+              </div>
+              <button class="btn btn--tactile-ride" data-driver="Dr. Rohan Sen" data-corridor="Barapullah / Aurobindo Link" data-fare="₹40" data-co2="-2.2 kg" data-dest="AIIMS New Delhi">
+                <span class="btn-text">CONNECT &amp; RIDE</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pod 5 -->
+        <div class="tilt-card pod-card" data-tilt-max="10" data-corridor="cybercity" data-driver="Neha Sharma" data-dest="One Horizon Center" data-hub="Green Park">
+          <div class="tilt-card__inner pod-card__inner">
+            <div class="tilt-glare"></div>
+            <div class="pod-card__header">
+              <div class="svg-ring-wrap" data-score="93">
+                <svg viewBox="0 0 80 80" class="svg-ring">
+                  <circle cx="40" cy="40" r="34" class="svg-ring__bg" />
+                  <circle cx="40" cy="40" r="34" class="svg-ring__fill" style="--pct: 93;" />
+                </svg>
+                <span class="svg-ring__label">93%</span>
+              </div>
+              <div class="pod-card__header-meta">
+                <span class="pod-card__match-type">AI Route Match</span>
+                <span class="pod-card__sub-type">Corridor: NH-48 Express / Golf Course</span>
+              </div>
+              <span class="status-chip status-chip--verified"><i data-lucide="shield-check" class="icon icon--xs"></i> Verified</span>
+            </div>
+
+            <div class="route-timeline">
+              <div class="route-stop">
+                <span class="stop-dot stop-dot--start"></span>
+                <div class="stop-info">
+                  <span class="stop-name">Green Park Metro</span>
+                  <span class="stop-time">08:20 AM · South Exit</span>
+                </div>
+              </div>
+              <div class="route-divider">
+                <span class="route-length">22.5 km · ~44 min</span>
+              </div>
+              <div class="route-stop">
+                <span class="stop-dot stop-dot--end"></span>
+                <div class="stop-info">
+                  <span class="stop-name">One Horizon Center</span>
+                  <span class="stop-time">09:04 AM · Golf Course Road</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pod-meta-row">
+              <span class="pill-chip"><i data-lucide="car" class="icon icon--xs"></i> Tata Tigor EV</span>
+              <span class="pill-chip"><i data-lucide="users" class="icon icon--xs"></i> 2 Seats Open</span>
+              <span class="pill-chip"><i data-lucide="leaf" class="icon icon--xs"></i> -2.9 kg CO₂</span>
+            </div>
+
+            <div class="pod-footer">
+              <div class="driver-profile">
+                <img src="images/driver_priya.jpg" alt="Neha Sharma" class="driver-avatar-photo" />
+                <div class="driver-info">
+                  <span class="driver-name">Neha Sharma</span>
+                  <span class="driver-score">★ 4.88 · 64 verified trips · ₹70/seat</span>
+                </div>
+              </div>
+              <button class="btn btn--tactile-ride" data-driver="Neha Sharma" data-corridor="NH-48 Express / Golf Course" data-fare="₹70" data-co2="-2.9 kg" data-dest="One Horizon Center">
+                <span class="btn-text">CONNECT &amp; RIDE</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ═══════════════════════ 8. INFRASTRUCTURE & MOBILITY SHOWCASE ═══════════════════════ -->

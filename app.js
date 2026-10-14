@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initAccordion();
   initCounterAnimations();
+  initMatcherFilters();
   initPodButtons();
   initVoucherButtons();
   initBriefForm();
@@ -173,6 +174,79 @@ function animateNumber({ el, target, prefix = '', suffix = '', decimals = 0 }) {
   }
 
   requestAnimationFrame(step);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   6.8. CARPOOL MATCHER CORRIDOR FILTER TABS & LIVE SEARCH
+   ═══════════════════════════════════════════════════════════════ */
+function initMatcherFilters() {
+  const tabs = document.querySelectorAll('.matcher-tab');
+  const searchInput = document.getElementById('matcher-search-input');
+  const cards = document.querySelectorAll('.pod-card');
+  let activeCorridor = 'all';
+
+  function applyFilters() {
+    const query = (searchInput?.value || '').trim().toLowerCase();
+
+    cards.forEach(card => {
+      const cardCorridor = card.dataset.corridor || '';
+      const driver = (card.dataset.driver || '').toLowerCase();
+      const dest = (card.dataset.dest || '').toLowerCase();
+      const hub = (card.dataset.hub || '').toLowerCase();
+      const allText = card.textContent.toLowerCase();
+
+      const matchesCorridor = (activeCorridor === 'all') || (cardCorridor === activeCorridor);
+      const matchesSearch = !query || driver.includes(query) || dest.includes(query) || hub.includes(query) || allText.includes(query);
+
+      if (matchesCorridor && matchesSearch) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+      activeCorridor = tab.dataset.corridor || 'all';
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', applyFilters);
+  }
+
+  // Update tabs when commuter persona switches
+  if (typeof CeraUserManager !== 'undefined') {
+    CeraUserManager.onUserChange(user => {
+      if (user && user.corridor) {
+        const corrLower = user.corridor.toLowerCase();
+        let targetKey = 'all';
+        if (corrLower.includes('barapullah')) targetKey = 'barapullah';
+        else if (corrLower.includes('cyber') || corrLower.includes('nh-48')) targetKey = 'cybercity';
+        else if (corrLower.includes('dnd') || corrLower.includes('noida')) targetKey = 'dnd';
+
+        const matchingTab = Array.from(tabs).find(t => t.dataset.corridor === targetKey);
+        if (matchingTab) {
+          tabs.forEach(t => {
+            t.classList.remove('is-active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          matchingTab.classList.add('is-active');
+          matchingTab.setAttribute('aria-selected', 'true');
+          activeCorridor = targetKey;
+          applyFilters();
+        }
+      }
+    });
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
