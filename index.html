@@ -136,6 +136,38 @@
             </span>
           </span>
         </button>
+
+        <!-- Active Commuter Profile & Persona Switcher -->
+        <div class="user-profile-menu" id="user-profile-menu">
+          <button id="user-profile-btn" class="user-pill-btn" aria-label="Active Commuter Profile" aria-expanded="false" title="Switch Commuter Profile">
+            <span class="user-avatar-wrap">
+              <img id="nav-user-avatar" src="images/driver_rajesh.jpg" alt="Adesh Sharma" class="user-avatar-img" />
+              <span class="user-status-dot" aria-hidden="true"></span>
+            </span>
+            <span class="user-meta-text">
+              <span class="user-name-label" id="nav-user-name">Adesh Sharma</span>
+              <span class="user-credits-label"><i data-lucide="leaf" class="icon icon--xxs"></i> <span id="nav-user-credits">420</span> GC</span>
+            </span>
+            <i data-lucide="chevron-down" class="icon icon--xxs user-dropdown-icon"></i>
+          </button>
+          
+          <!-- Quick Dropdown Menu -->
+          <div class="user-dropdown-panel" id="user-dropdown-panel" aria-hidden="true">
+            <div class="dropdown-header">
+              <span class="dropdown-heading">ACTIVE COMMUTER PERSONA</span>
+              <span class="dropdown-sub" id="dropdown-user-role">Civic Commuter · Tier 2</span>
+            </div>
+            <div class="dropdown-persona-list" id="dropdown-persona-list">
+              <!-- Populated via JS -->
+            </div>
+            <div class="dropdown-footer">
+              <button id="btn-open-persona-modal" class="btn-dropdown-action">
+                <i data-lucide="users" class="icon icon--xs"></i> All Commuter Personas
+              </button>
+            </div>
+          </div>
+        </div>
+
         <a href="#matcher" class="btn btn--pill-contrast">CONNECT &amp; RIDE</a>
         <button id="mobile-menu-btn" class="btn-icon mobile-hamburger" aria-label="Menu">
           <i data-lucide="menu" class="icon"></i>
@@ -145,6 +177,16 @@
 
     <!-- Mobile Drawer -->
     <div id="mobile-menu" class="mobile-drawer">
+      <div class="mobile-user-card" id="mobile-user-card">
+        <img id="mobile-user-avatar" src="images/driver_rajesh.jpg" alt="Adesh" class="mobile-user-avatar" />
+        <div class="mobile-user-info">
+          <span class="mobile-user-name" id="mobile-user-name">Adesh Sharma</span>
+          <span class="mobile-user-role" id="mobile-user-role">Tier 2 Green Commuter · 420 GC</span>
+        </div>
+        <button id="btn-mobile-switch-persona" class="btn-mobile-persona-switch" title="Switch User">
+          <i data-lucide="refresh-cw" class="icon icon--xs"></i>
+        </button>
+      </div>
       <a href="#cera-ai" class="mobile-nav-item mobile-nav-item--ai"><i data-lucide="sparkles" class="icon icon--xs"></i> CERA-AI Mobility Brain</a>
       <a href="#manifesto" class="mobile-nav-item">Mission</a>
       <a href="#services" class="mobile-nav-item">Architecture</a>

@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initVoucherButtons();
   initBriefForm();
   initHeroAQICard();
+  initUserProfileNav();
   initCeraAI();
   initCeraAIShortcuts();
   initCeraOmnibar();
@@ -1099,6 +1100,112 @@ const CeraUserManager = {
     });
   }
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   5.6. NAVBAR COMMUTER PROFILE & QUICK PERSONA SWITCHER
+   ═══════════════════════════════════════════════════════════════ */
+function initUserProfileNav() {
+  const menu = document.getElementById('user-profile-menu');
+  const btn = document.getElementById('user-profile-btn');
+  const list = document.getElementById('dropdown-persona-list');
+  const navAvatar = document.getElementById('nav-user-avatar');
+  const navName = document.getElementById('nav-user-name');
+  const navCredits = document.getElementById('nav-user-credits');
+  const dropdownRole = document.getElementById('dropdown-user-role');
+  const mobileAvatar = document.getElementById('mobile-user-avatar');
+  const mobileName = document.getElementById('mobile-user-name');
+  const mobileRole = document.getElementById('mobile-user-role');
+  const mobileSwitchBtn = document.getElementById('btn-mobile-switch-persona');
+
+  function renderDropdownPersonas(activeUser) {
+    if (!list) return;
+    const personas = CeraUserManager.getAllPersonas();
+    list.innerHTML = personas.map(p => {
+      const isActive = p.id === activeUser.id;
+      return `
+        <button type="button" class="dropdown-persona-item ${isActive ? 'is-active' : ''}" data-persona-id="${p.id}">
+          <img src="${p.avatar}" alt="${p.name}" class="dropdown-persona-avatar" />
+          <div class="dropdown-persona-meta">
+            <span class="dropdown-persona-name">${p.name} ${isActive ? '✓' : ''}</span>
+            <span class="dropdown-persona-role">${p.role} · ${p.destination}</span>
+          </div>
+          <span class="dropdown-persona-tag">${p.credits} GC</span>
+        </button>
+      `;
+    }).join('');
+
+    list.querySelectorAll('.dropdown-persona-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = item.dataset.personaId;
+        CeraUserManager.setCurrentUser(id);
+        if (menu) menu.classList.remove('is-open');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  function syncNav(user) {
+    if (navAvatar) {
+      navAvatar.src = user.avatar;
+      navAvatar.alt = user.name;
+    }
+    if (navName) navName.textContent = user.shortName || user.name;
+    if (navCredits) navCredits.textContent = user.credits;
+    if (dropdownRole) dropdownRole.textContent = `${user.role} · ${user.badge}`;
+
+    if (mobileAvatar) {
+      mobileAvatar.src = user.avatar;
+      mobileAvatar.alt = user.name;
+    }
+    if (mobileName) mobileName.textContent = user.name;
+    if (mobileRole) mobileRole.textContent = `${user.badge} · ${user.credits} GC`;
+
+    renderDropdownPersonas(user);
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // Initial populate
+  const initialUser = CeraUserManager.getCurrentUser();
+  syncNav(initialUser);
+
+  // Subscribe to changes
+  CeraUserManager.onUserChange(user => {
+    syncNav(user);
+  });
+
+  if (btn && menu) {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = menu.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target)) {
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  if (mobileSwitchBtn) {
+    mobileSwitchBtn.addEventListener('click', () => {
+      const personas = CeraUserManager.getAllPersonas();
+      const curr = CeraUserManager.getCurrentUser();
+      const idx = personas.findIndex(p => p.id === curr.id);
+      const nextIdx = (idx + 1) % personas.length;
+      CeraUserManager.setCurrentUser(personas[nextIdx].id);
+    });
+  }
+}
 
 function initCeraAI() {
   // ─── SYSTEM ENVIRONMENT TELEMETRY POPULATION ───
