@@ -6808,6 +6808,121 @@ textarea:focus-visible {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   THEME POLISH: 3-SHADE COLOR HARMONY & MICRO-INTERACTIONS
+   ═══════════════════════════════════════════════════════════════ */
+::selection {
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+/* Custom Scrollbar adhering to 3-shade palette */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-card);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Modal and Drawer scrollbars */
+.cera-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.cera-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cera-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(252, 241, 208, 0.2);
+  border-radius: 4px;
+}
+.cera-modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(252, 241, 208, 0.4);
+}
+
+/* Interactive Card Elevation & Micro-interactions */
+.carbon-calc-card,
+.aqi-health-advisory,
+.persona-card,
+.pod-card-v2,
+.hero-user-strip {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
+}
+
+.carbon-calc-card:hover {
+  border-color: rgba(252, 241, 208, 0.35);
+  box-shadow: 0 16px 40px -12px rgba(13, 28, 66, 0.9), 0 0 20px rgba(34, 57, 111, 0.4);
+}
+
+.aqi-health-advisory:hover {
+  border-color: rgba(252, 241, 208, 0.35);
+  box-shadow: 0 12px 30px -10px rgba(13, 28, 66, 0.8);
+}
+
+.cera-quick-dock {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cera-quick-dock:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(252, 241, 208, 0.3);
+}
+
+.dock-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.dock-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(252, 241, 208, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.dock-btn:hover::after {
+  opacity: 1;
+}
+
+/* Button & Badge Contrast Accents */
+.calc-btn.is-active,
+.corridor-filter-pill.is-active {
+  box-shadow: 0 4px 14px rgba(13, 28, 66, 0.6), inset 0 0 0 1px rgba(252, 241, 208, 0.5);
+}
+
+.cera-toast {
+  animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
 
 
 
