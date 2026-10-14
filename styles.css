@@ -5868,6 +5868,193 @@ h1, h2, h3, h4 {
   color: var(--text-muted);
 }
 
+/* ─── CARPOOL POD BOOKING CONFIRMATION MODAL ─── */
+.booking-modal-panel {
+  max-width: 640px;
+}
+
+.booking-modal-body {
+  padding: 22px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.booking-driver-strip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+}
+
+.booking-driver-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  flex-shrink: 0;
+}
+
+.booking-driver-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.booking-driver-name {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.booking-driver-corridor {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.booking-driver-tag {
+  font-size: 0.65rem;
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.booking-fare-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: var(--bg-secondary);
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.booking-fare-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.booking-fare-lbl {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.booking-itinerary-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-itinerary-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.step-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.step-bullet--start { background: var(--accent); }
+.step-bullet--end { background: #22C55E; }
+
+.step-label {
+  display: block;
+  font-size: 0.64rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.step-val {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.booking-itinerary-line {
+  margin: 6px 0 6px 4px;
+  padding-left: 18px;
+  border-left: 2px dashed var(--border);
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.booking-incentives-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.incentive-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.incentive-val {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.incentive-lbl {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.booking-commuter-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.btn--tactile-cancel {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 18px;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.btn--tactile-cancel:hover {
+  background: var(--bg-secondary);
+  color: var(--text-main);
+}
+
+
 
 
 

@@ -253,18 +253,96 @@ function initMatcherFilters() {
    7. AI POD CARDS — "CONNECT & RIDE" BUTTONS
    ═══════════════════════════════════════════════════════════════ */
 function initPodButtons() {
+  const modal = document.getElementById('cera-booking-modal');
+  const closeBtn = document.getElementById('booking-modal-close-btn');
+  const cancelBtn = document.getElementById('booking-modal-cancel-btn');
+  const confirmBtn = document.getElementById('booking-modal-confirm-btn');
+
+  const avatarEl = document.getElementById('booking-driver-avatar');
+  const nameEl = document.getElementById('booking-driver-name');
+  const corridorEl = document.getElementById('booking-corridor-name');
+  const fareEl = document.getElementById('booking-fare-val');
+  const pickupEl = document.getElementById('booking-pickup-val');
+  const destEl = document.getElementById('booking-dest-val');
+  const co2El = document.getElementById('booking-co2-val');
+  const commuterNameEl = document.getElementById('booking-commuter-name');
+  const commuterTierEl = document.getElementById('booking-commuter-tier');
+
+  let activeBtn = null;
+  let activeDriver = '';
+
+  function closeModal() {
+    if (modal) {
+      modal.classList.remove('is-active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
   document.querySelectorAll('.btn--tactile-ride').forEach(btn => {
     btn.addEventListener('click', () => {
+      activeBtn = btn;
       const card = btn.closest('.pod-card');
-      const driver = card ? card.querySelector('.driver-name').textContent : 'the driver';
+      const driver = btn.dataset.driver || (card ? card.querySelector('.driver-name')?.textContent : 'Verified Pilot');
+      const corridor = btn.dataset.corridor || (card ? card.querySelector('.pod-card__sub-type')?.textContent : 'Delhi NCR Corridor');
+      const fare = btn.dataset.fare || '₹45';
+      const co2 = btn.dataset.co2 || '-2.0 kg';
+      const dest = btn.dataset.dest || (card ? card.querySelectorAll('.stop-name')?.[1]?.textContent : 'Destination Hub');
+      const hub = btn.dataset.hub || (card ? card.querySelectorAll('.stop-name')?.[0]?.textContent : 'Origin Station');
+      const avatarSrc = card?.querySelector('.driver-avatar-photo')?.src || 'images/driver_rajesh.jpg';
 
-      btn.innerHTML = '<span>✓ REQUEST DISPATCHED</span>';
-      btn.disabled = true;
-      btn.style.opacity = '0.7';
-      btn.style.cursor = 'default';
+      activeDriver = driver;
 
-      displayToast(`Carpool handshake sent to ${driver}. GPS Bluetooth handshake pending vehicle boarding.`);
+      if (avatarEl) avatarEl.src = avatarSrc;
+      if (nameEl) nameEl.textContent = driver;
+      if (corridorEl) corridorEl.textContent = corridor;
+      if (fareEl) fareEl.textContent = fare;
+      if (co2El) co2El.textContent = co2 + ' CO₂';
+      if (pickupEl) pickupEl.textContent = hub;
+      if (destEl) destEl.textContent = dest;
+
+      const user = typeof CeraUserManager !== 'undefined' ? CeraUserManager.getCurrentUser() : null;
+      if (user) {
+        if (commuterNameEl) commuterNameEl.textContent = user.name;
+        if (commuterTierEl) commuterTierEl.textContent = user.badge;
+      }
+
+      if (modal) {
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+      if (window.lucide) lucide.createIcons();
     });
+  });
+
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', () => {
+      closeModal();
+      if (activeBtn) {
+        activeBtn.innerHTML = '<span>✓ SEAT RESERVED</span>';
+        activeBtn.disabled = true;
+        activeBtn.style.opacity = '0.7';
+        activeBtn.style.cursor = 'default';
+      }
+      if (typeof CeraUserManager !== 'undefined') {
+        CeraUserManager.addCredits(50);
+      }
+      displayToast(`Carpool pod reserved with ${activeDriver}! +50 Green Credits added to your civic balance.`);
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('is-active')) {
+      closeModal();
+    }
   });
 }
 

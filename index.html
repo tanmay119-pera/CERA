@@ -2039,6 +2039,93 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════ CARPOOL POD SEAT BOOKING MODAL ═══════════════════════ -->
+  <div id="cera-booking-modal" class="cera-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Carpool Pod Reservation">
+    <div class="cera-modal-panel booking-modal-panel">
+      <div class="cera-modal-header">
+        <div class="cera-modal-title-group">
+          <span class="cera-modal-badge"><i data-lucide="shield-check" class="icon icon--xs"></i> HIGH-OCCUPANCY POD DISPATCH</span>
+          <h3 class="cera-modal-title">Confirm Seat Reservation</h3>
+          <p class="cera-modal-sub" id="booking-modal-subtitle">Direct peer carpool match with municipal clean air compliance.</p>
+        </div>
+        <button id="booking-modal-close-btn" class="cera-modal-close" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="booking-modal-body">
+        <!-- Driver & Corridor Banner -->
+        <div class="booking-driver-strip">
+          <img id="booking-driver-avatar" src="images/driver_rajesh.jpg" alt="Driver" class="booking-driver-avatar" />
+          <div class="booking-driver-info">
+            <span class="booking-driver-name" id="booking-driver-name">Rajesh K.</span>
+            <span class="booking-driver-corridor" id="booking-corridor-name">Barapullah / Ring Road Corridor</span>
+            <span class="booking-driver-tag"><i data-lucide="zap" class="icon icon--xxs"></i> Zero Emission EV Pod · FASTag Tagged</span>
+          </div>
+          <div class="booking-fare-pill">
+            <span class="booking-fare-val" id="booking-fare-val">₹45</span>
+            <span class="booking-fare-lbl">Per Seat</span>
+          </div>
+        </div>
+
+        <!-- Trip Details Grid -->
+        <div class="booking-itinerary-box">
+          <div class="booking-itinerary-step">
+            <span class="step-bullet step-bullet--start"></span>
+            <div>
+              <span class="step-label">Pickup Hub</span>
+              <span class="step-val" id="booking-pickup-val">Navin Shahdara Metro Hub</span>
+            </div>
+          </div>
+          <div class="booking-itinerary-line">
+            <span id="booking-est-time">~45 min transit · Clean Priority Lane</span>
+          </div>
+          <div class="booking-itinerary-step">
+            <span class="step-bullet step-bullet--end"></span>
+            <div>
+              <span class="step-label">Destination</span>
+              <span class="step-val" id="booking-dest-val">Connaught Place Outer Circle</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impact & Incentive Summary -->
+        <div class="booking-incentives-grid">
+          <div class="incentive-item">
+            <i data-lucide="leaf" class="icon icon--sm text-accent"></i>
+            <div>
+              <span class="incentive-val" id="booking-co2-val">-1.8 kg CO₂</span>
+              <span class="incentive-lbl">Tailpipe Pollution Mitigated</span>
+            </div>
+          </div>
+          <div class="incentive-item">
+            <i data-lucide="award" class="icon icon--sm text-accent"></i>
+            <div>
+              <span class="incentive-val">+50 Green Credits</span>
+              <span class="incentive-lbl">Awarded on Journey Completion</span>
+            </div>
+          </div>
+          <div class="incentive-item">
+            <i data-lucide="tag" class="icon icon--sm text-accent"></i>
+            <div>
+              <span class="incentive-val">100% Toll Rebate</span>
+              <span class="incentive-lbl">FASTag Delhi NCR Reimbursement</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Commuter Confirmation Note -->
+        <div class="booking-commuter-note">
+          <i data-lucide="user-check" class="icon icon--xs"></i>
+          <span>Reserving seat for: <strong id="booking-commuter-name">Adesh Sharma</strong> (<span id="booking-commuter-tier">Tier 2 Green Commuter</span>)</span>
+        </div>
+      </div>
+
+      <div class="cera-modal-footer">
+        <button id="booking-modal-cancel-btn" class="btn btn--tactile-cancel">CANCEL</button>
+        <button id="booking-modal-confirm-btn" class="btn btn--pill-contrast">CONFIRM SEAT &amp; CLAIM 50 CREDITS &rarr;</button>
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
