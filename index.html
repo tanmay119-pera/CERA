@@ -1305,6 +1305,10 @@
                       <span class="route-badge-num">3</span>
                       <span>Noida Sec 62 &rarr; South Extension (DND Clean Air Flyway)</span>
                     </button>
+                    <button class="route-sel-btn" data-route="aurobindo-medical">
+                      <span class="route-badge-num">4</span>
+                      <span>Hauz Khas &rarr; AIIMS / Central Vista (Aurobindo Clean Corridor)</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1317,6 +1321,22 @@
                   <span class="panel-status-chip panel-status-chip--clean" id="heatmap-corridor-status">
                     <i data-lucide="shield-check" class="icon icon--xs"></i> Clean Air Corridor Active
                   </span>
+                </div>
+
+                <!-- Live Corridor Velocity & Traffic Flow KPI bar -->
+                <div class="corridor-flow-strip">
+                  <div class="flow-cell">
+                    <span class="flow-lbl">Flow Speed</span>
+                    <span class="flow-val text-green" id="corridor-speed-val">54 km/h</span>
+                  </div>
+                  <div class="flow-cell">
+                    <span class="flow-lbl">HOV Compliance</span>
+                    <span class="flow-val text-accent" id="corridor-compliance-val">96%</span>
+                  </div>
+                  <div class="flow-cell">
+                    <span class="flow-lbl">Toll Status</span>
+                    <span class="flow-val" id="corridor-toll-val">100% Rebate</span>
+                  </div>
                 </div>
 
                 <!-- Dynamic Real-Time Calculations -->

@@ -2697,6 +2697,11 @@ function initCeraAI() {
   const heatCreditsVal = document.getElementById('heat-credits-val');
   const heatAdviceText = document.getElementById('heat-advice-text');
 
+  const heatSpeedVal = document.getElementById('corridor-speed-val');
+  const heatCompVal = document.getElementById('corridor-compliance-val');
+  const heatTollVal = document.getElementById('corridor-toll-val');
+  const heatStatusChip = document.getElementById('heatmap-corridor-status');
+
   const heatRoutes = {
     'cp-barapullah': {
       title: 'Anand Vihar → Connaught Place',
@@ -2707,6 +2712,10 @@ function initCeraAI() {
       pm25: '-64% Inhalation',
       time: '34 mins saved',
       credits: '+50 Credits',
+      speed: '54 km/h',
+      compliance: '96%',
+      toll: '100% Rebate',
+      statusBadge: 'Clean Air Corridor · Barapullah HOV',
       advice: 'Routing co-riders through the Barapullah Elevated corridor circumvents the severe 342 AQI plume at Vikas Marg, granting co-riders 2.5× Green Credits and 100% FASTag toll reimbursement.'
     },
     'rohini-cybercity': {
@@ -2718,6 +2727,10 @@ function initCeraAI() {
       pm25: '-78% Inhalation',
       time: '48 mins saved',
       credits: '+75 Credits',
+      speed: '62 km/h',
+      compliance: '94%',
+      toll: '15% FASTag Rebate',
+      statusBadge: 'NH-48 EV Express Lane Active',
       advice: 'High-occupancy EV pods on NH-48 enjoy priority toll clearance and zero odd-even corridor restrictions, slashing commuter fuel expenditures by ₹120 per round trip.'
     },
     'noida-southex': {
@@ -2729,7 +2742,26 @@ function initCeraAI() {
       pm25: '-52% Inhalation',
       time: '26 mins saved',
       credits: '+40 Credits',
+      speed: '58 km/h',
+      compliance: '92%',
+      toll: '100% Toll Waiver',
+      statusBadge: 'DND Clean Flyway Verified',
       advice: 'DND Flyway fast-track lane automatically verifies 3+ passenger cabin occupancy via RFID, instantly waiving municipal toll charges and recording verified green credits.'
+    },
+    'aurobindo-medical': {
+      title: 'Hauz Khas → AIIMS / Central Vista',
+      markerA: { x: 420, y: 350, label: 'Hauz Khas' },
+      markerB: { x: 450, y: 240, label: 'Central Vista' },
+      d: 'M 420,350 C 430,300 440,270 450,240',
+      co2: '2.8 kg CO₂',
+      pm25: '-72% Inhalation',
+      time: '22 mins saved',
+      credits: '+50 Credits',
+      speed: '46 km/h',
+      compliance: '98%',
+      toll: 'Zero Toll Corridor',
+      statusBadge: 'Aurobindo Medical Link Active',
+      advice: 'The Aurobindo Marg Clean Link features dedicated electric vehicle lanes and HEPA-shielded priority pickup zones around AIIMS and Safdarjung medical campuses.'
     }
   };
 
@@ -2749,6 +2781,13 @@ function initCeraAI() {
       if (heatCreditsVal) heatCreditsVal.textContent = r.credits;
       if (heatAdviceText) heatAdviceText.textContent = r.advice;
 
+      if (heatSpeedVal && r.speed) heatSpeedVal.textContent = r.speed;
+      if (heatCompVal && r.compliance) heatCompVal.textContent = r.compliance;
+      if (heatTollVal && r.toll) heatTollVal.textContent = r.toll;
+      if (heatStatusChip && r.statusBadge) {
+        heatStatusChip.innerHTML = `<i data-lucide="shield-check" class="icon icon--xs"></i> ${r.statusBadge}`;
+      }
+
       if (markerA) {
         markerA.setAttribute('transform', `translate(${r.markerA.x}, ${r.markerA.y})`);
         if (markerAText) markerAText.textContent = r.markerA.label;
@@ -2766,6 +2805,8 @@ function initCeraAI() {
       if (particleLine) {
         particleLine.setAttribute('d', r.d);
       }
+
+      if (window.lucide) lucide.createIcons();
     });
   });
 }
