@@ -6428,6 +6428,116 @@ h1, h2, h3, h4 {
   color: var(--text-muted);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   DYNAMIC COMMUTER HEALTH ADVISORY BANNER
+   ═══════════════════════════════════════════════════════════════ */
+.aqi-health-advisory {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aqi-health-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.aqi-health-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  color: var(--accent);
+}
+
+.aqi-health-source {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.aqi-health-guidance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.aqi-guidance-pill {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guidance-text strong {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.guidance-text span {
+  display: block;
+  font-size: 0.64rem;
+  color: var(--text-muted);
+}
+
+.aqi-persona-advisory {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+.aqi-advisory-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.aqi-advisory-commuter {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.aqi-advisory-note {
+  font-size: 0.76rem;
+  color: var(--text-main);
+  margin: 2px 0 0 0;
+  line-height: 1.4;
+}
+
+
 
 
 

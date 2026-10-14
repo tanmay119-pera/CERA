@@ -424,11 +424,49 @@
             </div>
           </div>
 
-          <!-- Civic Advisory Note -->
-          <div class="aqi-monitor__footer">
-            <p class="aqi-footer-tip" id="aqi-display-tip">
-              <i data-lucide="info" class="icon icon--xs"></i> <strong>Civic Advisory:</strong> High-occupancy carpools exempt from odd-even corridor penalties. 2.5× Green Credits active.
-            </p>
+          <!-- Dynamic Commuter Health & Air Quality Advisory Banner -->
+          <div class="aqi-health-advisory" id="aqi-health-advisory">
+            <div class="aqi-health-head">
+              <div class="aqi-health-badge" id="aqi-health-level-badge">
+                <i data-lucide="shield-alert" class="icon icon--xs"></i>
+                <span id="aqi-health-level-text">Severe Health Advisory · N95 Mask Essential</span>
+              </div>
+              <span class="aqi-health-source"><i data-lucide="radio" class="icon icon--xxs"></i> CPCB Live Telemetry</span>
+            </div>
+
+            <div class="aqi-health-guidance-grid">
+              <div class="aqi-guidance-pill" id="guide-mask">
+                <i data-lucide="shield" class="icon icon--xs text-accent"></i>
+                <div class="guidance-text">
+                  <strong>N95 Respiratory Seal</strong>
+                  <span id="guide-mask-desc">Strictly required for all outdoor movement</span>
+                </div>
+              </div>
+
+              <div class="aqi-guidance-pill" id="guide-cabin">
+                <i data-lucide="airplay" class="icon icon--xs text-accent"></i>
+                <div class="guidance-text">
+                  <strong>HEPA Cabin Filtration</strong>
+                  <span id="guide-cabin-desc">HEPA scrub active in all verified EV pods</span>
+                </div>
+              </div>
+
+              <div class="aqi-guidance-pill" id="guide-multiplier">
+                <i data-lucide="zap" class="icon icon--xs text-accent"></i>
+                <div class="guidance-text">
+                  <strong>Civic Credit Boost</strong>
+                  <span id="guide-multiplier-desc">2.5× Green Credits active during GRAP IV</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="aqi-persona-advisory" id="aqi-persona-advisory">
+              <img id="aqi-advisory-avatar" src="images/driver_rajesh.jpg" alt="User" class="aqi-advisory-avatar" />
+              <div class="aqi-advisory-text">
+                <span class="aqi-advisory-commuter" id="aqi-advisory-user-name">Advisory for Adesh Sharma:</span>
+                <p class="aqi-advisory-note" id="aqi-advisory-note">Your Barapullah EV carpool reduces direct inhalable PM2.5 exposure by 74% compared to two-wheeler transit.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

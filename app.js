@@ -563,7 +563,19 @@ function initHeroAQICard() {
       pm10: '312 µg/m³',
       no2: '78 ppb',
       co2: '+38% Peak',
-      tip: '<strong>Civic Advisory:</strong> High-occupancy carpools exempt from odd-even corridor penalties. 2.5× Green Credits active.'
+      tip: '<strong>Civic Advisory:</strong> High-occupancy carpools exempt from odd-even corridor penalties. 2.5× Green Credits active.',
+      healthBadge: 'Severe Health Advisory · N95 Mask Essential',
+      maskDesc: 'Strictly required for all outdoor movement',
+      cabinDesc: 'HEPA scrub active in all verified EV pods',
+      multiplierDesc: '2.5× Green Credits active during GRAP IV',
+      personaNotes: {
+        adesh: 'Your Barapullah EV carpool reduces direct inhalable PM2.5 exposure by 74% compared to two-wheeler transit.',
+        ananya: 'NH-48 express corridor experiences morning smog peaks. Sealed EV cabins with HEPA filters protect lungs.',
+        rohan: 'Epidemiological Note: Ambient PM2.5 at 184 µg/m³ exceeds WHO limits by 12×. EV carpools strongly indicated.',
+        vikram: 'DND HOV corridor has 32% lower ground-level particulates due to elevated breeze. Keep windows sealed.',
+        sneha: 'Central Vista corridor sealed EV transit cuts tailpipe soot exposure by 82% vs walking.',
+        default: 'High fine particulate load. Seal cabin air intake and travel exclusively in verified EV carpool pods.'
+      }
     },
     lucknow: {
       city: 'Lucknow',
@@ -577,7 +589,19 @@ function initHeroAQICard() {
       pm10: '288 µg/m³',
       no2: '64 ppb',
       co2: '+29% Peak',
-      tip: '<strong>Winter Smog Advisory:</strong> Shared electric carpools earn double municipal tax rebates on daily commutes.'
+      tip: '<strong>Winter Smog Advisory:</strong> Shared electric carpools earn double municipal tax rebates on daily commutes.',
+      healthBadge: 'Severe Smog Advisory · Limit Outdoor Exertion',
+      maskDesc: 'N95 advised during Gomti Nagar morning peak',
+      cabinDesc: 'EV cabin filtration keeps indoor AQI < 45',
+      multiplierDesc: '2.0× Municipal Green Credits active',
+      personaNotes: {
+        adesh: 'Shaheed Path transit cluster active. Carpool in sealed EV pods to minimize fine soot inhalation.',
+        ananya: 'Express transit corridor offers continuous velocity, cutting engine idling exposure by 60%.',
+        rohan: 'Severe atmospheric stagnation over Gomti basin. Advise carpoolers to avoid open auto-rickshaws.',
+        vikram: 'Inter-hub commuter pods recommended. Shared electric transit mitigates 2.8 kg CO2 per commute.',
+        sneha: 'Urban center travel protected via sealed EV cabins with active air recirculation.',
+        default: 'Shaheed Path transit cluster active. Carpool in sealed EV pods to minimize fine soot inhalation.'
+      }
     },
     patna: {
       city: 'Patna',
@@ -591,7 +615,19 @@ function initHeroAQICard() {
       pm10: '265 µg/m³',
       no2: '58 ppb',
       co2: '+26% Peak',
-      tip: '<strong>Clean Air Corridor:</strong> Priority transit corridor active. High-occupancy vehicles receive arterial clearance.'
+      tip: '<strong>Clean Air Corridor:</strong> Priority transit corridor active. High-occupancy vehicles receive arterial clearance.',
+      healthBadge: 'Severe Inversion Advisory · High Particulate',
+      maskDesc: 'Recommended during morning and evening rush',
+      cabinDesc: 'Shared electric transit recommended',
+      multiplierDesc: '2.0× Clean Air Credits active',
+      personaNotes: {
+        adesh: 'Ganga Pathway corridor offers faster transit with reduced stationary idling emissions.',
+        ananya: 'Rapid arterial link bypasses high congestion zones, lowering respiratory stress.',
+        rohan: 'Riverine basin particulate buildup. Shared EV pods provide the safest transit modality.',
+        vikram: 'High-occupancy arterial lanes operational. Fastag toll concessions active.',
+        sneha: 'Air quality advisory: travel before 08:30 AM in closed electric vehicles for clean breathing.',
+        default: 'Ganga Pathway corridor offers faster transit with reduced stationary idling emissions.'
+      }
     },
     mumbai: {
       city: 'Mumbai',
@@ -605,7 +641,19 @@ function initHeroAQICard() {
       pm10: '128 µg/m³',
       no2: '42 ppb',
       co2: '+18% Peak',
-      tip: '<strong>Coastal Maritime Airflow:</strong> Coastal Road & Sea Link carpool toll waivers active for registered 3+ rides.'
+      tip: '<strong>Coastal Maritime Airflow:</strong> Coastal Road & Sea Link carpool toll waivers active for registered 3+ rides.',
+      healthBadge: 'Moderate Air Quality · Standard Maritime Flow',
+      maskDesc: 'Optional for healthy commuters; advised for sensitive groups',
+      cabinDesc: 'Fresh air mode acceptable; AC recommended during bottleneck rush',
+      multiplierDesc: '1.5× Transit Credits active',
+      personaNotes: {
+        adesh: 'Coastal corridor benefits from maritime breeze dispersion. Carpool to relieve Western Express bottleneck.',
+        ananya: 'Sea Link carpool lanes operational with zero congestion hold-ups.',
+        rohan: 'Particulate density moderate. Standard cabin filtration sufficient for routine daily transit.',
+        vikram: 'Coastal bypass HOV lanes verified. Toll exemptions logged via automated FASTag.',
+        sneha: 'Clean transit corridor active with stable offshore winds.',
+        default: 'Coastal corridor benefits from sea breeze dispersion. Carpool to relieve Western Express bottleneck.'
+      }
     },
     bengaluru: {
       city: 'Bengaluru',
@@ -619,7 +667,19 @@ function initHeroAQICard() {
       pm10: '48 µg/m³',
       no2: '21 ppb',
       co2: 'Normal',
-      tip: '<strong>Clean Air Benchmark:</strong> Tech park shared transit maintains optimal city air standards.'
+      tip: '<strong>Clean Air Benchmark:</strong> Tech park shared transit maintains optimal city air standards.',
+      healthBadge: 'Good Air Quality · Clean Corridor Benchmark',
+      maskDesc: 'Not required; outdoor activity safe and healthy',
+      cabinDesc: 'Zero tailpipe shared transit keeps Whitefield clean and fluent',
+      multiplierDesc: '1.0× Baseline Green Credits',
+      personaNotes: {
+        adesh: 'Outer Ring Road clean air index optimal. Carpooling keeps suburban Bengaluru traffic fluent.',
+        ananya: 'Tech park commuter pods running on schedule with 100% green fleet compliance.',
+        rohan: 'Cleanest urban air among national metros. Ambient PM2.5 within WHO guideline benchmarks.',
+        vikram: 'ORR high-occupancy vehicle lanes operating smoothly. Green transit rewards credited.',
+        sneha: 'Ideal atmospheric conditions for early morning intermodal commuting.',
+        default: 'Outer Ring Road clean air index optimal. Carpooling keeps suburban Bengaluru traffic fluent.'
+      }
     }
   };
 
@@ -727,11 +787,45 @@ function initHeroAQICard() {
     cityRows.forEach(r => {
       r.classList.toggle('active', r.getAttribute('data-city-key') === key);
     });
-    popoverCityBtns.forEach(b => {
-      b.classList.toggle('popover-city-btn--active', b.getAttribute('data-city') === key);
-    });
+    // 5. Update Commuter Health Advisory Banner
+    const healthBadgeText = document.getElementById('aqi-health-level-text');
+    const maskDesc = document.getElementById('guide-mask-desc');
+    const cabinDesc = document.getElementById('guide-cabin-desc');
+    const multDesc = document.getElementById('guide-multiplier-desc');
+    const advAvatar = document.getElementById('aqi-advisory-avatar');
+    const advUserName = document.getElementById('aqi-advisory-user-name');
+    const advNote = document.getElementById('aqi-advisory-note');
+
+    if (healthBadgeText && data.healthBadge) healthBadgeText.textContent = data.healthBadge;
+    if (maskDesc && data.maskDesc) maskDesc.textContent = data.maskDesc;
+    if (cabinDesc && data.cabinDesc) cabinDesc.textContent = data.cabinDesc;
+    if (multDesc && data.multiplierDesc) multDesc.textContent = data.multiplierDesc;
+
+    const user = typeof CeraUserManager !== 'undefined' ? CeraUserManager.getCurrentUser() : null;
+    if (user) {
+      if (advAvatar) {
+        advAvatar.src = user.avatar;
+        advAvatar.alt = user.name;
+      }
+      if (advUserName) {
+        advUserName.textContent = `Advisory for ${user.name}:`;
+      }
+      if (advNote) {
+        advNote.textContent = (data.personaNotes && data.personaNotes[user.id]) ||
+          (data.personaNotes && data.personaNotes.default) ||
+          data.tip.replace(/<[^>]+>/g, '');
+      }
+    }
 
     if (window.lucide) lucide.createIcons();
+  }
+
+  // Subscribe to user persona switches for real-time advisory personalization
+  if (typeof CeraUserManager !== 'undefined') {
+    CeraUserManager.onUserChange(() => {
+      const activeKey = document.querySelector('.city-bar-row.active')?.getAttribute('data-city-key') || 'delhi';
+      updateAirTelemetry(activeKey);
+    });
   }
 
   // Hero city bar clicks
