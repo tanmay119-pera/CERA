@@ -1849,18 +1849,16 @@
           </div>
 
           <!-- User Balance Bar with 3D Depth -->
-          <div class="balance-card">
+          <div class="balance-card" id="voucher-balance-card">
             <div class="balance-card__left">
-              <div class="icon-avatar icon-avatar--accent">
-                <i data-lucide="wallet" class="icon"></i>
-              </div>
+              <img id="voucher-user-avatar" src="images/driver_rajesh.jpg" alt="Adesh" class="voucher-user-avatar" />
               <div>
-                <span class="balance-card__label">Verified Civic Balance</span>
-                <span class="balance-card__val">340 <small>Green Credits</small></span>
+                <span class="balance-card__label" id="voucher-user-label">Adesh Sharma's Verified Balance</span>
+                <span class="balance-card__val"><span id="voucher-user-balance">420</span> <small>Green Credits</small></span>
               </div>
             </div>
             <div class="balance-card__right">
-              <span class="sync-tag"><i data-lucide="badge-check" class="icon icon--xs"></i> DPI Certified</span>
+              <span class="sync-tag" id="voucher-tier-tag"><i data-lucide="badge-check" class="icon icon--xs"></i> DPI Certified · Tier 2</span>
             </div>
           </div>
 
@@ -1885,7 +1883,7 @@
                 </p>
                 <div class="voucher-pass__footer">
                   <span class="cost-tag"><i data-lucide="coins" class="icon icon--xs"></i> 200 Green Credits</span>
-                  <button class="btn btn--voucher-redeem">REDEEM VOUCHER</button>
+                  <button class="btn btn--voucher-redeem" data-cost="200">REDEEM VOUCHER</button>
                 </div>
                 <div class="voucher-perforation"></div>
               </div>
@@ -1910,7 +1908,7 @@
                 </p>
                 <div class="voucher-pass__footer">
                   <span class="cost-tag"><i data-lucide="coins" class="icon icon--xs"></i> 180 Green Credits</span>
-                  <button class="btn btn--voucher-redeem">REDEEM VOUCHER</button>
+                  <button class="btn btn--voucher-redeem" data-cost="180">REDEEM VOUCHER</button>
                 </div>
                 <div class="voucher-perforation"></div>
               </div>
@@ -1935,7 +1933,32 @@
                 </p>
                 <div class="voucher-pass__footer">
                   <span class="cost-tag"><i data-lucide="coins" class="icon icon--xs"></i> 100 Green Credits</span>
-                  <button class="btn btn--voucher-redeem">REDEEM VOUCHER</button>
+                  <button class="btn btn--voucher-redeem" data-cost="100">REDEEM VOUCHER</button>
+                </div>
+                <div class="voucher-perforation"></div>
+              </div>
+            </div>
+
+            <!-- Voucher 4 -->
+            <div class="tilt-card voucher-pass" data-tilt-max="8">
+              <div class="tilt-card__inner voucher-pass__inner">
+                <div class="voucher-pass__ribbon">EV CHARGING</div>
+                <div class="tilt-glare"></div>
+                <div class="voucher-pass__top">
+                  <div class="icon-avatar icon-avatar--accent">
+                    <i data-lucide="zap" class="icon"></i>
+                  </div>
+                  <div class="voucher-pass__title-box">
+                    <h4 class="voucher-pass__title">Public EV Fast Charging Voucher</h4>
+                    <span class="voucher-pass__discount">15 kWh Grid Power Credit</span>
+                  </div>
+                </div>
+                <p class="voucher-pass__desc">
+                  Redeemable across 250+ Delhi Transco / Tata Power EZ Charge stations along Barapullah, Outer Ring Road, and DND EV corridors.
+                </p>
+                <div class="voucher-pass__footer">
+                  <span class="cost-tag"><i data-lucide="coins" class="icon icon--xs"></i> 150 Green Credits</span>
+                  <button class="btn btn--voucher-redeem" data-cost="150">REDEEM VOUCHER</button>
                 </div>
                 <div class="voucher-perforation"></div>
               </div>

@@ -2838,6 +2838,15 @@ h1, h2, h3, h4 {
   gap: 14px;
 }
 
+.voucher-user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
 .balance-card__label {
   display: block;
   font-size: 0.74rem;

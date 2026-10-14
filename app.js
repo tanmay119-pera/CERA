@@ -348,20 +348,97 @@ function initPodButtons() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   8. CIVIC BENEFIT REDEMPTION BUTTONS
+   8. CIVIC BENEFIT REDEMPTION BUTTONS & DYNAMIC BALANCE ENGINE
    ═══════════════════════════════════════════════════════════════ */
 function initVoucherButtons() {
-  document.querySelectorAll('.btn--voucher-redeem').forEach(btn => {
+  const balanceVal = document.getElementById('voucher-user-balance');
+  const userAvatar = document.getElementById('voucher-user-avatar');
+  const userLabel = document.getElementById('voucher-user-label');
+  const tierTag = document.getElementById('voucher-tier-tag');
+  const buttons = document.querySelectorAll('.btn--voucher-redeem');
+
+  function syncVoucherUser(user) {
+    if (!user) return;
+    if (balanceVal) balanceVal.textContent = user.credits;
+    if (userAvatar) {
+      userAvatar.src = user.avatar;
+      userAvatar.alt = user.name;
+    }
+    if (userLabel) userLabel.textContent = `${user.name}'s Verified Civic Balance`;
+    if (tierTag) {
+      tierTag.innerHTML = `<i data-lucide="badge-check" class="icon icon--xs"></i> DPI Certified · ${user.badge}`;
+    }
+
+    // Refresh button affordability states
+    buttons.forEach(btn => {
+      const cost = Number(btn.dataset.cost) || 100;
+      if (btn.classList.contains('is-redeemed')) return;
+
+      if (user.credits < cost) {
+        btn.textContent = `NEED ${cost} GC (HAVE ${user.credits})`;
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+      } else {
+        btn.textContent = 'REDEEM VOUCHER';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+      }
+    });
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // Initial user sync
+  if (typeof CeraUserManager !== 'undefined') {
+    syncVoucherUser(CeraUserManager.getCurrentUser());
+    CeraUserManager.onUserChange(user => {
+      syncVoucherUser(user);
+    });
+  }
+
+  // Button clicks
+  buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const card = btn.closest('.voucher-pass');
-      const title = card ? card.querySelector('.voucher-pass__title').textContent : 'Civic Voucher';
+      const title = card ? card.querySelector('.voucher-pass__title').textContent.trim() : 'Civic Voucher';
+      const cost = Number(btn.dataset.cost) || 100;
+      const user = typeof CeraUserManager !== 'undefined' ? CeraUserManager.getCurrentUser() : null;
 
-      btn.textContent = '✓ CREDITED TO DIGILOCKER';
-      btn.disabled = true;
-      btn.style.opacity = '0.7';
-      btn.style.cursor = 'default';
+      if (user && user.credits < cost) {
+        if (typeof CeraToast !== 'undefined') {
+          CeraToast.show(`Insufficient Green Credits. You have ${user.credits} GC, but this voucher requires ${cost} GC. Complete 1 carpool to earn 50 GC!`, {
+            title: 'Credit Balance Alert',
+            type: 'warning'
+          });
+        }
+        return;
+      }
 
-      displayToast(`"${title}" voucher cleared via DPI fast-path. Barcode added to your DigiLocker app.`);
+      let success = true;
+      if (typeof CeraUserManager !== 'undefined') {
+        success = CeraUserManager.deductCredits(cost);
+      }
+
+      if (success) {
+        btn.classList.add('is-redeemed');
+        btn.innerHTML = `<i data-lucide="check" class="icon icon--xxs"></i> REDEEMED (-${cost} GC)`;
+        btn.disabled = true;
+        btn.style.opacity = '0.8';
+        btn.style.cursor = 'default';
+
+        if (typeof CeraToast !== 'undefined') {
+          CeraToast.show(`"${title}" voucher cleared via DPI fast-path for ${user ? user.name : 'you'}. 15-minute barcode added to DigiLocker. Balance: ${user ? user.credits : 'updated'} GC.`, {
+            title: 'Voucher Issued to DigiLocker',
+            type: 'success'
+          });
+        } else if (typeof displayToast === 'function') {
+          displayToast(`"${title}" voucher cleared via DPI fast-path. Barcode added to your DigiLocker app.`);
+        }
+
+        if (window.lucide) lucide.createIcons();
+      }
     });
   });
 }
