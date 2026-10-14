@@ -1346,59 +1346,8 @@ function initCeraAI() {
   const co2Counter = document.getElementById('co2-counter');
   const routinePills = document.querySelectorAll('.routine-pill');
 
-  const routines = {
-    mon: {
-      user: 'Adesh',
-      dest: 'Connaught Place',
-      driver: 'Priya M.',
-      driverImg: 'images/driver_priya.jpg',
-      driverMeta: '★ 4.9 · 87 verified trips · Tata Nexon EV (Zero Tailpipe PM2.5)',
-      matchPct: '98%',
-      startPoint: 'Sector Gate 4',
-      startTime: '08:35 AM · 300m walk',
-      corridor: '14.2 km · Clean Barapullah Route',
-      endPoint: 'Connaught Place',
-      endTime: '09:12 AM · Outer Circle',
-      fare: '₹60',
-      credits: '+50 Credits',
-      co2: '-2.4 kg CO₂',
-      quote: 'Hey <strong>Adesh</strong>! I noticed you usually head to <strong>Connaught Place</strong> on Mondays. I’ve pre-matched you with <strong>Priya</strong> (98% route alignment, EV Sedan). Tap to lock in your ride and claim your daily <strong>50 Green Credits</strong>.'
-    },
-    wed: {
-      user: 'Adesh',
-      dest: 'Cyber City Gurugram',
-      driver: 'Rajesh K.',
-      driverImg: 'images/driver_rajesh.jpg',
-      driverMeta: '★ 4.8 · 112 verified trips · Tata Nexon EV (Clean Corridor Tagged)',
-      matchPct: '94%',
-      startPoint: 'Rohini Sector 11',
-      startTime: '08:20 AM · 200m walk',
-      corridor: '26.8 km · NH-48 EV Express Lane',
-      endPoint: 'Cyber City DLF',
-      endTime: '09:18 AM · Cyber Hub Gate 2',
-      fare: '₹75',
-      credits: '+60 Credits',
-      co2: '-3.8 kg CO₂',
-      quote: 'Good morning <strong>Adesh</strong>! For your Wednesday commute to <strong>Cyber City</strong>, I’ve pre-clustered a seat with <strong>Rajesh</strong> (94% route match, priority HOV lane). Tap to lock in and earn <strong>60 Green Credits</strong>.'
-    },
-    fri: {
-      user: 'Adesh',
-      dest: 'Noida Sector 62',
-      driver: 'Vikram S.',
-      driverImg: 'images/driver_rajesh.jpg',
-      driverMeta: '★ 4.6 · 34 verified trips · MG ZS EV (Zero Emission)',
-      matchPct: '91%',
-      startPoint: 'Lajpat Nagar Ring Road',
-      startTime: '08:45 AM · Metro Pillar 14',
-      corridor: '18.4 km · DND Clean Flyway',
-      endPoint: 'Noida Sector 62',
-      endTime: '09:25 AM · Institutional Area',
-      fare: '₹55',
-      credits: '+45 Credits',
-      co2: '-2.1 kg CO₂',
-      quote: 'Heading to <strong>Noida Sector 62</strong> this Friday, <strong>Adesh</strong>? I’ve held seat #2 in <strong>Vikram’s</strong> MG ZS EV via DND Flyway (91% route alignment). Lock in now for <strong>45 Green Credits</strong>.'
-    }
-  };
+  let activeUser = CeraUserManager.getCurrentUser();
+  let routines = activeUser.routines || CeraUserManager.PERSONAS.adesh.routines;
 
   let isLocked = false;
   const commuteContext = CeraAISystem.getCommuteContext();
@@ -1409,7 +1358,8 @@ function initCeraAI() {
     const timeStr = ctx.timeFormatted;
     const osName = sys.os;
     const rush = ctx.isRushHour ? ` <span class="ai-greeting-alert">⚡ ${ctx.commuteContext}</span>` : '';
-    return `"${greeting}, <strong>${routine.user}</strong>! Connected from your <strong>${osName}</strong> system at ${timeStr}.${rush} For your <strong>${ctx.dayName}</strong> commute to <strong>${routine.dest}</strong>, I’ve pre-matched you with <strong>${routine.driver}</strong> (${routine.matchPct} route alignment, EV Sedan). Tap to lock in your ride and claim your daily <strong>50 Green Credits</strong>."`;
+    const commuterName = activeUser.shortName || routine.user;
+    return `"${greeting}, <strong>${commuterName}</strong>! Connected from your <strong>${osName}</strong> system at ${timeStr}.${rush} For your <strong>${ctx.dayName}</strong> commute to <strong>${routine.dest}</strong>, I’ve pre-matched you with <strong>${routine.driver}</strong> (${routine.matchPct} route alignment, EV Sedan). Tap to lock in your ride and claim your daily <strong>${routine.credits || '50 Green Credits'}</strong>."`;
   }
 
   function applyRoutine(day) {
@@ -1510,13 +1460,12 @@ function initCeraAI() {
         } catch (e) {}
 
         // Dynamically increment citizen's civic credit balance
+        CeraUserManager.addCredits(50);
         if (creditsCounter) {
-          const currentCredits = parseInt(creditsCounter.textContent, 10) || 340;
-          creditsCounter.textContent = currentCredits + 50;
+          creditsCounter.textContent = activeUser.credits;
         }
         if (co2Counter) {
-          const currentCO2 = parseFloat(co2Counter.textContent) || 42.5;
-          co2Counter.textContent = (currentCO2 + 2.4).toFixed(1);
+          co2Counter.textContent = activeUser.co2SavedKg;
         }
 
         if (window.lucide) lucide.createIcons();
@@ -1530,12 +1479,26 @@ function initCeraAI() {
         if (feedbackBanner) {
           feedbackBanner.style.display = 'none';
         }
+        CeraUserManager.deductCredits(50);
+        if (creditsCounter) {
+          creditsCounter.textContent = activeUser.credits;
+        }
         try {
           localStorage.removeItem('cera-commute-routine');
         } catch (e) {}
       }
     });
   }
+
+  // Listen for user persona switches to update Smart-Twin routines
+  CeraUserManager.onUserChange(user => {
+    activeUser = user;
+    routines = user.routines || CeraUserManager.PERSONAS.adesh.routines;
+    isLocked = false;
+    if (creditsCounter) creditsCounter.textContent = user.credits;
+    if (co2Counter) co2Counter.textContent = user.co2SavedKg;
+    applyRoutine(currentDay);
+  });
 
   // Reset Routine Button
   const resetRoutineBtn = document.getElementById('smart-twin-reset-btn');
