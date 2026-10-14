@@ -2095,7 +2095,49 @@
       </div>
     </footer>
 
-  </main>
+  <!-- ═══════════════════ FLOATING QUICK-ACTION DOCK ═══════════════════ -->
+  <aside class="cera-quick-dock" id="cera-quick-dock" aria-label="Quick Navigation Dock">
+    <div class="quick-dock__inner">
+      <!-- Matcher Shortcut -->
+      <a href="#matcher" class="quick-dock-action" title="Carpool Pod Matcher" aria-label="Jump to Carpool Pod Matcher">
+        <i data-lucide="car" class="icon icon--xs"></i>
+        <span class="quick-dock-tooltip">Carpool Pods</span>
+      </a>
+
+      <!-- Smart-Twin AI Shortcut -->
+      <a href="#cera-ai" class="quick-dock-action" title="Smart-Twin Commute Predictor" aria-label="Jump to Smart-Twin AI">
+        <i data-lucide="sparkles" class="icon icon--xs"></i>
+        <span class="quick-dock-tooltip">Smart-Twin AI</span>
+      </a>
+
+      <!-- ROI Calculator Shortcut -->
+      <a href="#calc-distance-slider" class="quick-dock-action" title="Fuel &amp; Carbon Savings Calculator" aria-label="Jump to Carbon Calculator">
+        <i data-lucide="calculator" class="icon icon--xs"></i>
+        <span class="quick-dock-tooltip">Savings Calculator</span>
+      </a>
+
+      <!-- Civic Vouchers Shortcut -->
+      <a href="#redemption" class="quick-dock-action" title="Civic Vouchers &amp; DigiLocker" aria-label="Jump to Civic Vouchers">
+        <i data-lucide="ticket" class="icon icon--xs"></i>
+        <span class="quick-dock-tooltip">Civic Vouchers</span>
+      </a>
+
+      <!-- Persona Switcher Shortcut -->
+      <button type="button" class="quick-dock-action quick-dock-action--persona" id="quick-dock-persona-trigger" title="Switch Commuter Identity" aria-label="Switch Commuter Identity">
+        <img id="quick-dock-avatar" src="images/driver_rajesh.jpg" alt="Active Commuter" class="quick-dock-avatar" />
+        <span class="quick-dock-tooltip" id="quick-dock-tooltip-name">Adesh Sharma</span>
+      </button>
+
+      <!-- Divider -->
+      <div class="quick-dock-divider"></div>
+
+      <!-- Scroll to Top -->
+      <button type="button" class="quick-dock-action quick-dock-action--top" id="quick-dock-scroll-top" title="Scroll to Top" aria-label="Scroll to top of page">
+        <i data-lucide="chevron-up" class="icon icon--xs"></i>
+        <span class="quick-dock-tooltip">Scroll to Top</span>
+      </button>
+    </div>
+  </aside>
 
   <!-- ═══════════════════════ CERA-AI COMMAND PALETTE OMNIBAR ═══════════════════════ -->
   <div id="cera-omnibar-modal" class="cera-omnibar-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="CERA-AI Global Command Palette">

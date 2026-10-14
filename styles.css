@@ -6537,6 +6537,125 @@ h1, h2, h3, h4 {
   line-height: 1.4;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   FLOATING QUICK-ACTION NAVIGATION DOCK
+   ═══════════════════════════════════════════════════════════════ */
+.cera-quick-dock {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  pointer-events: auto;
+}
+
+.cera-quick-dock.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+.quick-dock__inner {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px var(--card-glow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.quick-dock-action {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+}
+
+.quick-dock-action:hover,
+.quick-dock-action:focus-visible {
+  color: var(--text-main);
+  background: var(--bg-primary);
+  border-color: var(--border);
+  transform: translateY(-2px);
+}
+
+.quick-dock-action--persona {
+  border: 1px solid var(--border);
+}
+
+.quick-dock-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--accent);
+}
+
+.quick-dock-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 2px;
+}
+
+.quick-dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--bg-primary);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.quick-dock-action:hover .quick-dock-tooltip,
+.quick-dock-action:focus-visible .quick-dock-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 640px) {
+  .cera-quick-dock {
+    bottom: 16px;
+    right: 16px;
+  }
+  .quick-dock__inner {
+    padding: 4px 6px;
+    gap: 4px;
+  }
+  .quick-dock-action {
+    width: 34px;
+    height: 34px;
+  }
+  .quick-dock-tooltip {
+    display: none;
+  }
+}
+
+
 
 
 

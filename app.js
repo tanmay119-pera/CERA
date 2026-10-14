@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCeraAIShortcuts();
   initCeraOmnibar();
   initCeraDiagnostics();
+  initQuickDock();
 });
 
 /* ═══════════════════════════════════════════════════════════════
@@ -3385,5 +3386,79 @@ function initCarbonCalculator() {
 
   calculate();
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   5.9. FLOATING QUICK-ACTION NAVIGATION DOCK
+   ═══════════════════════════════════════════════════════════════ */
+function initQuickDock() {
+  const dock = document.getElementById('cera-quick-dock');
+  const scrollTopBtn = document.getElementById('quick-dock-scroll-top');
+  const personaBtn = document.getElementById('quick-dock-persona-trigger');
+  const avatar = document.getElementById('quick-dock-avatar');
+  const tooltipName = document.getElementById('quick-dock-tooltip-name');
+
+  if (!dock) return;
+
+  // Sync active user identity to dock
+  function syncDockUser(user) {
+    if (!user) return;
+    if (avatar && user.avatar) {
+      avatar.src = user.avatar;
+      avatar.alt = user.name;
+    }
+    if (tooltipName) {
+      tooltipName.textContent = user.name;
+    }
+  }
+
+  if (typeof CeraUserManager !== 'undefined') {
+    syncDockUser(CeraUserManager.getCurrentUser());
+    CeraUserManager.onUserChange(user => {
+      syncDockUser(user);
+    });
+  }
+
+  // Persona switcher shortcut opens persona modal
+  if (personaBtn) {
+    personaBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const modal = document.getElementById('cera-persona-modal');
+      if (modal) {
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+    });
+  }
+
+  // Scroll to Top functionality
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+  // Scroll visibility threshold
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    // Hide dock near the very top of hero (first 120px) so hero remains ultra-clean
+    if (currentScrollY < 120) {
+      dock.classList.add('is-hidden');
+    } else {
+      dock.classList.remove('is-hidden');
+    }
+  }, { passive: true });
+
+  // Initial visibility check
+  if (window.scrollY < 120) {
+    dock.classList.add('is-hidden');
+  }
+
+  if (window.lucide) lucide.createIcons();
+}
+
 
 
