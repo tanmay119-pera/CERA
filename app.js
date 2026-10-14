@@ -663,6 +663,443 @@ const CeraAISystem = {
   }
 };
 
+/* ═══════════════════════════════════════════════════════════════
+   5.5. CERA COMMUTER PERSONA & USER MANAGEMENT ENGINE
+   Dynamic user profiles, credits ledger, routine habits & persistence
+   ═══════════════════════════════════════════════════════════════ */
+const CeraUserManager = {
+  STORAGE_KEY: 'cera_active_user_v2',
+  CUSTOM_DATA_KEY: 'cera_users_data_v2',
+
+  PERSONAS: {
+    adesh: {
+      id: 'adesh',
+      name: 'Adesh Sharma',
+      shortName: 'Adesh',
+      role: 'Civic Commuter',
+      badge: 'Tier 2 Green Commuter',
+      avatar: 'images/driver_rajesh.jpg',
+      avatarColor: '#22396F',
+      initials: 'AS',
+      credits: 420,
+      co2SavedKg: 48.6,
+      tripsCompleted: 34,
+      corridor: 'Barapullah & Ring Road Corridor',
+      primaryHub: 'Navin Shahdara',
+      destination: 'Connaught Place',
+      vehiclePref: 'Tata Nexon EV / Electric Sedan',
+      habitualDays: 'Mondays & Thursdays (08:30 AM)',
+      streak: 12,
+      routines: {
+        mon: {
+          dest: 'Connaught Place',
+          driver: 'Priya M.',
+          driverImg: 'images/driver_priya.jpg',
+          driverMeta: '★ 4.9 · 87 verified trips · Tata Nexon EV (Zero Tailpipe PM2.5)',
+          matchPct: '98%',
+          startPoint: 'Sector Gate 4',
+          startTime: '08:35 AM · 300m walk',
+          corridor: '14.2 km · Clean Barapullah Route',
+          endPoint: 'Connaught Place',
+          endTime: '09:12 AM · Outer Circle',
+          fare: '₹60',
+          credits: '+50 Credits',
+          co2: '-2.4 kg CO₂',
+          quote: 'Hey <strong>Adesh</strong>! I noticed you usually head to <strong>Connaught Place</strong> on Mondays. I’ve pre-matched you with <strong>Priya</strong> (98% route alignment, EV Sedan). Tap to lock in your ride and claim your daily <strong>50 Green Credits</strong>.'
+        },
+        wed: {
+          dest: 'Cyber City Gurugram',
+          driver: 'Rajesh K.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.8 · 112 verified trips · Tata Nexon EV (Clean Corridor Tagged)',
+          matchPct: '94%',
+          startPoint: 'Rohini Sector 11',
+          startTime: '08:20 AM · 200m walk',
+          corridor: '26.8 km · NH-48 EV Express Lane',
+          endPoint: 'Cyber City DLF',
+          endTime: '09:18 AM · Cyber Hub Gate 2',
+          fare: '₹75',
+          credits: '+60 Credits',
+          co2: '-3.8 kg CO₂',
+          quote: 'Good morning <strong>Adesh</strong>! For your Wednesday commute to <strong>Cyber City</strong>, I’ve pre-clustered a seat with <strong>Rajesh</strong> (94% route match, priority HOV lane). Tap to lock in and earn <strong>60 Green Credits</strong>.'
+        },
+        fri: {
+          dest: 'Noida Sector 62',
+          driver: 'Vikram S.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.6 · 34 verified trips · MG ZS EV (Zero Emission)',
+          matchPct: '91%',
+          startPoint: 'Lajpat Nagar Ring Road',
+          startTime: '08:45 AM · Metro Pillar 14',
+          corridor: '18.4 km · DND Clean Flyway',
+          endPoint: 'Noida Sector 62',
+          endTime: '09:25 AM · Institutional Area',
+          fare: '₹55',
+          credits: '+45 Credits',
+          co2: '-2.1 kg CO₂',
+          quote: 'Heading to <strong>Noida Sector 62</strong> this Friday, <strong>Adesh</strong>? I’ve held seat #2 in <strong>Vikram’s</strong> MG ZS EV via DND Flyway (91% route alignment). Lock in now for <strong>45 Green Credits</strong>.'
+        }
+      }
+    },
+    ananya: {
+      id: 'ananya',
+      name: 'Ananya Roy',
+      shortName: 'Ananya',
+      role: 'Climate Tech Lead',
+      badge: 'Tier 3 Green Pioneer',
+      avatar: 'images/driver_priya.jpg',
+      avatarColor: '#1b3260',
+      initials: 'AR',
+      credits: 890,
+      co2SavedKg: 92.4,
+      tripsCompleted: 68,
+      corridor: 'NH-48 EV Expressway & Cyber Corridor',
+      primaryHub: 'Vasant Kunj B-Block',
+      destination: 'Cyber City DLF',
+      vehiclePref: 'Tata Nexon EV / MG ZS EV',
+      habitualDays: 'Tuesdays, Wednesdays & Fridays (08:15 AM)',
+      streak: 24,
+      routines: {
+        mon: {
+          dest: 'Cyber City DLF',
+          driver: 'Rajesh K.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.8 · 112 verified trips · Tata Nexon EV (Clean Corridor)',
+          matchPct: '99%',
+          startPoint: 'Vasant Kunj B-Block Gate 2',
+          startTime: '08:15 AM · 150m walk',
+          corridor: '16.5 km · NH-48 Express HOV Lane',
+          endPoint: 'Cyber City Building 10',
+          endTime: '08:50 AM · Cyber Hub Concourse',
+          fare: '₹70',
+          credits: '+65 Credits',
+          co2: '-3.2 kg CO₂',
+          quote: 'Hey <strong>Ananya</strong>! Routing to <strong>Cyber City</strong> today? I’ve paired you with <strong>Rajesh</strong> on the express HOV corridor (99% alignment). Lock in to preserve your 24-day zero-tailpipe streak!'
+        },
+        wed: {
+          dest: 'Aerocity Hospitality District',
+          driver: 'Priya M.',
+          driverImg: 'images/driver_priya.jpg',
+          driverMeta: '★ 4.9 · 87 verified trips · Tata Nexon EV',
+          matchPct: '96%',
+          startPoint: 'Saket District Centre',
+          startTime: '08:40 AM · Metro Gate 1',
+          corridor: '11.8 km · Clean Spine Corridor',
+          endPoint: 'Aerocity Worldmark 2',
+          endTime: '09:10 AM · Central Plaza',
+          fare: '₹50',
+          credits: '+55 Credits',
+          co2: '-2.6 kg CO₂',
+          quote: 'Hi <strong>Ananya</strong>! Heading to <strong>Aerocity</strong>? <strong>Priya</strong> is departing Saket at 08:40 AM with an open EV front seat. One tap secures your seat + <strong>55 Green Credits</strong>.'
+        },
+        fri: {
+          dest: 'One Horizon Center',
+          driver: 'Dr. Sen',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.95 · 140 verified trips · Hyundai Ioniq 5',
+          matchPct: '95%',
+          startPoint: 'Green Park Metro',
+          startTime: '08:30 AM · South Extension exit',
+          corridor: '24.2 km · Southern Peripheral EV Flyway',
+          endPoint: 'Golf Course Road, Horizon',
+          endTime: '09:15 AM · Main Portico',
+          fare: '₹80',
+          credits: '+70 Credits',
+          co2: '-4.1 kg CO₂',
+          quote: 'Friday executive commute to <strong>Horizon Center</strong>, <strong>Ananya</strong>? <strong>Dr. Sen’s</strong> Ioniq 5 has 1 open pod seat on the Southern Peripheral. Reserve now for <strong>70 Green Credits</strong>.'
+        }
+      }
+    },
+    rohan: {
+      id: 'rohan',
+      name: 'Dr. Rohan Sen',
+      shortName: 'Dr. Sen',
+      role: 'Clean Air Epidemiologist',
+      badge: 'Tier 3 EV Specialist',
+      avatar: 'images/driver_rajesh.jpg',
+      avatarColor: '#2a427f',
+      initials: 'RS',
+      credits: 1150,
+      co2SavedKg: 134.2,
+      tripsCompleted: 98,
+      corridor: 'Aurobindo Marg & Medical Hub Corridor',
+      primaryHub: 'Hauz Khas Enclave',
+      destination: 'AIIMS & South Campus',
+      vehiclePref: 'Hyundai Ioniq 5 EV',
+      habitualDays: 'Daily Weekdays (07:45 AM)',
+      streak: 42,
+      routines: {
+        mon: {
+          dest: 'AIIMS New Delhi',
+          driver: 'Priya M.',
+          driverImg: 'images/driver_priya.jpg',
+          driverMeta: '★ 4.9 · 87 verified trips · Tata Nexon EV',
+          matchPct: '97%',
+          startPoint: 'Hauz Khas Enclave Gate 1',
+          startTime: '07:45 AM · 100m walk',
+          corridor: '6.4 km · Clean Aurobindo Green Link',
+          endPoint: 'AIIMS Emergency Corridor',
+          endTime: '08:05 AM · Dedicated HOV Bay',
+          fare: '₹40',
+          credits: '+50 Credits',
+          co2: '-1.9 kg CO₂',
+          quote: 'Good morning <strong>Dr. Sen</strong>! For your Monday clinical rounds at <strong>AIIMS</strong>, <strong>Priya’s</strong> EV pod is ready at 07:45 AM (97% route alignment). Tap to lock in and earn <strong>50 Green Credits</strong>.'
+        },
+        wed: {
+          dest: 'Safdarjung Research Labs',
+          driver: 'Rajesh K.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.8 · 112 verified trips · Clean Corridor EV',
+          matchPct: '96%',
+          startPoint: 'Panchsheel Park',
+          startTime: '07:50 AM',
+          corridor: '8.2 km · Outer Ring Road Clean Lane',
+          endPoint: 'Safdarjung Hospital Gate 3',
+          endTime: '08:15 AM',
+          fare: '₹45',
+          credits: '+50 Credits',
+          co2: '-2.1 kg CO₂',
+          quote: 'Hello <strong>Dr. Sen</strong>! Connecting to <strong>Safdarjung Labs</strong> today? I’ve held a front seat with <strong>Rajesh</strong> on the Outer Ring Road. Claim your <strong>50 Green Credits</strong>.'
+        },
+        fri: {
+          dest: 'Vallabhbhai Patel Chest Institute',
+          driver: 'Vikram S.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.6 · 34 verified trips · MG ZS EV',
+          matchPct: '93%',
+          startPoint: 'South Extension II',
+          startTime: '08:00 AM',
+          corridor: '19.5 km · Ring Road Rapid Transit',
+          endPoint: 'Delhi University North Campus',
+          endTime: '08:48 AM',
+          fare: '₹70',
+          credits: '+65 Credits',
+          co2: '-3.4 kg CO₂',
+          quote: 'Heading to <strong>North Campus Pulmonary Institute</strong> this Friday, <strong>Dr. Sen</strong>? <strong>Vikram’s</strong> MG ZS EV is passing South Ext at 08:00 AM. 1 seat remaining.'
+        }
+      }
+    },
+    vikram: {
+      id: 'vikram',
+      name: 'Vikram Malhotra',
+      shortName: 'Vikram',
+      role: 'Intermodal Transit Architect',
+      badge: 'Tier 2 Transit Fellow',
+      avatar: 'images/driver_rajesh.jpg',
+      avatarColor: '#203565',
+      initials: 'VM',
+      credits: 580,
+      co2SavedKg: 64.5,
+      tripsCompleted: 45,
+      corridor: 'DND Flyway & Noida Bio-Corridor',
+      primaryHub: 'Lajpat Nagar Ring Road',
+      destination: 'Noida Sector 125 & IT Hub',
+      vehiclePref: 'MG ZS EV / Verified Shared Pod',
+      habitualDays: 'Mondays, Wednesdays & Thursdays (08:30 AM)',
+      streak: 15,
+      routines: {
+        mon: {
+          dest: 'Noida Sector 125 Hub',
+          driver: 'Priya M.',
+          driverImg: 'images/driver_priya.jpg',
+          driverMeta: '★ 4.9 · 87 verified trips · Tata Nexon EV',
+          matchPct: '97%',
+          startPoint: 'Lajpat Nagar Central Market',
+          startTime: '08:25 AM · Metro Station Gate 3',
+          corridor: '17.8 km · DND Clean Flyway HOV',
+          endPoint: 'Amity / Sector 125 Complex',
+          endTime: '09:05 AM · Main Plaza',
+          fare: '₹60',
+          credits: '+55 Credits',
+          co2: '-2.9 kg CO₂',
+          quote: 'Hey <strong>Vikram</strong>! Planning your transit review at <strong>Noida Sector 125</strong>? <strong>Priya</strong> is rolling via DND Flyway (97% route match). Tap to lock your shared EV seat.'
+        },
+        wed: {
+          dest: 'Mayur Vihar Mobility Interchange',
+          driver: 'Rajesh K.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.8 · 112 verified trips · Tata Nexon EV',
+          matchPct: '95%',
+          startPoint: 'Jangpura Flyover',
+          startTime: '08:40 AM',
+          corridor: '12.4 km · Barapullah Elevated Transit',
+          endPoint: 'Mayur Vihar Phase 1 Metro',
+          endTime: '09:10 AM',
+          fare: '₹50',
+          credits: '+50 Credits',
+          co2: '-2.2 kg CO₂',
+          quote: 'Good morning <strong>Vikram</strong>! heading to <strong>Mayur Vihar Interchange</strong>? <strong>Rajesh</strong> is on Barapullah at 08:40 AM with an open seat.'
+        },
+        fri: {
+          dest: 'Greater Noida Knowledge Park',
+          driver: 'Vikram S.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.6 · 34 verified trips · Clean EV',
+          matchPct: '92%',
+          startPoint: 'Ashram Chowk Underpass',
+          startTime: '08:10 AM',
+          corridor: '32.0 km · Noida-Greater Noida Expressway',
+          endPoint: 'Knowledge Park III',
+          endTime: '09:05 AM',
+          fare: '₹90',
+          credits: '+75 Credits',
+          co2: '-4.6 kg CO₂',
+          quote: 'Heading out to <strong>Knowledge Park</strong> on Friday, <strong>Vikram</strong>? Long-distance zero-emission pod matched with <strong>Vikram S.</strong> for <strong>75 Green Credits</strong>.'
+        }
+      }
+    },
+    sneha: {
+      id: 'sneha',
+      name: 'Sneha Kapur',
+      shortName: 'Sneha',
+      role: 'Design Strategist',
+      badge: 'Tier 1 Urban Commuter',
+      avatar: 'images/driver_priya.jpg',
+      avatarColor: '#17274e',
+      initials: 'SK',
+      credits: 310,
+      co2SavedKg: 35.2,
+      tripsCompleted: 23,
+      corridor: 'Ring Road & Hauz Khas Arts Corridor',
+      primaryHub: 'Hauz Khas Village',
+      destination: 'Lodhi Art District & CGO',
+      vehiclePref: 'Shared Compact EV',
+      habitualDays: 'Tuesdays & Thursdays (09:00 AM)',
+      streak: 9,
+      routines: {
+        mon: {
+          dest: 'Lodhi Art District',
+          driver: 'Priya M.',
+          driverImg: 'images/driver_priya.jpg',
+          driverMeta: '★ 4.9 · 87 verified trips · Tata Nexon EV',
+          matchPct: '98%',
+          startPoint: 'Hauz Khas Metro Gate 2',
+          startTime: '08:50 AM · 100m walk',
+          corridor: '9.2 km · Sri Aurobindo Clean Corridor',
+          endPoint: 'Lodhi Colony Block 12',
+          endTime: '09:20 AM · Habitat Centre',
+          fare: '₹45',
+          credits: '+45 Credits',
+          co2: '-2.0 kg CO₂',
+          quote: 'Hey <strong>Sneha</strong>! Ready for your creative session at <strong>Lodhi Art District</strong>? <strong>Priya</strong> has reserved seat #2 in her clean EV pod. One tap saves 2.0 kg CO₂!'
+        },
+        wed: {
+          dest: 'Khan Market Cultural Hub',
+          driver: 'Rajesh K.',
+          driverImg: 'images/driver_rajesh.jpg',
+          driverMeta: '★ 4.8 · 112 verified trips · Clean Corridor EV',
+          matchPct: '94%',
+          startPoint: 'Green Park Market',
+          startTime: '09:00 AM',
+          corridor: '7.8 km · Ring Road to Subramaniam Marg',
+          endPoint: 'Khan Market Metro Gate 4',
+          endTime: '09:25 AM',
+          fare: '₹40',
+          credits: '+40 Credits',
+          co2: '-1.8 kg CO₂',
+          quote: 'Good morning <strong>Sneha</strong>! Heading to <strong>Khan Market</strong> on Wednesday? <strong>Rajesh</strong> has a shared EV seat available with 94% alignment.'
+        },
+        fri: {
+          dest: 'Connaught Place British Council',
+          driver: 'Priya M.',
+          driverImg: 'images/driver_priya.jpg',
+          driverMeta: '★ 4.9 · 87 verified trips · Tata Nexon EV',
+          matchPct: '96%',
+          startPoint: 'AIIMS Flyover North',
+          startTime: '09:10 AM',
+          corridor: '11.5 km · Central Vista Green Corridor',
+          endPoint: 'Kasturba Gandhi Marg',
+          endTime: '09:40 AM',
+          fare: '₹50',
+          credits: '+50 Credits',
+          co2: '-2.3 kg CO₂',
+          quote: 'Friday visit to <strong>CP British Council</strong>, <strong>Sneha</strong>? <strong>Priya</strong> is departing AIIMS Flyover at 09:10 AM. Claim your <strong>50 Green Credits</strong>.'
+        }
+      }
+    }
+  },
+
+  listeners: [],
+
+  getAllPersonas() {
+    return Object.values(this.PERSONAS);
+  },
+
+  getCurrentUser() {
+    let savedId = null;
+    try {
+      savedId = localStorage.getItem(this.STORAGE_KEY);
+    } catch (e) {}
+
+    const id = (savedId && this.PERSONAS[savedId]) ? savedId : 'adesh';
+    const base = this.PERSONAS[id];
+
+    // Load any dynamic credits/offsets saved in localStorage
+    try {
+      const customData = JSON.parse(localStorage.getItem(this.CUSTOM_DATA_KEY) || '{}');
+      if (customData[id]) {
+        return { ...base, ...customData[id] };
+      }
+    } catch (e) {}
+
+    return { ...base };
+  },
+
+  setCurrentUser(userId) {
+    if (!this.PERSONAS[userId]) return false;
+    try {
+      localStorage.setItem(this.STORAGE_KEY, userId);
+    } catch (e) {}
+
+    const updatedUser = this.getCurrentUser();
+    this.notify(updatedUser);
+    return true;
+  },
+
+  addCredits(amount) {
+    const user = this.getCurrentUser();
+    user.credits = (user.credits || 0) + Number(amount);
+    user.tripsCompleted = (user.tripsCompleted || 0) + 1;
+    user.co2SavedKg = +(user.co2SavedKg + 2.4).toFixed(1);
+    this.persistUserData(user.id, {
+      credits: user.credits,
+      tripsCompleted: user.tripsCompleted,
+      co2SavedKg: user.co2SavedKg
+    });
+    this.notify(user);
+    return user;
+  },
+
+  deductCredits(amount) {
+    const user = this.getCurrentUser();
+    if (user.credits < amount) return false;
+    user.credits -= Number(amount);
+    this.persistUserData(user.id, { credits: user.credits });
+    this.notify(user);
+    return true;
+  },
+
+  persistUserData(userId, data) {
+    try {
+      const all = JSON.parse(localStorage.getItem(this.CUSTOM_DATA_KEY) || '{}');
+      all[userId] = { ...(all[userId] || {}), ...data };
+      localStorage.setItem(this.CUSTOM_DATA_KEY, JSON.stringify(all));
+    } catch (e) {}
+  },
+
+  onUserChange(fn) {
+    if (typeof fn === 'function') {
+      this.listeners.push(fn);
+    }
+  },
+
+  notify(user) {
+    this.listeners.forEach(fn => {
+      try { fn(user); } catch (err) { console.error('User listener error:', err); }
+    });
+  }
+};
+
 function initCeraAI() {
   // ─── SYSTEM ENVIRONMENT TELEMETRY POPULATION ───
   try {
